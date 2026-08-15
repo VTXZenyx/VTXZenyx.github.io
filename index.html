@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Viraj Gandhi — Information Systems, Digital Intelligence and Data Science portfolio." />
+  <meta name="theme-color" content="#07101f" />
+  <title>Viraj Gandhi — Systems × Data</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-grid" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-halo" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Viraj Gandhi home">
+      <span class="brand-mark">VG</span>
+      <span>Viraj Gandhi</span>
+    </a>
+    <nav class="topnav" aria-label="Primary navigation">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#stack">Stack</a><a href="#resume">Resume</a><a href="#playground">Playground</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-github" href="https://github.com/VTXZenyx" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-orb hero-orb-a" aria-hidden="true"></div><div class="hero-orb hero-orb-b" aria-hidden="true"></div><div class="hero-orb hero-orb-c" aria-hidden="true"></div>
+      <div class="hero-meta"><span>INFORMATION SYSTEMS · DATA · DIGITAL INTELLIGENCE</span><span>WELLINGTON · 2026</span></div>
+      <div class="hero-title-wrap"><canvas id="dotCanvas" aria-hidden="true"></canvas><h1 class="sr-only">Viraj Gandhi</h1></div>
+      <div class="hero-bottom">
+        <div class="hero-copy">
+          <p>I work at the intersection of <strong>business, systems and data</strong> — turning messy information into clearer processes, useful analysis and practical decisions.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#work">View selected work <span>↓</span></a><a class="button button-ghost" href="resume.pdf" target="_blank" rel="noreferrer">Open resume PDF <span>↗</span></a></div>
+        </div>
+        <div class="status-card">
+          <div class="status-row"><span class="live-dot"></span><strong>AVAILABLE FOR OPPORTUNITIES</strong></div>
+          <div class="status-row"><span>LOCATION</span><strong>Wellington, NZ</strong></div>
+          <div class="status-row"><span>LOCAL TIME</span><strong id="clock">00:00</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="signal-strip" aria-label="Focus areas">
+      <span class="signal-label">FOCUS / 2026</span>
+      <div class="signal-track"><span>Systems thinking</span><span>SQL & databases</span><span>Python analysis</span><span>R & statistics</span><span>Business analysis</span><span>Clear communication</span></div>
+    </section>
+
+    <section class="section work-section" id="work">
+      <div class="section-head reveal">
+        <div class="section-id"><span class="section-no">01</span><span class="eyebrow">SELECTED WORK</span></div>
+        <div><h2>Projects that show how I <em>analyse, build and explain.</em></h2><p class="section-intro">These are based on real university and personal project work. The visual previews are styled placeholders until you drop in your own screenshots.</p></div>
+      </div>
+      <div class="project-grid">
+        <article class="project-card project-card--hero reveal">
+          <div class="project-topline"><span>APPLICATION DEVELOPMENT</span><span>01</span></div>
+          <div class="project-preview"><img src="assets/waid-preview.svg" alt="Styled preview for the WAID application project" /></div>
+          <div class="project-copy"><div class="project-title-row"><h3>WAID Business Rules Application</h3><span class="project-year">2026</span></div><p>Built a working application with HTML, CSS and Python/Brython, translating business rules into a usable interface.</p><div class="tags"><span>HTML</span><span>CSS</span><span>PYTHON</span><span>BRYTHON</span></div><div class="project-actions"><button class="text-button" data-open-project="waid">Project details →</button><a href="https://github.com/VTXZenyx?tab=repositories" target="_blank" rel="noreferrer">Repositories ↗</a></div></div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-topline"><span>DATA ANALYSIS</span><span>02</span></div>
+          <div class="project-preview"><img src="assets/netflix-preview.svg" alt="Styled preview for the Netflix data analysis project" /></div>
+          <div class="project-copy"><div class="project-title-row"><h3>Netflix Data Analysis</h3><span class="project-year">PYTHON</span></div><p>Analysed more than 8,000 titles using Python tools to explore patterns and communicate findings visually.</p><div class="tags"><span>PANDAS</span><span>NUMPY</span><span>MATPLOTLIB</span></div><div class="project-actions"><button class="text-button" data-open-project="netflix">Project details →</button><a href="https://github.com/VTXZenyx?tab=repositories" target="_blank" rel="noreferrer">Repositories ↗</a></div></div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-topline"><span>DATABASES</span><span>03</span></div>
+          <div class="project-preview"><img src="assets/sql-preview.svg" alt="Styled preview for the SQL and database project" /></div>
+          <div class="project-copy"><div class="project-title-row"><h3>SQL & Database Design</h3><span class="project-year">SQL</span></div><p>Worked with joins, aggregates, subqueries, normalisation and data integrity to query and organise structured data.</p><div class="tags"><span>SQL</span><span>JOINS</span><span>NORMALISATION</span></div><div class="project-actions"><button class="text-button" data-open-project="sql">Project details →</button><a href="https://github.com/VTXZenyx?tab=repositories" target="_blank" rel="noreferrer">Repositories ↗</a></div></div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-topline"><span>DATA202</span><span>04</span></div>
+          <div class="project-preview"><img src="assets/r-preview.svg" alt="Styled preview for R and RStudio coursework" /></div>
+          <div class="project-copy"><div class="project-title-row"><h3>R Data Analysis & Programming</h3><span class="project-year">R</span></div><p>Used R and RStudio for data structures, filtering, transformations, grouped analysis and interpretation.</p><div class="tags"><span>R</span><span>RSTUDIO</span><span>DATA</span></div><div class="project-actions"><button class="text-button" data-open-project="r">Project details →</button><a href="https://github.com/VTXZenyx?tab=repositories" target="_blank" rel="noreferrer">Repositories ↗</a></div></div>
+        </article>
+
+        <article class="project-card project-card--wide reveal">
+          <div class="project-topline"><span>SYSTEMS ANALYSIS</span><span>05</span></div>
+          <div class="project-preview"><img src="assets/systems-preview.svg" alt="Styled preview for a systems analysis project" /></div>
+          <div class="project-copy"><div class="project-title-row"><h3>Systems Thinking & Stakeholder Analysis</h3><span class="project-year">IS</span></div><p>Mapped stakeholders, system boundaries, feedback relationships and trade-offs to understand complex business and community problems.</p><div class="tags"><span>STAKEHOLDERS</span><span>SYSTEMS</span><span>PROBLEM FRAMING</span></div><div class="project-actions"><button class="text-button" data-open-project="systems">Project details →</button><a href="#resume">Resume evidence ↓</a></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="about-grid">
+        <div class="about-heading reveal"><span class="eyebrow">02 / ABOUT</span><h2>BUSINESS<br><span>×</span> SYSTEMS<br><span>×</span> DATA</h2></div>
+        <div class="about-copy reveal"><p class="lead">I am building toward roles where technology needs to work for both the business and the people using it.</p><p>I enjoy understanding a problem before jumping to a solution, working with data to support decisions, and explaining technical ideas in a way that is actually useful.</p><p>That makes areas such as business intelligence, reporting, systems analysis, digital operations, data support and junior analyst work especially interesting to me.</p><div class="about-facts"><div><span>BASE</span><strong>Wellington, NZ</strong></div><div><span>FOCUS</span><strong>Systems + Data</strong></div><div><span>APPROACH</span><strong>Evidence first</strong></div><div><span>INTEREST</span><strong>Useful technology</strong></div></div></div>
+      </div>
+    </section>
+
+    <section class="section stack-section" id="stack">
+      <div class="section-head reveal"><div class="section-id"><span class="section-no">03</span><span class="eyebrow">TECHNICAL STACK</span></div><div><h2>Tools I use to <em>work with information.</em></h2><p class="section-intro">The goal is not collecting technologies. It is knowing when each one is useful.</p></div></div>
+      <div class="stack-board"><div class="stack-row reveal"><span>01</span><strong>SQL</strong><p>Queries · Relational data · Joins · Aggregation · Data integrity</p><b>CORE</b></div><div class="stack-row reveal"><span>02</span><strong>Python</strong><p>Pandas · NumPy · Analysis · Data cleaning · Programming</p><b>CORE</b></div><div class="stack-row reveal"><span>03</span><strong>R / RStudio</strong><p>Data structures · Filtering · Functions · Grouped analysis</p><b>ACTIVE</b></div><div class="stack-row reveal"><span>04</span><strong>HTML + CSS</strong><p>Interfaces · Layout · Web prototypes · Front-end fundamentals</p><b>ACTIVE</b></div><div class="stack-row reveal"><span>05</span><strong>Information Systems</strong><p>Requirements · Stakeholders · Processes · People · Technology</p><b>CORE</b></div><div class="stack-row reveal"><span>06</span><strong>Communication</strong><p>Evidence summaries · Problem framing · Presentations · Teamwork</p><b>GROWING</b></div></div>
+    </section>
+
+    <section class="section resume-section" id="resume">
+      <div class="resume-copy reveal"><span class="eyebrow">04 / RESUME</span><h2>Everything important, in one place.</h2><p>The site shows the detail. The PDF gives recruiters the fast version.</p><div class="resume-actions"><a class="button button-primary" href="resume.pdf" target="_blank" rel="noreferrer">Open resume PDF ↗</a><a class="button button-ghost" href="resume.pdf" download>Download PDF ↓</a><a class="button button-ghost" href="https://github.com/VTXZenyx" target="_blank" rel="noreferrer">GitHub ↗</a><a class="button button-ghost" href="mailto:gandhiviraj2006@gmail.com">Email me ↗</a></div><div class="resume-note"><span>PDF PLACEHOLDER INCLUDED</span><p>Replace <code>resume.pdf</code> with your final CV later and every resume button on the site will automatically point to it.</p></div></div>
+      <div class="resume-viewer reveal"><div class="viewer-bar"><div><span class="viewer-dot"></span><span class="viewer-dot"></span><span class="viewer-dot"></span></div><span>resume.pdf</span><a href="resume.pdf" target="_blank" rel="noreferrer">OPEN ↗</a></div><object data="resume.pdf#view=FitH" type="application/pdf" aria-label="Resume PDF preview"><div class="pdf-fallback"><p>Your browser cannot preview the PDF here.</p><a href="resume.pdf" target="_blank" rel="noreferrer">Open resume PDF</a></div></object></div>
+    </section>
+
+    <section class="section playground-section" id="playground">
+      <div class="section-head reveal"><div class="section-id"><span class="section-no">05</span><span class="eyebrow">PLAYGROUND</span></div><div><h2>A little personality, <em>without leaving the portfolio.</em></h2><p class="section-intro">The games now live inside the same 2026 site — no second retro mode, no separate experience.</p></div></div>
+      <div class="game-shell reveal">
+        <div class="game-tabs" role="tablist" aria-label="Games"><button class="game-tab active" data-game="reaction" role="tab" aria-selected="true">Reaction Game</button><button class="game-tab" data-game="snake" role="tab" aria-selected="false">Snake</button><button class="game-tab" data-game="sql" role="tab" aria-selected="false">SQL Quiz</button></div>
+        <div class="game-panel active" id="game-reaction"><div class="game-panel-head"><div><span>REACTION / 01</span><h3>How fast are you?</h3></div><div class="score-chip">BEST <strong id="reactionBest">--- ms</strong></div></div><button class="reaction-box" id="reactionBox" type="button"><strong id="reactionText">PRESS START</strong><small id="reactionSub">Wait for the signal, then click.</small></button><div class="game-footer"><button class="button button-primary compact" id="reactionStart" type="button">Start round</button><span>Best time is saved on this device.</span></div></div>
+        <div class="game-panel" id="game-snake"><div class="game-panel-head"><div><span>SNAKE / 02</span><h3>Classic, but blue.</h3></div><div class="score-chip">SCORE <strong id="snakeScore">0</strong> · BEST <strong id="snakeBest">0</strong></div></div><div class="snake-wrap"><canvas id="snakeCanvas" width="600" height="360" aria-label="Snake game canvas"></canvas></div><div class="snake-controls" aria-label="Snake controls"><button type="button" data-dir="up">↑</button><div><button type="button" data-dir="left">←</button><button type="button" data-dir="down">↓</button><button type="button" data-dir="right">→</button></div></div><div class="game-footer"><button class="button button-primary compact" id="snakeStart" type="button">Start / reset</button><span>Use arrow keys or the controls above.</span></div></div>
+        <div class="game-panel" id="game-sql"><div class="game-panel-head"><div><span>SQL QUIZ / 03</span><h3>Five quick database questions.</h3></div><div class="score-chip">SCORE <strong id="sqlScore">0</strong>/5 · BEST <strong id="sqlBest">0</strong>/5</div></div><div class="sql-card"><div class="sql-progress">QUESTION <span id="sqlNo">1</span>/5</div><p id="sqlQuestion">Which keyword is used to retrieve rows from a table?</p><div id="sqlAnswers" class="sql-answers"></div><p id="sqlFeedback" class="sql-feedback"></p></div><div class="game-footer"><button class="button button-primary compact" id="sqlNext" type="button" disabled>Next question</button><span>Short, simple and recruiter-friendly.</span></div></div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact"><div class="contact-kicker reveal"><span>06 / CONTACT</span><span>WELLINGTON · NEW ZEALAND</span></div><div class="contact-main reveal"><div><p>OPEN TO INTERNSHIPS, PART-TIME WORK & JUNIOR OPPORTUNITIES</p><h2>Have a role where systems, data and people overlap?</h2></div><a class="contact-link" href="mailto:gandhiviraj2006@gmail.com">LET'S TALK <span>↗</span></a></div><div class="contact-footer reveal"><a href="mailto:gandhiviraj2006@gmail.com">gandhiviraj2006@gmail.com</a><a href="https://github.com/VTXZenyx" target="_blank" rel="noreferrer">github.com/VTXZenyx ↗</a><a href="resume.pdf" target="_blank" rel="noreferrer">Resume PDF ↗</a></div></section>
+  </main>
+
+  <footer class="site-footer"><span>© <span id="year"></span> Viraj Gandhi</span><span>Designed for systems × data × people.</span><a href="#home">Back to top ↑</a></footer>
+
+  <div class="project-modal" id="projectModal" aria-hidden="true"><div class="project-modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="project-modal-close" type="button" aria-label="Close project details">×</button><span id="modalKicker" class="modal-kicker">PROJECT</span><h3 id="modalTitle">Project title</h3><p id="modalDesc">Project description.</p><div id="modalEvidence" class="modal-evidence"></div><div id="modalTags" class="tags"></div><div class="modal-actions"><a id="modalGithub" class="button button-primary compact" href="https://github.com/VTXZenyx?tab=repositories" target="_blank" rel="noreferrer">View GitHub repositories ↗</a><button class="button button-ghost compact" type="button" id="modalCloseSecondary">Close</button></div><p class="modal-note">Tip: once you publish each project in its own GitHub repository, replace the profile repository link with the exact repository URL.</p></div></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
