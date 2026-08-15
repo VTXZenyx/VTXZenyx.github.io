@@ -1,113 +1,2041 @@
 (() => {
   "use strict";
 
-  const projects = {
-    waid: {
-      kicker: "APPLICATION DEVELOPMENT / WAID",
-      title: "WAID Business Rules Application",
-      desc: "Built a working application using HTML, CSS and Python/Brython. The project converted business rules into a usable system rather than leaving them as written requirements.",
-      evidence: [["ROLE","Application development"],["TOOLS","HTML, CSS, Python/Brython"],["FOCUS","Business rules → working interface"]],
-      tags: ["HTML","CSS","PYTHON","BRYTHON"]
-    },
-    netflix: {
-      kicker: "DATA ANALYSIS / PYTHON",
-      title: "Netflix Data Analysis",
-      desc: "Used Python to analyse a dataset containing more than 8,000 titles. The work involved organising data, exploring patterns and creating visual outputs that made the findings easier to understand.",
-      evidence: [["DATA","8,000+ titles"],["TOOLS","Pandas, NumPy, Matplotlib"],["FOCUS","Cleaning, exploration, visual explanation"]],
-      tags: ["PYTHON","PANDAS","NUMPY","MATPLOTLIB"]
-    },
-    sql: {
-      kicker: "DATABASES / SQL",
-      title: "SQL & Database Design",
-      desc: "Worked with structured data using SQL queries and database concepts. The project evidence includes joins, aggregates, subqueries, normalisation and data integrity.",
-      evidence: [["QUERYING","Joins, aggregates, subqueries"],["DESIGN","Normalisation"],["QUALITY","Data integrity"]],
-      tags: ["SQL","DATABASES","JOINS","NORMALISATION"]
-    },
-    r: {
-      kicker: "DATA202 / R",
-      title: "R Data Analysis & Programming",
-      desc: "Used R and RStudio to work with data structures, filtering, transformations, functions and grouped analysis. This section can grow as more DATA202 work is completed.",
-      evidence: [["TOOLS","R, RStudio"],["SKILLS","Filtering, functions, grouped analysis"],["STATUS","Developing further capability"]],
-      tags: ["R","RSTUDIO","DATA","ANALYSIS"]
-    },
-    systems: {
-      kicker: "INFORMATION SYSTEMS / SYSTEMS THINKING",
-      title: "Systems Thinking & Stakeholder Analysis",
-      desc: "Applied stakeholder analysis, system boundaries, feedback relationships and problem framing to understand complex problems before recommending solutions.",
-      evidence: [["METHODS","Stakeholders, boundaries, feedback"],["FOCUS","People, technology, data and processes"],["APPROACH","Evidence before assumptions"]],
-      tags: ["INFORMATION SYSTEMS","STAKEHOLDERS","SYSTEMS","PROBLEM FRAMING"]
+  // ---------------------------------------------------------------------------
+  // Helpers
+  // ---------------------------------------------------------------------------
+
+  const $ = (selector, parent = document) => parent.querySelector(selector);
+  const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+
+  const getStoredNumber = (key) => {
+    try {
+      return Number(localStorage.getItem(key)) || 0;
+    } catch {
+      return 0;
     }
   };
 
-  const qs = (s, p=document) => p.querySelector(s);
-  const qsa = (s, p=document) => [...p.querySelectorAll(s)];
-
-  const clock = qs("#clock");
-  qs("#year").textContent = new Date().getFullYear();
-  const tick = () => {
-    const d = new Date();
-    clock.textContent = `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+  const setStoredNumber = (key, value) => {
+    try {
+      localStorage.setItem(key, String(value));
+    } catch {
+      // The site still works if browser storage is unavailable.
+    }
   };
-  tick(); setInterval(tick,1000);
 
-  const halo = qs(".cursor-halo");
-  if (halo && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    let tx=innerWidth/2,ty=innerHeight/2,cx=tx,cy=ty;
-    addEventListener("mousemove",e=>{tx=e.clientX;ty=e.clientY;});
-    const loop=()=>{cx+=(tx-cx)*.07;cy+=(ty-cy)*.07;halo.style.left=`${cx}px`;halo.style.top=`${cy}px`;requestAnimationFrame(loop);};
-    loop();
-  }
 
-  const canvas = qs("#dotCanvas");
-  if (canvas) {
-    const ctx=canvas.getContext("2d");
-    let dots=[],mouse={x:-9999,y:-9999},visible=true;
-    canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
-    canvas.addEventListener("mouseleave",()=>{mouse={x:-9999,y:-9999};});
-    const build=()=>{
-      const r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2),w=Math.max(1,Math.floor(r.width)),h=Math.max(1,Math.floor(r.height));
-      canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-      const off=document.createElement("canvas");off.width=w;off.height=h;const o=off.getContext("2d");
-      const fs=Math.min(w*.215,h*.36);o.fillStyle="#fff";o.textAlign="center";o.textBaseline="middle";o.font=`800 ${fs}px Arial,sans-serif`;o.fillText("VIRAJ",w/2,h*.39);o.fillText("GANDHI",w/2,h*.69);
-      const data=o.getImageData(0,0,w,h).data,gap=w<700?7:8;dots=[];
-      for(let y=gap;y<h;y+=gap)for(let x=gap;x<w;x+=gap){if(data[(Math.floor(y)*w+Math.floor(x))*4+3]>100)dots.push({bx:x,by:y,p:Math.random()*Math.PI*2});}
+  // ---------------------------------------------------------------------------
+  // Project data
+  // ---------------------------------------------------------------------------
+
+  const PROJECTS = {
+    waid: {
+      kicker: "APPLICATION DEVELOPMENT / WAID",
+      title: "WAID Business Rules Application",
+      desc:
+        "Built a working web application using HTML, CSS and Python/Brython, turning business rules into an interactive interface.",
+      evidence: [
+        ["ROLE", "Application development"],
+        ["TOOLS", "HTML, CSS, Python/Brython"],
+        ["FOCUS", "Business rules → working interface"]
+      ],
+      tags: ["HTML", "CSS", "PYTHON", "BRYTHON"]
+    },
+
+    netflix: {
+      kicker: "DATA ANALYSIS / PYTHON",
+      title: "Netflix Data Analysis",
+      desc:
+        "Used Python to explore a dataset of more than 8,000 Netflix titles, find patterns in the data and communicate the results visually.",
+      evidence: [
+        ["DATA", "8,000+ titles"],
+        ["TOOLS", "Pandas, NumPy, Matplotlib"],
+        ["FOCUS", "Cleaning, exploration, visual explanation"]
+      ],
+      tags: ["PYTHON", "PANDAS", "NUMPY", "MATPLOTLIB"]
+    },
+
+    sql: {
+      kicker: "DATABASES / SQL",
+      title: "SQL & Database Design",
+      desc:
+        "Worked with relational databases, DDL, joins, aggregates, subqueries, normalisation and data integrity while learning how structured data is designed and queried.",
+      evidence: [
+        ["QUERYING", "Joins, aggregates, subqueries"],
+        ["DESIGN", "DDL and normalisation"],
+        ["QUALITY", "Data integrity"]
+      ],
+      tags: ["SQL", "DDL", "DATABASES", "JOINS"]
+    },
+
+    r: {
+      kicker: "DATA & PROGRAMMING / R",
+      title: "R Data Analysis & Programming",
+      desc:
+        "Used R and RStudio to work with data structures, filtering, functions, transformations and grouped analysis while building my programming and data skills.",
+      evidence: [
+        ["TOOLS", "R, RStudio"],
+        ["SKILLS", "Filtering, functions, grouped analysis"],
+        ["STATUS", "Continuing to build experience"]
+      ],
+      tags: ["R", "RSTUDIO", "DATA", "PROGRAMMING"]
+    },
+
+    systems: {
+      kicker: "INFORMATION SYSTEMS / SYSTEMS THINKING",
+      title: "Systems Thinking & Stakeholder Analysis",
+      desc:
+        "Used systems thinking, stakeholder analysis and problem framing to understand how people, organisations and technology interact before jumping straight to a solution.",
+      evidence: [
+        ["METHODS", "Stakeholders, boundaries, feedback"],
+        ["FOCUS", "People, technology, data and processes"],
+        ["APPROACH", "Understand the problem first"]
+      ],
+      tags: [
+        "INFORMATION SYSTEMS",
+        "STAKEHOLDERS",
+        "SYSTEMS",
+        "PROBLEM FRAMING"
+      ]
+    }
+  };
+
+
+  // ---------------------------------------------------------------------------
+  // Clock + footer year
+  // ---------------------------------------------------------------------------
+
+  function initClock() {
+    const clock = $("#clock");
+    const year = $("#year");
+
+    if (year) {
+      year.textContent = new Date().getFullYear();
+    }
+
+    if (!clock) return;
+
+    const updateClock = () => {
+      const now = new Date();
+
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+
+      clock.textContent = `${hours}:${minutes}`;
     };
-    let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(build,120);});build();
-    const hero=qs(".hero"); if(hero && "IntersectionObserver" in window){new IntersectionObserver(e=>{visible=e[0]?.isIntersecting??true;}).observe(hero);}
-    const draw=t=>{if(visible){const r=canvas.getBoundingClientRect();ctx.clearRect(0,0,r.width,r.height);for(const d of dots){const dx=d.bx-mouse.x,dy=d.by-mouse.y,dist=Math.sqrt(dx*dx+dy*dy),inf=Math.max(0,1-dist/135),rep=inf*16,ang=Math.atan2(dy,dx),x=d.bx+Math.cos(ang)*rep+Math.sin(t*.00075+d.p)*.65,y=d.by+Math.sin(ang)*rep+Math.cos(t*.00082+d.p)*.65,m=d.bx/Math.max(r.width,1),a=.68+inf*.25;ctx.fillStyle=m<.48?`rgba(77,141,255,${a})`:`rgba(104,220,255,${a-.04})`;ctx.beginPath();ctx.arc(x,y,1.15+inf*1.25,0,Math.PI*2);ctx.fill();}}requestAnimationFrame(draw);};
-    requestAnimationFrame(draw);
+
+    updateClock();
+
+    setInterval(updateClock, 1000);
   }
 
-  if ("IntersectionObserver" in window) {
-    const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");ro.unobserve(e.target);}}),{threshold:.1});qsa(".reveal").forEach(el=>ro.observe(el));
-  } else qsa(".reveal").forEach(el=>el.classList.add("visible"));
 
-  const modal=qs("#projectModal"),mk=qs("#modalKicker"),mt=qs("#modalTitle"),md=qs("#modalDesc"),me=qs("#modalEvidence"),mta=qs("#modalTags");
-  const openProject=key=>{const p=projects[key];if(!p)return;mk.textContent=p.kicker;mt.textContent=p.title;md.textContent=p.desc;me.innerHTML=p.evidence.map(([a,b])=>`<div><span>${a}</span><strong>${b}</strong></div>`).join("");mta.innerHTML=p.tags.map(t=>`<span>${t}</span>`).join("");modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";};
-  const closeProject=()=>{modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";};
-  qsa("[data-open-project]").forEach(b=>b.addEventListener("click",()=>openProject(b.dataset.openProject)));qs(".project-modal-close").addEventListener("click",closeProject);qs("#modalCloseSecondary").addEventListener("click",closeProject);modal.addEventListener("click",e=>{if(e.target===modal)closeProject();});
+  // ---------------------------------------------------------------------------
+  // Cursor halo
+  // ---------------------------------------------------------------------------
 
-  qsa(".game-tab").forEach(tab=>tab.addEventListener("click",()=>{qsa(".game-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false")});qsa(".game-panel").forEach(p=>p.classList.remove("active"));tab.classList.add("active");tab.setAttribute("aria-selected","true");qs(`#game-${tab.dataset.game}`).classList.add("active");}));
+  function initCursorHalo() {
+    const halo = $(".cursor-halo");
 
-  const rb=qs("#reactionBox"),rtxt=qs("#reactionText"),rsub=qs("#reactionSub"),rstart=qs("#reactionStart"),rbest=qs("#reactionBest");
-  let rstate="idle",rtimer=null,rtime=0,bestR=Number(localStorage.getItem("vg2026_reaction_best"))||0;if(bestR)rbest.textContent=`${bestR} ms`;
-  rstart.addEventListener("click",()=>{clearTimeout(rtimer);rstate="waiting";rb.className="reaction-box waiting";rtxt.textContent="WAIT...";rsub.textContent="Do not click yet.";rtimer=setTimeout(()=>{rstate="ready";rb.className="reaction-box go";rtxt.textContent="CLICK!";rsub.textContent="NOW";rtime=performance.now();},1400+Math.random()*2600);});
-  rb.addEventListener("click",()=>{if(rstate==="waiting"){clearTimeout(rtimer);rstate="idle";rb.className="reaction-box early";rtxt.textContent="TOO EARLY";rsub.textContent="Try another round.";}else if(rstate==="ready"){const ms=Math.round(performance.now()-rtime);rstate="idle";rb.className="reaction-box";rtxt.textContent=`${ms} ms`;rsub.textContent=ms<200?"Very quick.":ms<250?"Fast.":ms<320?"Nice.":"You can beat that.";if(!bestR||ms<bestR){bestR=ms;localStorage.setItem("vg2026_reaction_best",String(ms));rbest.textContent=`${ms} ms`;}}});
+    const reducedMotion = matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-  const sc=qs("#snakeCanvas"),ss=qs("#snakeScore"),sb=qs("#snakeBest"),sst=qs("#snakeStart");
-  if(sc){const c=sc.getContext("2d"),CELL=15,COLS=sc.width/CELL,ROWS=sc.height/CELL;let snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}],dir={x:1,y:0},next={...dir},food={x:20,y:12},timer=null,score=0,running=false,best=Number(localStorage.getItem("vg2026_snake_best"))||0;sb.textContent=best;
-    const randomFood=()=>{let f;do{f={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)}}while(snake.some(s=>s.x===f.x&&s.y===f.y));return f;};
-    const draw=(over=false)=>{const w=sc.width,h=sc.height;c.fillStyle="#050d19";c.fillRect(0,0,w,h);c.strokeStyle="rgba(77,141,255,.055)";for(let x=0;x<w;x+=CELL){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke()}for(let y=0;y<h;y+=CELL){c.beginPath();c.moveTo(0,y);c.lineTo(w,y);c.stroke()}snake.forEach((s,i)=>{c.fillStyle=i===0?"#9bd0ff":"#4d8dff";c.fillRect(s.x*CELL+1,s.y*CELL+1,CELL-2,CELL-2)});c.fillStyle="#68dcff";c.fillRect(food.x*CELL+2,food.y*CELL+2,CELL-4,CELL-4);if(over){c.fillStyle="rgba(3,8,16,.78)";c.fillRect(0,0,w,h);c.fillStyle="#eef5ff";c.font="700 30px monospace";c.textAlign="center";c.fillText("GAME OVER",w/2,h/2-5);c.fillStyle="#87a3c8";c.font="500 14px monospace";c.fillText("Press START / RESET to try again",w/2,h/2+28)}};
-    const stop=()=>{clearInterval(timer);running=false;if(score>best){best=score;localStorage.setItem("vg2026_snake_best",String(best));sb.textContent=best}draw(true)};
-    const tickSnake=()=>{dir=next;const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(head.x<0||head.y<0||head.x>=COLS||head.y>=ROWS||snake.some(s=>s.x===head.x&&s.y===head.y)){stop();return}snake.unshift(head);if(head.x===food.x&&head.y===food.y){score++;ss.textContent=score;food=randomFood()}else snake.pop();draw()};
-    const reset=()=>{snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];dir={x:1,y:0};next={...dir};food=randomFood();score=0;ss.textContent="0";running=true;clearInterval(timer);timer=setInterval(tickSnake,95);draw()};
-    const change=d=>{if(!running||!d)return;if(d.x+dir.x===0&&d.y+dir.y===0)return;next=d};sst.addEventListener("click",reset);document.addEventListener("keydown",e=>{const m={ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0}};if(!m[e.key]||!running)return;e.preventDefault();change(m[e.key])});qsa("[data-dir]").forEach(b=>b.addEventListener("click",()=>change({up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[b.dataset.dir])));draw();}
+    if (!halo || reducedMotion) return;
 
-  const questions=[{q:"Which keyword is used to retrieve rows from a table?",a:["SELECT","DELETE","DROP","ALTER"],c:0},{q:"Which clause filters rows before they are returned?",a:["GROUP BY","WHERE","ORDER BY","HAVING"],c:1},{q:"Which command adds a new row to a table?",a:["UPDATE","CREATE","INSERT","JOIN"],c:2},{q:"Which JOIN keeps every row from the left table?",a:["INNER JOIN","LEFT JOIN","CROSS JOIN","SELF JOIN"],c:1},{q:"Which function counts rows?",a:["SUM()","AVG()","COUNT()","MAX()"],c:2}];
-  const qno=qs("#sqlNo"),qq=qs("#sqlQuestion"),qa=qs("#sqlAnswers"),qf=qs("#sqlFeedback"),qn=qs("#sqlNext"),qscore=qs("#sqlScore"),qbest=qs("#sqlBest");let qi=0,score=0,answered=false,finished=false,bestQ=Number(localStorage.getItem("vg2026_sql_best"))||0;qbest.textContent=bestQ;
-  const renderQ=()=>{const item=questions[qi];qno.textContent=qi+1;qq.textContent=item.q;qa.innerHTML="";qf.textContent="";qn.disabled=true;qn.textContent="Next question";answered=false;finished=false;item.a.forEach((ans,i)=>{const b=document.createElement("button");b.type="button";b.textContent=ans;b.addEventListener("click",()=>{if(answered)return;answered=true;[...qa.children].forEach((x,j)=>{if(j===item.c)x.classList.add("correct")});if(i===item.c){score++;qscore.textContent=score;qf.textContent="Correct."}else{b.classList.add("wrong");qf.textContent=`Not quite. Correct answer: ${item.a[item.c]}.`}qn.disabled=false});qa.appendChild(b)});};
-  const finishQ=()=>{finished=true;qq.textContent=`Finished — ${score}/5`;qa.innerHTML="";qf.textContent=score===5?"Perfect run.":"Restart and try for 5/5.";qn.textContent="Restart quiz";qn.disabled=false;if(score>bestQ){bestQ=score;localStorage.setItem("vg2026_sql_best",String(bestQ));qbest.textContent=bestQ}};
-  qn.addEventListener("click",()=>{if(finished){qi=0;score=0;qscore.textContent="0";renderQ();return}if(!answered)return;if(qi<questions.length-1){qi++;renderQ()}else finishQ()});renderQ();
+    let targetX = innerWidth / 2;
+    let targetY = innerHeight / 2;
 
-  addEventListener("keydown",e=>{if(e.key==="Escape")closeProject();});
+    let currentX = targetX;
+    let currentY = targetY;
+
+    addEventListener("mousemove", (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+    });
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.07;
+      currentY += (targetY - currentY) * 0.07;
+
+      halo.style.left = `${currentX}px`;
+      halo.style.top = `${currentY}px`;
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Dot-matrix VIRAJ GANDHI hero
+  // ---------------------------------------------------------------------------
+
+  function initDotHero() {
+    const canvas = $("#dotCanvas");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) return;
+
+    let dots = [];
+    let isVisible = true;
+    let resizeTimer;
+
+    const mouse = {
+      x: -9999,
+      y: -9999
+    };
+
+
+    canvas.addEventListener("mousemove", (event) => {
+      const rect = canvas.getBoundingClientRect();
+
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    });
+
+
+    canvas.addEventListener("mouseleave", () => {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
+
+
+    const buildDots = () => {
+      const rect = canvas.getBoundingClientRect();
+
+      const width = Math.max(1, Math.floor(rect.width));
+      const height = Math.max(1, Math.floor(rect.height));
+
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+
+      const offscreen = document.createElement("canvas");
+
+      offscreen.width = width;
+      offscreen.height = height;
+
+      const offCtx = offscreen.getContext("2d");
+
+      if (!offCtx) return;
+
+
+      const fontSize = Math.min(
+        width * 0.215,
+        height * 0.36
+      );
+
+
+      offCtx.fillStyle = "#fff";
+
+      offCtx.textAlign = "center";
+      offCtx.textBaseline = "middle";
+
+      offCtx.font = `800 ${fontSize}px Arial, sans-serif`;
+
+      offCtx.fillText(
+        "VIRAJ",
+        width / 2,
+        height * 0.39
+      );
+
+      offCtx.fillText(
+        "GANDHI",
+        width / 2,
+        height * 0.69
+      );
+
+
+      const imageData = offCtx.getImageData(
+        0,
+        0,
+        width,
+        height
+      ).data;
+
+
+      const gap = width < 700 ? 7 : 8;
+
+      dots = [];
+
+
+      for (let y = gap; y < height; y += gap) {
+
+        for (let x = gap; x < width; x += gap) {
+
+          const alphaIndex =
+            (Math.floor(y) * width + Math.floor(x)) * 4 + 3;
+
+
+          if (imageData[alphaIndex] > 100) {
+
+            dots.push({
+              baseX: x,
+              baseY: y,
+              phase: Math.random() * Math.PI * 2
+            });
+
+          }
+
+        }
+
+      }
+
+    };
+
+
+    const drawDots = (time) => {
+
+      if (isVisible) {
+
+        const rect = canvas.getBoundingClientRect();
+
+        const width = rect.width;
+        const height = rect.height;
+
+
+        ctx.clearRect(
+          0,
+          0,
+          width,
+          height
+        );
+
+
+        for (const dot of dots) {
+
+          const dx = dot.baseX - mouse.x;
+          const dy = dot.baseY - mouse.y;
+
+          const distance = Math.hypot(dx, dy);
+
+          const influence =
+            Math.max(
+              0,
+              1 - distance / 135
+            );
+
+
+          const repel = influence * 16;
+
+          const angle =
+            Math.atan2(dy, dx);
+
+
+          const x =
+            dot.baseX +
+            Math.cos(angle) * repel +
+            Math.sin(
+              time * 0.00075 + dot.phase
+            ) * 0.65;
+
+
+          const y =
+            dot.baseY +
+            Math.sin(angle) * repel +
+            Math.cos(
+              time * 0.00082 + dot.phase
+            ) * 0.65;
+
+
+          const horizontalMix =
+            dot.baseX /
+            Math.max(width, 1);
+
+
+          const alpha =
+            0.68 +
+            influence * 0.25;
+
+
+          ctx.fillStyle =
+            horizontalMix < 0.48
+
+              ? `rgba(77, 141, 255, ${alpha})`
+
+              : `rgba(104, 220, 255, ${alpha - 0.04})`;
+
+
+          ctx.beginPath();
+
+          ctx.arc(
+            x,
+            y,
+            1.15 + influence * 1.25,
+            0,
+            Math.PI * 2
+          );
+
+          ctx.fill();
+
+        }
+
+      }
+
+
+      requestAnimationFrame(drawDots);
+    };
+
+
+    addEventListener("resize", () => {
+
+      clearTimeout(resizeTimer);
+
+      resizeTimer =
+        setTimeout(
+          buildDots,
+          120
+        );
+
+    });
+
+
+    const hero = $(".hero");
+
+
+    if (
+      hero &&
+      "IntersectionObserver" in window
+    ) {
+
+      const observer =
+        new IntersectionObserver(
+          ([entry]) => {
+
+            isVisible =
+              entry?.isIntersecting ??
+              true;
+
+          }
+        );
+
+
+      observer.observe(hero);
+
+    }
+
+
+    buildDots();
+
+    requestAnimationFrame(drawDots);
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Scroll reveal animations
+  // ---------------------------------------------------------------------------
+
+  function initRevealAnimations() {
+    const revealItems = $$(".reveal");
+
+
+    if (!("IntersectionObserver" in window)) {
+
+      revealItems.forEach((item) =>
+        item.classList.add("visible")
+      );
+
+      return;
+
+    }
+
+
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach((entry) => {
+
+            if (!entry.isIntersecting) return;
+
+
+            entry.target.classList.add(
+              "visible"
+            );
+
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.1
+        }
+      );
+
+
+    revealItems.forEach((item) =>
+      observer.observe(item)
+    );
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Project modal
+  // ---------------------------------------------------------------------------
+
+  function initProjectModal() {
+    const modal =
+      $("#projectModal");
+
+    if (!modal) return;
+
+
+    const kicker =
+      $("#modalKicker");
+
+    const title =
+      $("#modalTitle");
+
+    const description =
+      $("#modalDesc");
+
+    const evidence =
+      $("#modalEvidence");
+
+    const tags =
+      $("#modalTags");
+
+    const primaryClose =
+      $(".project-modal-close");
+
+    const secondaryClose =
+      $("#modalCloseSecondary");
+
+
+    let lastTrigger = null;
+
+
+    const openProject = (
+      projectKey,
+      trigger
+    ) => {
+
+      const project =
+        PROJECTS[projectKey];
+
+      if (!project) return;
+
+
+      lastTrigger =
+        trigger || null;
+
+
+      if (kicker) {
+        kicker.textContent =
+          project.kicker;
+      }
+
+
+      if (title) {
+        title.textContent =
+          project.title;
+      }
+
+
+      if (description) {
+        description.textContent =
+          project.desc;
+      }
+
+
+      if (evidence) {
+
+        evidence.innerHTML =
+          project.evidence
+            .map(
+              ([label, value]) => `
+                <div>
+                  <span>${label}</span>
+                  <strong>${value}</strong>
+                </div>
+              `
+            )
+            .join("");
+
+      }
+
+
+      if (tags) {
+
+        tags.innerHTML =
+          project.tags
+            .map(
+              (tag) =>
+                `<span>${tag}</span>`
+            )
+            .join("");
+
+      }
+
+
+      modal.classList.add(
+        "open"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      document.body.style.overflow =
+        "hidden";
+
+
+      primaryClose?.focus();
+
+    };
+
+
+    const closeProject = () => {
+
+      if (
+        !modal.classList.contains(
+          "open"
+        )
+      ) {
+        return;
+      }
+
+
+      modal.classList.remove(
+        "open"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      document.body.style.overflow =
+        "";
+
+
+      lastTrigger?.focus();
+
+    };
+
+
+    $$("[data-open-project]")
+      .forEach((button) => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openProject(
+              button.dataset.openProject,
+              button
+            );
+
+          }
+        );
+
+      });
+
+
+    primaryClose?.addEventListener(
+      "click",
+      closeProject
+    );
+
+
+    secondaryClose?.addEventListener(
+      "click",
+      closeProject
+    );
+
+
+    modal.addEventListener(
+      "click",
+      (event) => {
+
+        if (event.target === modal) {
+          closeProject();
+        }
+
+      }
+    );
+
+
+    addEventListener(
+      "keydown",
+      (event) => {
+
+        if (event.key === "Escape") {
+          closeProject();
+        }
+
+      }
+    );
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Game tabs
+  // ---------------------------------------------------------------------------
+
+  function initGameTabs() {
+    const tabs =
+      $$(".game-tab");
+
+    const panels =
+      $$(".game-panel");
+
+
+    tabs.forEach((tab) => {
+
+      tab.addEventListener(
+        "click",
+        () => {
+
+          tabs.forEach((item) => {
+
+            item.classList.remove(
+              "active"
+            );
+
+            item.setAttribute(
+              "aria-selected",
+              "false"
+            );
+
+          });
+
+
+          panels.forEach((panel) =>
+            panel.classList.remove(
+              "active"
+            )
+          );
+
+
+          tab.classList.add(
+            "active"
+          );
+
+
+          tab.setAttribute(
+            "aria-selected",
+            "true"
+          );
+
+
+          const panel =
+            $(
+              `#game-${tab.dataset.game}`
+            );
+
+
+          panel?.classList.add(
+            "active"
+          );
+
+        }
+      );
+
+    });
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Reaction game
+  // ---------------------------------------------------------------------------
+
+  function initReactionGame() {
+    const box =
+      $("#reactionBox");
+
+    const text =
+      $("#reactionText");
+
+    const subtext =
+      $("#reactionSub");
+
+    const startButton =
+      $("#reactionStart");
+
+    const bestDisplay =
+      $("#reactionBest");
+
+
+    if (
+      !box ||
+      !text ||
+      !subtext ||
+      !startButton ||
+      !bestDisplay
+    ) {
+      return;
+    }
+
+
+    const BEST_KEY =
+      "vg2026_reaction_best";
+
+
+    let state =
+      "idle";
+
+    let timerId =
+      null;
+
+    let startTime =
+      0;
+
+    let bestTime =
+      getStoredNumber(
+        BEST_KEY
+      );
+
+
+    if (bestTime) {
+      bestDisplay.textContent =
+        `${bestTime} ms`;
+    }
+
+
+    const setBoxState = (
+      className,
+      heading,
+      message
+    ) => {
+
+      box.className =
+        className;
+
+      text.textContent =
+        heading;
+
+      subtext.textContent =
+        message;
+
+    };
+
+
+    startButton.addEventListener(
+      "click",
+      () => {
+
+        clearTimeout(
+          timerId
+        );
+
+
+        state =
+          "waiting";
+
+
+        setBoxState(
+          "reaction-box waiting",
+          "WAIT...",
+          "Do not click yet."
+        );
+
+
+        const delay =
+          1400 +
+          Math.random() * 2600;
+
+
+        timerId =
+          setTimeout(
+            () => {
+
+              state =
+                "ready";
+
+
+              startTime =
+                performance.now();
+
+
+              setBoxState(
+                "reaction-box go",
+                "CLICK!",
+                "NOW"
+              );
+
+            },
+            delay
+          );
+
+      }
+    );
+
+
+    box.addEventListener(
+      "click",
+      () => {
+
+        if (state === "waiting") {
+
+          clearTimeout(
+            timerId
+          );
+
+
+          state =
+            "idle";
+
+
+          setBoxState(
+            "reaction-box early",
+            "TOO EARLY",
+            "Try another round."
+          );
+
+
+          return;
+
+        }
+
+
+        if (state !== "ready") {
+          return;
+        }
+
+
+        const reactionTime =
+          Math.round(
+            performance.now() -
+            startTime
+          );
+
+
+        state =
+          "idle";
+
+
+        let message =
+          "You can beat that.";
+
+
+        if (reactionTime < 200) {
+
+          message =
+            "Very quick.";
+
+        } else if (
+          reactionTime < 250
+        ) {
+
+          message =
+            "Fast.";
+
+        } else if (
+          reactionTime < 320
+        ) {
+
+          message =
+            "Nice.";
+
+        }
+
+
+        setBoxState(
+          "reaction-box",
+          `${reactionTime} ms`,
+          message
+        );
+
+
+        if (
+          !bestTime ||
+          reactionTime < bestTime
+        ) {
+
+          bestTime =
+            reactionTime;
+
+
+          bestDisplay.textContent =
+            `${bestTime} ms`;
+
+
+          setStoredNumber(
+            BEST_KEY,
+            bestTime
+          );
+
+        }
+
+      }
+    );
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Snake
+  // ---------------------------------------------------------------------------
+
+  function initSnakeGame() {
+    const canvas =
+      $("#snakeCanvas");
+
+    const scoreDisplay =
+      $("#snakeScore");
+
+    const bestDisplay =
+      $("#snakeBest");
+
+    const startButton =
+      $("#snakeStart");
+
+
+    if (
+      !canvas ||
+      !scoreDisplay ||
+      !bestDisplay ||
+      !startButton
+    ) {
+      return;
+    }
+
+
+    const ctx =
+      canvas.getContext("2d");
+
+    if (!ctx) return;
+
+
+    const BEST_KEY =
+      "vg2026_snake_best";
+
+
+    const CELL =
+      15;
+
+    const COLS =
+      canvas.width / CELL;
+
+    const ROWS =
+      canvas.height / CELL;
+
+    const SPEED =
+      95;
+
+
+    const DIRECTIONS = {
+
+      up: {
+        x: 0,
+        y: -1
+      },
+
+      down: {
+        x: 0,
+        y: 1
+      },
+
+      left: {
+        x: -1,
+        y: 0
+      },
+
+      right: {
+        x: 1,
+        y: 0
+      }
+
+    };
+
+
+    let snake = [];
+
+    let direction = {
+      ...DIRECTIONS.right
+    };
+
+    let nextDirection = {
+      ...direction
+    };
+
+    let food = {
+      x: 20,
+      y: 12
+    };
+
+    let timerId =
+      null;
+
+    let score =
+      0;
+
+    let running =
+      false;
+
+    let bestScore =
+      getStoredNumber(
+        BEST_KEY
+      );
+
+
+    bestDisplay.textContent =
+      bestScore;
+
+
+    const createSnake = () => [
+      {
+        x: 10,
+        y: 10
+      },
+      {
+        x: 9,
+        y: 10
+      },
+      {
+        x: 8,
+        y: 10
+      }
+    ];
+
+
+    const createFood = () => {
+
+      let nextFood;
+
+
+      do {
+
+        nextFood = {
+
+          x:
+            Math.floor(
+              Math.random() *
+              COLS
+            ),
+
+          y:
+            Math.floor(
+              Math.random() *
+              ROWS
+            )
+
+        };
+
+      } while (
+        snake.some(
+          (segment) =>
+            segment.x ===
+              nextFood.x &&
+            segment.y ===
+              nextFood.y
+        )
+      );
+
+
+      return nextFood;
+    };
+
+
+    const drawGrid = () => {
+
+      ctx.strokeStyle =
+        "rgba(77, 141, 255, 0.055)";
+
+
+      for (
+        let x = 0;
+        x < canvas.width;
+        x += CELL
+      ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          x,
+          0
+        );
+
+        ctx.lineTo(
+          x,
+          canvas.height
+        );
+
+        ctx.stroke();
+
+      }
+
+
+      for (
+        let y = 0;
+        y < canvas.height;
+        y += CELL
+      ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          0,
+          y
+        );
+
+        ctx.lineTo(
+          canvas.width,
+          y
+        );
+
+        ctx.stroke();
+
+      }
+
+    };
+
+
+    const drawGame = (
+      gameOver = false
+    ) => {
+
+      ctx.fillStyle =
+        "#050d19";
+
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+      drawGrid();
+
+
+      snake.forEach(
+        (segment, index) => {
+
+          ctx.fillStyle =
+            index === 0
+              ? "#9bd0ff"
+              : "#4d8dff";
+
+
+          ctx.fillRect(
+
+            segment.x *
+              CELL +
+              1,
+
+            segment.y *
+              CELL +
+              1,
+
+            CELL - 2,
+
+            CELL - 2
+
+          );
+
+        }
+      );
+
+
+      ctx.fillStyle =
+        "#68dcff";
+
+
+      ctx.fillRect(
+
+        food.x *
+          CELL +
+          2,
+
+        food.y *
+          CELL +
+          2,
+
+        CELL - 4,
+
+        CELL - 4
+
+      );
+
+
+      if (!gameOver) return;
+
+
+      ctx.fillStyle =
+        "rgba(3, 8, 16, 0.78)";
+
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.fillStyle =
+        "#eef5ff";
+
+
+      ctx.font =
+        "700 30px monospace";
+
+
+      ctx.fillText(
+
+        "GAME OVER",
+
+        canvas.width / 2,
+
+        canvas.height / 2 - 5
+
+      );
+
+
+      ctx.fillStyle =
+        "#87a3c8";
+
+
+      ctx.font =
+        "500 14px monospace";
+
+
+      ctx.fillText(
+
+        "Press START / RESET to try again",
+
+        canvas.width / 2,
+
+        canvas.height / 2 + 28
+
+      );
+
+    };
+
+
+    const saveBestScore = () => {
+
+      if (
+        score <= bestScore
+      ) {
+        return;
+      }
+
+
+      bestScore =
+        score;
+
+
+      bestDisplay.textContent =
+        bestScore;
+
+
+      setStoredNumber(
+        BEST_KEY,
+        bestScore
+      );
+
+    };
+
+
+    const stopGame = () => {
+
+      clearInterval(
+        timerId
+      );
+
+
+      running =
+        false;
+
+
+      saveBestScore();
+
+
+      drawGame(true);
+
+    };
+
+
+    const tick = () => {
+
+      direction =
+        nextDirection;
+
+
+      const head = {
+
+        x:
+          snake[0].x +
+          direction.x,
+
+        y:
+          snake[0].y +
+          direction.y
+
+      };
+
+
+      const hitWall =
+
+        head.x < 0 ||
+
+        head.y < 0 ||
+
+        head.x >= COLS ||
+
+        head.y >= ROWS;
+
+
+      const hitSelf =
+        snake.some(
+          (segment) =>
+
+            segment.x ===
+              head.x &&
+
+            segment.y ===
+              head.y
+
+        );
+
+
+      if (
+        hitWall ||
+        hitSelf
+      ) {
+
+        stopGame();
+
+        return;
+
+      }
+
+
+      snake.unshift(
+        head
+      );
+
+
+      const ateFood =
+
+        head.x ===
+          food.x &&
+
+        head.y ===
+          food.y;
+
+
+      if (ateFood) {
+
+        score += 1;
+
+
+        scoreDisplay.textContent =
+          score;
+
+
+        food =
+          createFood();
+
+      } else {
+
+        snake.pop();
+
+      }
+
+
+      drawGame();
+    };
+
+
+    const resetGame = () => {
+
+      snake =
+        createSnake();
+
+
+      direction = {
+        ...DIRECTIONS.right
+      };
+
+
+      nextDirection = {
+        ...direction
+      };
+
+
+      score =
+        0;
+
+
+      running =
+        true;
+
+
+      food =
+        createFood();
+
+
+      scoreDisplay.textContent =
+        "0";
+
+
+      clearInterval(
+        timerId
+      );
+
+
+      timerId =
+        setInterval(
+          tick,
+          SPEED
+        );
+
+
+      drawGame();
+    };
+
+
+    const changeDirection = (
+      newDirection
+    ) => {
+
+      if (
+        !running ||
+        !newDirection
+      ) {
+        return;
+      }
+
+
+      const isReverse =
+
+        newDirection.x +
+          direction.x ===
+        0 &&
+
+        newDirection.y +
+          direction.y ===
+        0;
+
+
+      if (isReverse) return;
+
+
+      nextDirection =
+        newDirection;
+
+    };
+
+
+    startButton.addEventListener(
+      "click",
+      resetGame
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+
+        const keyboardDirections = {
+
+          ArrowUp:
+            DIRECTIONS.up,
+
+          ArrowDown:
+            DIRECTIONS.down,
+
+          ArrowLeft:
+            DIRECTIONS.left,
+
+          ArrowRight:
+            DIRECTIONS.right
+
+        };
+
+
+        const newDirection =
+          keyboardDirections[
+            event.key
+          ];
+
+
+        if (
+          !newDirection ||
+          !running
+        ) {
+          return;
+        }
+
+
+        event.preventDefault();
+
+
+        changeDirection(
+          newDirection
+        );
+
+      }
+    );
+
+
+    $$("[data-dir]")
+      .forEach((button) => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            changeDirection(
+              DIRECTIONS[
+                button.dataset.dir
+              ]
+            );
+
+          }
+        );
+
+      });
+
+
+    snake =
+      createSnake();
+
+
+    drawGame();
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // SQL quiz
+  // ---------------------------------------------------------------------------
+
+  function initSqlQuiz() {
+
+    const QUESTIONS = [
+
+      {
+        question:
+          "Which keyword is used to retrieve rows from a table?",
+
+        answers: [
+          "SELECT",
+          "DELETE",
+          "DROP",
+          "ALTER"
+        ],
+
+        correct: 0
+      },
+
+
+      {
+        question:
+          "Which clause filters rows before they are returned?",
+
+        answers: [
+          "GROUP BY",
+          "WHERE",
+          "ORDER BY",
+          "HAVING"
+        ],
+
+        correct: 1
+      },
+
+
+      {
+        question:
+          "Which command adds a new row to a table?",
+
+        answers: [
+          "UPDATE",
+          "CREATE",
+          "INSERT",
+          "JOIN"
+        ],
+
+        correct: 2
+      },
+
+
+      {
+        question:
+          "Which JOIN keeps every row from the left table?",
+
+        answers: [
+          "INNER JOIN",
+          "LEFT JOIN",
+          "CROSS JOIN",
+          "SELF JOIN"
+        ],
+
+        correct: 1
+      },
+
+
+      {
+        question:
+          "Which function counts rows?",
+
+        answers: [
+          "SUM()",
+          "AVG()",
+          "COUNT()",
+          "MAX()"
+        ],
+
+        correct: 2
+      }
+
+    ];
+
+
+    const questionNumber =
+      $("#sqlNo");
+
+    const questionText =
+      $("#sqlQuestion");
+
+    const answers =
+      $("#sqlAnswers");
+
+    const feedback =
+      $("#sqlFeedback");
+
+    const nextButton =
+      $("#sqlNext");
+
+    const scoreDisplay =
+      $("#sqlScore");
+
+    const bestDisplay =
+      $("#sqlBest");
+
+
+    if (
+      !questionNumber ||
+      !questionText ||
+      !answers ||
+      !feedback ||
+      !nextButton ||
+      !scoreDisplay ||
+      !bestDisplay
+    ) {
+      return;
+    }
+
+
+    const BEST_KEY =
+      "vg2026_sql_best";
+
+
+    let currentIndex =
+      0;
+
+    let score =
+      0;
+
+    let answered =
+      false;
+
+    let finished =
+      false;
+
+    let bestScore =
+      getStoredNumber(
+        BEST_KEY
+      );
+
+
+    bestDisplay.textContent =
+      bestScore;
+
+
+    const renderQuestion = () => {
+
+      const current =
+        QUESTIONS[
+          currentIndex
+        ];
+
+
+      questionNumber.textContent =
+        currentIndex + 1;
+
+
+      questionText.textContent =
+        current.question;
+
+
+      answers.innerHTML =
+        "";
+
+
+      feedback.textContent =
+        "";
+
+
+      nextButton.disabled =
+        true;
+
+
+      nextButton.textContent =
+        "Next question";
+
+
+      answered =
+        false;
+
+
+      finished =
+        false;
+
+
+      current.answers.forEach(
+        (answer, answerIndex) => {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.type =
+            "button";
+
+
+          button.textContent =
+            answer;
+
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              if (answered) {
+                return;
+              }
+
+
+              answered =
+                true;
+
+
+              [...answers.children]
+                .forEach(
+                  (
+                    answerButton,
+                    index
+                  ) => {
+
+                    if (
+                      index ===
+                      current.correct
+                    ) {
+
+                      answerButton.classList.add(
+                        "correct"
+                      );
+
+                    }
+
+                  }
+                );
+
+
+              if (
+                answerIndex ===
+                current.correct
+              ) {
+
+                score += 1;
+
+
+                scoreDisplay.textContent =
+                  score;
+
+
+                feedback.textContent =
+                  "Correct.";
+
+              } else {
+
+                button.classList.add(
+                  "wrong"
+                );
+
+
+                feedback.textContent =
+                  `Not quite. Correct answer: ${current.answers[current.correct]}.`;
+
+              }
+
+
+              nextButton.disabled =
+                false;
+
+            }
+          );
+
+
+          answers.appendChild(
+            button
+          );
+
+        }
+      );
+
+    };
+
+
+    const finishQuiz = () => {
+
+      finished =
+        true;
+
+
+      questionText.textContent =
+        `Finished — ${score}/5`;
+
+
+      answers.innerHTML =
+        "";
+
+
+      feedback.textContent =
+        score ===
+        QUESTIONS.length
+
+          ? "Perfect run."
+
+          : "Restart and try for 5/5.";
+
+
+      nextButton.textContent =
+        "Restart quiz";
+
+
+      nextButton.disabled =
+        false;
+
+
+      if (
+        score > bestScore
+      ) {
+
+        bestScore =
+          score;
+
+
+        bestDisplay.textContent =
+          bestScore;
+
+
+        setStoredNumber(
+          BEST_KEY,
+          bestScore
+        );
+
+      }
+
+    };
+
+
+    const restartQuiz = () => {
+
+      currentIndex =
+        0;
+
+
+      score =
+        0;
+
+
+      scoreDisplay.textContent =
+        "0";
+
+
+      renderQuestion();
+
+    };
+
+
+    nextButton.addEventListener(
+      "click",
+      () => {
+
+        if (finished) {
+
+          restartQuiz();
+
+          return;
+
+        }
+
+
+        if (!answered) {
+          return;
+        }
+
+
+        if (
+          currentIndex <
+          QUESTIONS.length - 1
+        ) {
+
+          currentIndex += 1;
+
+          renderQuestion();
+
+        } else {
+
+          finishQuiz();
+
+        }
+
+      }
+    );
+
+
+    renderQuestion();
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // Start everything
+  // ---------------------------------------------------------------------------
+
+  function init() {
+    initClock();
+    initCursorHalo();
+    initDotHero();
+    initRevealAnimations();
+    initProjectModal();
+    initGameTabs();
+    initReactionGame();
+    initSnakeGame();
+    initSqlQuiz();
+  }
+
+
+  init();
+
 })();
