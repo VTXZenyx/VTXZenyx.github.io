@@ -2,6 +2,8 @@
 
 Personal portfolio website for Viraj Gandhi.
 
+##
+- Live website: https://vtxzenyx.github.io
 ## Main sections
 
 - Interactive hero
