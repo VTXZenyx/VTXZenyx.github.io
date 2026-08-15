@@ -1,4 +1,4 @@
-# Viraj Gandhi — Portfolio
+# Viraj — Portfolio
 
 My personal portfolio website showcasing my work in Information Systems, Data Science, databases and web development.
 
