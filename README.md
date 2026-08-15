@@ -13,7 +13,6 @@ https://vtxzenyx.github.io
 - SQL
 - HTML
 - CSS
-- JavaScript
 - Data Analysis
 - Database Design
 - Information Systems
