@@ -3276,3 +3276,327 @@ img {
     font-size: 7px;
   }
 }
+
+
+/* =========================================================
+   Changes 20th Aug 
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Slightly tighter hero
+   Gets projects onto the screen sooner without removing
+   the animated hero.
+   --------------------------------------------------------- */
+
+.hero {
+  min-height: 760px;
+}
+
+.hero-title-wrap {
+  height: 460px;
+}
+
+.hero-bottom {
+  margin-top: -12px;
+}
+
+
+/* ---------------------------------------------------------
+   2. Improve readability of tiny interface text
+   Some 8–9px labels are too small on normal laptops.
+   --------------------------------------------------------- */
+
+.hero-meta,
+.eyebrow,
+.project-topline,
+.signal-label,
+.status-row,
+.preview-badge,
+.stack-row b,
+.contact-main p,
+.contact-kicker,
+.contact-footer {
+  font-size: 10px;
+}
+
+
+/* ---------------------------------------------------------
+   3. Give the SQL hero preview proper header clearance
+   The project topline is absolutely positioned above it.
+   --------------------------------------------------------- */
+
+.project-card--hero .project-preview--sql-code {
+  padding:
+    70px
+    28px
+    28px;
+}
+
+
+/* ---------------------------------------------------------
+   4. Make PRIMARY project buttons consistent
+   Course Enrolment is now project-card--wide, so it should
+   receive the same strong button styling as the SQL project.
+   --------------------------------------------------------- */
+
+.project-card--wide
+.project-actions
+.project-link--primary,
+.project-card--hero
+.project-actions
+.project-link--primary {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 38px;
+
+  padding: 0 12px;
+
+  border:
+    1px solid
+    rgba(114, 183, 255, 0.32);
+
+  border-radius: 9px;
+
+  background:
+    rgba(77, 141, 255, 0.09);
+
+  color:
+    #8fc5ff !important;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.project-card--wide
+.project-actions
+.project-link--primary:hover,
+.project-card--hero
+.project-actions
+.project-link--primary:hover {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(114, 183, 255, 0.45);
+
+  background:
+    rgba(77, 141, 255, 0.14);
+}
+
+
+/* ---------------------------------------------------------
+   5. Style secondary links on wide projects consistently
+   e.g. GitHub on the Course Enrolment project.
+   --------------------------------------------------------- */
+
+.project-card--wide
+.project-actions
+> a:not(.project-link--primary),
+.project-card--hero
+.project-actions
+> a:not(.project-link--primary) {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 38px;
+
+  padding: 0 12px;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.project-card--wide
+.project-actions
+> a:not(.project-link--primary):hover,
+.project-card--hero
+.project-actions
+> a:not(.project-link--primary):hover {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(114, 183, 255, 0.38);
+
+  background:
+    rgba(77, 141, 255, 0.07);
+}
+
+
+/* ---------------------------------------------------------
+   6. Match standard project preview heights
+   Keeps R and Information Systems cards visually balanced.
+   --------------------------------------------------------- */
+
+.systems-visual {
+  min-height: 320px;
+}
+
+
+/* ---------------------------------------------------------
+   7. Slightly tighten general section spacing
+   Still spacious, but recruiters reach information faster.
+   --------------------------------------------------------- */
+
+.section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+
+/* ---------------------------------------------------------
+   8. Make the CV section less dominant
+   The PDF is useful, but projects should remain the focus.
+   --------------------------------------------------------- */
+
+.resume-viewer object {
+  height: 590px;
+}
+
+
+/* ---------------------------------------------------------
+   9. Better keyboard accessibility / professional polish
+   --------------------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible {
+  outline:
+    2px solid
+    var(--blue-light);
+
+  outline-offset: 4px;
+
+  border-radius: 8px;
+}
+
+
+/* ---------------------------------------------------------
+   10. Better Safari support for glass effects
+   --------------------------------------------------------- */
+
+.topbar,
+.project-topline,
+.preview-badge,
+.project-modal {
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.page-grid {
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      #000,
+      transparent 92%
+    );
+}
+
+
+/* =========================================================
+   RESPONSIVE POLISH
+   ========================================================= */
+
+@media (max-width: 1080px) {
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-title-wrap {
+    height: 430px;
+  }
+
+  .resume-viewer object {
+    height: 540px;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .hero-title-wrap {
+    height: 390px;
+  }
+
+  .section {
+    padding-top: 82px;
+    padding-bottom: 82px;
+  }
+
+  .resume-viewer object {
+    height: 500px;
+  }
+
+
+  /*
+     Your new nav is:
+     1 Projects
+     2 Skills
+     3 About
+     4 CV
+     5 Contact
+
+     Keep the useful links visible.
+     Only hide About on tablet/mobile.
+  */
+
+  .topnav a:nth-child(2) {
+    display: inline-flex;
+  }
+
+  .topnav a:nth-child(3) {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 560px) {
+
+  .hero-title-wrap {
+    height: 300px;
+  }
+
+  /*
+     Very small phones:
+     Projects · CV · Contact
+  */
+
+  .topnav a:nth-child(2) {
+    display: none;
+  }
+
+  .topnav a:nth-child(4) {
+    display: inline-flex;
+  }
+
+  .section {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .resume-viewer object {
+    height: 440px;
+  }
+
+  .project-card--hero .project-preview--sql-code {
+    padding:
+      64px
+      16px
+      18px;
+  }
+
+}
