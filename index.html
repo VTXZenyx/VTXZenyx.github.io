@@ -6,12 +6,37 @@
 
   <meta
     name="description"
-    content="Viraj Gandhi, a second-year Victoria University of Wellington student studying Information Systems, Digital Intelligence and Data Science. Portfolio featuring SQL, databases, R, data analysis, web development and information systems projects."
+    content="Portfolio of Viraj Gandhi, a second-year Bachelor of Commerce student at Victoria University of Wellington working across Information Systems, data, databases and technology."
   />
 
+  <meta name="author" content="Viraj Gandhi" />
+  <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#07101f" />
 
-  <title>Viraj Gandhi | Information Systems × Data × Technology</title>
+  <link rel="canonical" href="https://vtxzenyx.github.io/" />
+
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:title"
+    content="Viraj Gandhi | Information Systems & Data Portfolio"
+  />
+  <meta
+    property="og:description"
+    content="Projects and work across SQL, R, relational databases, Information Systems and web technologies."
+  />
+  <meta property="og:url" content="https://vtxzenyx.github.io/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta
+    name="twitter:title"
+    content="Viraj Gandhi | Information Systems & Data Portfolio"
+  />
+  <meta
+    name="twitter:description"
+    content="Information Systems, data, database and technology projects."
+  />
+
+  <title>Viraj Gandhi | Information Systems & Data</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,11 +47,40 @@
   />
 
   <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Viraj Gandhi",
+    "url": "https://vtxzenyx.github.io/",
+    "sameAs": [
+      "https://github.com/VTXZenyx"
+    ],
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "Victoria University of Wellington"
+    },
+    "knowsAbout": [
+      "Information Systems",
+      "SQL",
+      "SQLite",
+      "R",
+      "Data Analysis",
+      "Relational Databases",
+      "Business Systems",
+      "Web Development"
+    ]
+  }
+  </script>
 </head>
 
 <body>
 
-  <!-- Background effects -->
+  <a class="skip-link" href="#main-content">
+    Skip to main content
+  </a>
+
   <div class="page-grid" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="cursor-halo" aria-hidden="true"></div>
@@ -46,7 +100,23 @@
       <span class="brand-name">Viraj Gandhi</span>
     </a>
 
-    <nav class="topnav" aria-label="Primary navigation">
+    <button
+      class="nav-toggle"
+      id="navToggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="primaryNav"
+    >
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav
+      class="topnav"
+      id="primaryNav"
+      aria-label="Primary navigation"
+    >
       <a href="#work">Projects</a>
       <a href="#stack">Skills</a>
       <a href="#about">About</a>
@@ -58,7 +128,8 @@
       class="nav-github"
       href="https://github.com/VTXZenyx"
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
+      aria-label="Open Viraj Gandhi's GitHub profile"
     >
       GitHub ↗
     </a>
@@ -66,7 +137,7 @@
   </header>
 
 
-  <main>
+  <main id="main-content">
 
     <!-- ======================================================
          HERO
@@ -92,20 +163,18 @@
 
         <div class="hero-copy">
 
-          <p>
+          <p class="hero-intro">
             I'm a
-            <strong>
-              second-year Commerce student at Victoria University of Wellington
-            </strong>
+            <strong>second-year Bachelor of Commerce student at Victoria University of Wellington</strong>
             studying Information Systems, Digital Intelligence and Data Science.
+          </p>
 
-            I'm interested in the space where
-            <strong>technology, data and people meet</strong>.
-
-            I enjoy turning what I learn into practical work, from databases
-            and data analysis to web projects and business systems. I'm always
-            looking for the next thing to
-            <strong>understand, build or improve</strong>.
+          <p>
+            I like understanding how
+            <strong>technology, data and people fit together</strong>.
+            Through university and personal projects, I've worked with SQL,
+            relational databases, R data analysis, web technologies and
+            business systems.
           </p>
 
           <div class="hero-actions">
@@ -122,7 +191,7 @@
               class="button button-ghost"
               href="resume.pdf"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               Open CV
               <span>↗</span>
@@ -133,11 +202,26 @@
         </div>
 
 
-        <div class="status-card">
+        <aside class="status-card" aria-label="Current availability">
 
-          <div class="status-row">
+          <div class="status-row status-row-main">
             <span class="live-dot"></span>
             <strong>OPEN TO OPPORTUNITIES</strong>
+          </div>
+
+          <div class="status-row">
+            <span>AVAILABLE</span>
+            <strong>30 OCT 2026</strong>
+          </div>
+
+          <div class="status-row">
+            <span>SUMMER</span>
+            <strong>FULL-TIME</strong>
+          </div>
+
+          <div class="status-row">
+            <span>2027</span>
+            <strong>PART-TIME DURING UNI</strong>
           </div>
 
           <div class="status-row">
@@ -145,41 +229,8 @@
             <strong>Wellington, NZ</strong>
           </div>
 
-          <div class="status-row">
-            <span>LOCAL TIME</span>
-            <strong id="clock">00:00</strong>
-          </div>
+        </aside>
 
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ======================================================
-         CURRENT FOCUS
-    ======================================================= -->
-
-    <section
-      class="signal-strip"
-      aria-label="Current skills and focus"
-    >
-
-      <span class="signal-label">
-        CURRENTLY / 2026
-      </span>
-
-      <div class="signal-track">
-        <span>Information Systems</span>
-        <span>SQL &amp; Databases</span>
-        <span>R &amp; Data Analysis</span>
-        <span>Excel</span>
-        <span>Power BI: Learning</span>
-        <span>Python: Working Knowledge</span>
-        <span>Web Development</span>
-        <span>Git &amp; GitHub</span>
-        <span>Working With People</span>
       </div>
 
     </section>
@@ -201,7 +252,7 @@
           <span class="eyebrow">SELECTED PROJECTS</span>
         </div>
 
-        <div>
+        <div class="section-heading-copy">
 
           <h2>
             Practical work across
@@ -209,9 +260,8 @@
           </h2>
 
           <p class="section-intro">
-            A selection of university and personal work where I've applied
-            what I'm learning in databases, application development, data
-            analysis and information systems.
+            A few projects that show how I've applied what I'm learning to
+            real datasets, databases, applications and system problems.
           </p>
 
         </div>
@@ -236,14 +286,14 @@
 
           <div
             class="project-preview project-preview--sql-code"
-            aria-label="SQL query preview from Viraj Gandhi's database work"
+            aria-label="SQL query example from Viraj Gandhi's database portfolio"
           >
 
             <div class="sql-code-window">
 
               <div class="sql-window-bar">
                 <span>SQL / SQLITE</span>
-                <span>MusicDB.db</span>
+                <span>RELATIONAL DATA</span>
               </div>
 
               <pre><code><span class="sql-keyword">SELECT</span>
@@ -269,14 +319,10 @@
                 <span>JOINS</span>
                 <span>AGGREGATES</span>
                 <span>SUBQUERIES</span>
-                <span>DDL / DML</span>
+                <span>KEYS</span>
                 <span>NORMALISATION</span>
               </div>
 
-            </div>
-
-            <div class="preview-badge">
-              REAL SQL WORK · SQLITE · DB BROWSER
             </div>
 
           </div>
@@ -286,26 +332,20 @@
 
             <div class="project-title-row">
               <h3>SQL &amp; Relational Database Portfolio</h3>
-              <span class="project-year">SQL</span>
+              <span class="project-year">2026</span>
             </div>
 
             <p>
-              A collection of my relational database work covering multi-table
-              queries, joins, grouped analysis, subqueries, DDL/DML,
-              normalisation, transactions, views and database design.
+              A collection of SQL and database work focused on querying and
+              organising relational data. I've worked with joins, subqueries,
+              grouped queries, database relationships, keys and normalisation.
             </p>
 
             <div class="tags">
               <span>SQL</span>
               <span>SQLITE</span>
-              <span>DB BROWSER</span>
+              <span>DBI / RSQLITE</span>
               <span>DATABASE DESIGN</span>
-            </div>
-
-            <div class="project-highlights">
-              <span>QUERYING + ANALYSIS</span>
-              <span>RELATIONAL DESIGN</span>
-              <span>JOINS + SUBQUERIES</span>
             </div>
 
             <div class="project-actions">
@@ -322,9 +362,9 @@
                 class="project-link project-link--primary"
                 href="https://github.com/VTXZenyx/sql-database-portfolio"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
-                View SQL portfolio ↗
+                View on GitHub ↗
               </a>
 
             </div>
@@ -335,14 +375,106 @@
 
 
         <!-- ==================================================
-             PROJECT 02: COURSE ENROLMENT APPLICATION
+             PROJECT 02: R DATA ANALYSIS
+        =================================================== -->
+
+        <article class="project-card reveal">
+
+          <div class="project-topline">
+            <span>R · DATA ANALYSIS · VISUALISATION</span>
+            <span>02</span>
+          </div>
+
+
+          <div
+            class="project-preview visual-preview r-visual"
+            aria-label="Example of Viraj Gandhi's R data analysis workflow"
+          >
+
+            <div class="console-head">
+              R / RSTUDIO / R MARKDOWN
+            </div>
+
+            <pre><code>mineral_measures &lt;- read_excel(
+  filename,
+  sheet = "mineral_measures"
+)
+
+clean_data &lt;- mineral_measures %&gt;%
+  rename(sr = sr87_sr86) %&gt;%
+  filter(!is.na(sr))
+
+clean_data %&gt;%
+  group_by(...) %&gt;%
+  summarise(...)</code></pre>
+
+            <div class="r-status">
+              <span>DPLYR</span>
+              <span>GGPLOT2</span>
+              <span>READXL</span>
+              <span>R MARKDOWN</span>
+            </div>
+
+          </div>
+
+
+          <div class="project-copy">
+
+            <div class="project-title-row">
+              <h3>R Data Analysis</h3>
+              <span class="project-year">2026</span>
+            </div>
+
+            <p>
+              Used R to import, clean, transform and analyse Excel-based
+              archaeological data. I produced grouped summaries and
+              visualisations to explore historical periods, demographic
+              groups and strontium isotope measurements.
+            </p>
+
+            <div class="tags">
+              <span>R</span>
+              <span>DPLYR</span>
+              <span>GGPLOT2</span>
+              <span>READXL</span>
+              <span>R MARKDOWN</span>
+            </div>
+
+            <div class="project-actions">
+
+              <button
+                class="text-button"
+                data-open-project="r"
+                type="button"
+              >
+                Project details →
+              </button>
+
+              <a
+                class="project-link project-link--primary"
+                href="https://github.com/VTXZenyx/r-data-programming-portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on GitHub ↗
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ==================================================
+             PROJECT 03: COURSE ENROLMENT APPLICATION
         =================================================== -->
 
         <article class="project-card project-card--wide reveal">
 
           <div class="project-topline">
             <span>APPLICATION · BUSINESS RULES · SYSTEMS</span>
-            <span>02</span>
+            <span>03</span>
           </div>
 
 
@@ -368,7 +500,7 @@
                 <a
                   href="https://vtxzenyx.github.io/course-enrolment-web-app/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="Open the live course enrolment application"
                 >
                   OPEN ↗
@@ -381,22 +513,19 @@
                 class="live-browser-viewport live-browser-viewport--image"
                 href="https://vtxzenyx.github.io/course-enrolment-web-app/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label="Open the live Course Enrolment Web Application"
               >
 
                 <img
                   src="assets/course-enrolment-preview.png"
-                  alt="Screenshot of Viraj Gandhi's Course Enrolment Web Application showing the login and course list interface"
+                  alt="Screenshot of Viraj Gandhi's Course Enrolment Web Application"
+                  loading="lazy"
+                  decoding="async"
                 />
 
               </a>
 
-            </div>
-
-            <div class="preview-badge">
-              <span class="live-dot"></span>
-              REAL APP PREVIEW
             </div>
 
           </div>
@@ -410,10 +539,10 @@
             </div>
 
             <p>
-              Built a working university course enrolment application with
-              login, course browsing and enrol/drop functionality. The app
-              checks rules such as prerequisites and timetable conflicts
-              using structured data and application logic.
+              Built a working course-enrolment application with login, course
+              browsing, enrolment and withdrawal. The application uses
+              structured data and checks rules such as prerequisites,
+              course-load limits, GPA requirements and timetable clashes.
             </p>
 
             <div class="tags">
@@ -422,12 +551,6 @@
               <span>VUE.JS</span>
               <span>PYTHON / BRYTHON</span>
               <span>JSON</span>
-            </div>
-
-            <div class="project-highlights">
-              <span>BUSINESS RULES + APP LOGIC</span>
-              <span>STRUCTURED DATA</span>
-              <span>WORKING LIVE APPLICATION</span>
             </div>
 
             <div class="project-actions">
@@ -444,7 +567,7 @@
                 class="project-link project-link--primary"
                 href="https://vtxzenyx.github.io/course-enrolment-web-app/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 View live app ↗
               </a>
@@ -452,7 +575,7 @@
               <a
                 href="https://github.com/VTXZenyx/course-enrolment-web-app"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 GitHub ↗
               </a>
@@ -465,90 +588,7 @@
 
 
         <!-- ==================================================
-             PROJECT 03: R
-        =================================================== -->
-
-        <article class="project-card reveal">
-
-          <div class="project-topline">
-            <span>R · RSTUDIO · DATA ANALYSIS</span>
-            <span>03</span>
-          </div>
-
-
-          <div
-            class="project-preview visual-preview r-visual"
-            aria-label="R programming preview using examples from Viraj Gandhi's coursework"
-          >
-
-            <div class="console-head">
-              R PROGRAMMING / R MARKDOWN
-            </div>
-
-            <pre><code><span>x[x == 4 | x == 7]</span>
-
-g &lt;- z[, 2:3]
-
-t(g)
-
-solve(g)</code></pre>
-
-            <div class="r-status">
-              <span>R</span>
-              <span>RSTUDIO</span>
-              <span>R MARKDOWN</span>
-              <span>CSV DATA</span>
-            </div>
-
-          </div>
-
-
-          <div class="project-copy">
-
-            <div class="project-title-row">
-              <h3>R Programming &amp; Data Analysis</h3>
-              <span class="project-year">DEVELOPING</span>
-            </div>
-
-            <p>
-              Developing my R and data analysis skills through DATA202 using
-              RStudio and R Markdown. I'm currently working with data frames,
-              filtering, missing values, functions, CSV data, dates and
-              reshaping.
-            </p>
-
-            <div class="tags">
-              <span>R</span>
-              <span>RSTUDIO</span>
-              <span>R MARKDOWN</span>
-              <span>CSV</span>
-            </div>
-
-            <div class="project-highlights">
-              <span>DATA FRAMES + FILTERING</span>
-              <span>DATES + RESHAPING</span>
-              <span>GGPLOT: LEARNING</span>
-            </div>
-
-            <div class="project-actions">
-
-              <button
-                class="text-button"
-                data-open-project="r"
-                type="button"
-              >
-                Project details →
-              </button>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- ==================================================
-             PROJECT 04: INFORMATION SYSTEMS
+             PROJECT 04: BUSINESS & SYSTEMS ANALYSIS
         =================================================== -->
 
         <article class="project-card reveal">
@@ -561,7 +601,7 @@ solve(g)</code></pre>
 
           <div
             class="project-preview visual-preview systems-visual"
-            aria-label="Systems and stakeholder analysis model"
+            aria-label="People, process, technology and data shown as connected parts of a system"
           >
 
             <div class="system-node n1">PEOPLE</div>
@@ -585,26 +625,22 @@ solve(g)</code></pre>
           <div class="project-copy">
 
             <div class="project-title-row">
-              <h3>Systems Thinking &amp; Stakeholder Analysis</h3>
+              <h3>Business &amp; Systems Analysis</h3>
               <span class="project-year">IS</span>
             </div>
 
             <p>
-              Used Information Systems and business analysis methods to look
-              at stakeholders, requirements, relationships and trade-offs
-              before deciding what a useful response might look like.
+              Through my Information Systems study, I've worked with user and
+              stakeholder research, interviews, identifying needs, analysing
+              evidence, defining problems and developing and testing possible
+              solutions.
             </p>
 
             <div class="tags">
+              <span>USER RESEARCH</span>
+              <span>REQUIREMENTS</span>
               <span>STAKEHOLDERS</span>
-              <span>BUSINESS ANALYSIS</span>
-              <span>PROBLEM FRAMING</span>
-            </div>
-
-            <div class="project-highlights">
-              <span>STAKEHOLDER ANALYSIS</span>
-              <span>BUSINESS REQUIREMENTS</span>
-              <span>STRUCTURED PROBLEM-SOLVING</span>
+              <span>PROTOTYPING</span>
             </div>
 
             <div class="project-actions">
@@ -644,7 +680,7 @@ solve(g)</code></pre>
           <span class="eyebrow">SKILLS &amp; TOOLS</span>
         </div>
 
-        <div>
+        <div class="section-heading-copy">
 
           <h2>
             What I'm working with
@@ -652,8 +688,8 @@ solve(g)</code></pre>
           </h2>
 
           <p class="section-intro">
-            Skills I'm building through university coursework, projects
-            and practice.
+            Skills I've developed through coursework, technical projects and
+            practice.
           </p>
 
         </div>
@@ -661,127 +697,74 @@ solve(g)</code></pre>
       </div>
 
 
-      <div class="stack-board">
+      <div class="stack-board stack-board--compact">
 
         <div class="stack-row reveal">
           <span>01</span>
 
-          <strong>SQL &amp; Databases</strong>
+          <strong>Data &amp; Analytics</strong>
 
           <p>
-            SQLite · DB Browser · Joins · Aggregates · Subqueries ·
-            DDL/DML · Views · Normalisation
+            R · RStudio · dplyr · tidyr · ggplot2 · R Markdown · Excel ·
+            Data cleaning · Grouped analysis · Reshaping
           </p>
 
-          <b>PRACTICAL</b>
+          <b>PROJECT WORK</b>
         </div>
 
 
         <div class="stack-row reveal">
           <span>02</span>
 
-          <strong>R / RStudio</strong>
+          <strong>SQL &amp; Databases</strong>
 
           <p>
-            R Markdown · Data frames · Filtering · Missing values ·
-            CSV data · Dates · Reshaping
+            SQL · SQLite · Multi-table joins · Self joins · Subqueries ·
+            GROUP BY / HAVING · Keys · Normalisation · DBI / RSQLite
           </p>
 
-          <b>DEVELOPING</b>
+          <b>PROJECT WORK</b>
         </div>
 
 
         <div class="stack-row reveal">
           <span>03</span>
 
-          <strong>Excel</strong>
+          <strong>Business &amp; Systems Analysis</strong>
 
           <p>
-            Formulas · Charts · PivotTables · Basic data analysis
+            Requirements · User research · Stakeholders · Business rules ·
+            Problem definition · Evidence analysis · Prototyping
           </p>
 
-          <b>WORKING</b>
+          <b>COURSEWORK</b>
         </div>
 
 
         <div class="stack-row reveal">
           <span>04</span>
 
-          <strong>Power BI</strong>
+          <strong>Web &amp; Tools</strong>
 
           <p>
-            Currently learning reporting, dashboards and data visualisation
+            HTML · CSS · JavaScript · Vue.js · Python / Brython · Git ·
+            GitHub · JSON · GitHub Pages
           </p>
 
-          <b>LEARNING</b>
+          <b>PROJECT USE</b>
         </div>
 
 
         <div class="stack-row reveal">
           <span>05</span>
 
-          <strong>Python</strong>
+          <strong>Currently Learning</strong>
 
           <p>
-            Programming fundamentals · Application logic · Basic data work
+            Power BI · Reporting · Dashboards · Data visualisation
           </p>
 
-          <b>WORKING</b>
-        </div>
-
-
-        <div class="stack-row reveal">
-          <span>06</span>
-
-          <strong>Web Development</strong>
-
-          <p>
-            HTML · CSS · JavaScript · Vue.js · Brython · Responsive interfaces
-          </p>
-
-          <b>WORKING</b>
-        </div>
-
-
-        <div class="stack-row reveal">
-          <span>07</span>
-
-          <strong>Git &amp; GitHub</strong>
-
-          <p>
-            Repositories · Version control basics · GitHub Pages ·
-            Project publishing
-          </p>
-
-          <b>WORKING</b>
-        </div>
-
-
-        <div class="stack-row reveal">
-          <span>08</span>
-
-          <strong>Information Systems</strong>
-
-          <p>
-            Business rules · Requirements · Stakeholders · Processes ·
-            Systems analysis · Problem framing
-          </p>
-
-          <b>STUDYING</b>
-        </div>
-
-
-        <div class="stack-row reveal">
-          <span>09</span>
-
-          <strong>Communication &amp; Customer Service</strong>
-
-          <p>
-            Customer assistance · Clear communication · Listening ·
-            Reliability · Practical problem-solving
-          </p>
-
-          <b>EXPERIENCE</b>
+          <b>LEARNING</b>
         </div>
 
       </div>
@@ -818,29 +801,34 @@ solve(g)</code></pre>
         <div class="about-copy reveal">
 
           <p class="lead">
-            I like understanding how technology, data, business processes
-            and people fit together, then using what I'm learning to work
-            through practical problems.
+            I like understanding how technology, data and people fit together,
+            then using what I'm learning to work through practical problems.
           </p>
 
           <p>
-            I'm studying Information Systems, Digital Intelligence and Data
-            Science at Victoria University of Wellington.
-
-            My current technical experience includes SQL and relational
-            databases, R/RStudio, Excel, web technologies, Python and
-            Git/GitHub.
+            Hi, I'm Viraj. I'm a second-year Bachelor of Commerce student at
+            Victoria University of Wellington studying Information Systems,
+            Digital Intelligence and Data Science.
           </p>
 
           <p>
-            I'm continuing to develop my data and reporting skills through
-            DATA202, and I'm currently learning Power BI.
+            Through university and personal projects, I've worked with SQL,
+            relational databases, R data analysis, web technologies, business
+            rules and systems analysis. I enjoy applying what I learn to
+            practical work instead of only learning the theory.
+          </p>
 
-            I'm especially interested in information systems, data and
-            reporting, business systems, technology support and junior
-            analyst opportunities.
+          <p>
+            I also help at Paparangi Foodmarket, where I've gained practical
+            experience working with customers and helping with everyday store
+            operations. That has helped me become more confident communicating
+            with people, solving problems and taking responsibility.
+          </p>
 
-            Outside university, I enjoy the gym, hiking, nature and music.
+          <p>
+            Right now, I'm looking for an opportunity where I can gain real
+            industry experience, keep improving my technical and analytical
+            skills and learn from people already working in the field.
           </p>
 
 
@@ -857,13 +845,13 @@ solve(g)</code></pre>
             </div>
 
             <div>
-              <span>CURRENT</span>
-              <strong>DATA202 · R · SQL</strong>
+              <span>AVAILABLE</span>
+              <strong>30 October 2026</strong>
             </div>
 
             <div>
-              <span>LEARNING</span>
-              <strong>Power BI</strong>
+              <span>LOCATION</span>
+              <strong>Wellington, NZ</strong>
             </div>
 
           </div>
@@ -895,8 +883,8 @@ solve(g)</code></pre>
         </h2>
 
         <p>
-          A quick look at my education, technical skills, project work,
-          customer-facing experience and current availability.
+          A concise overview of my education, technical skills, project work,
+          customer-facing experience and availability.
         </p>
 
 
@@ -906,15 +894,15 @@ solve(g)</code></pre>
             class="button button-primary"
             href="resume.pdf"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
-            Open Tech CV ↗
+            Open CV ↗
           </a>
 
           <a
             class="button button-ghost"
             href="resume.pdf"
-            download
+            download="Viraj-Gandhi-Tech-CV.pdf"
           >
             Download CV ↓
           </a>
@@ -923,16 +911,9 @@ solve(g)</code></pre>
             class="button button-ghost"
             href="https://github.com/VTXZenyx"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             GitHub ↗
-          </a>
-
-          <a
-            class="button button-ghost"
-            href="mailto:gandhiviraj2006@gmail.com"
-          >
-            Email me ↗
           </a>
 
         </div>
@@ -944,18 +925,18 @@ solve(g)</code></pre>
 
         <div class="viewer-bar">
 
-          <div>
+          <div aria-hidden="true">
             <span class="viewer-dot"></span>
             <span class="viewer-dot"></span>
             <span class="viewer-dot"></span>
           </div>
 
-          <span>Information Systems &amp; Data CV</span>
+          <span>Viraj Gandhi · Tech CV</span>
 
           <a
             href="resume.pdf"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             OPEN ↗
           </a>
@@ -978,7 +959,7 @@ solve(g)</code></pre>
             <a
               href="resume.pdf"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               Open CV PDF
             </a>
@@ -1008,7 +989,7 @@ solve(g)</code></pre>
           <span class="eyebrow">PLAYGROUND</span>
         </div>
 
-        <div>
+        <div class="section-heading-copy">
 
           <h2>
             Small things I've built
@@ -1016,7 +997,7 @@ solve(g)</code></pre>
           </h2>
 
           <p class="section-intro">
-            A few interactive extras I added while building the website.
+            A few smaller interactive experiments from the website.
           </p>
 
         </div>
@@ -1026,13 +1007,10 @@ solve(g)</code></pre>
 
       <div class="game-shell reveal">
 
-
-        <!-- Game tabs -->
-
         <div
           class="game-tabs"
           role="tablist"
-          aria-label="Games"
+          aria-label="Interactive projects"
         >
 
           <button
@@ -1040,8 +1018,10 @@ solve(g)</code></pre>
             data-game="reaction"
             role="tab"
             aria-selected="true"
+            aria-controls="game-reaction"
+            type="button"
           >
-            Reaction Game
+            Reaction
           </button>
 
           <button
@@ -1049,6 +1029,8 @@ solve(g)</code></pre>
             data-game="snake"
             role="tab"
             aria-selected="false"
+            aria-controls="game-snake"
+            type="button"
           >
             Snake
           </button>
@@ -1058,6 +1040,8 @@ solve(g)</code></pre>
             data-game="sql"
             role="tab"
             aria-selected="false"
+            aria-controls="game-sql"
+            type="button"
           >
             SQL Quiz
           </button>
@@ -1065,11 +1049,12 @@ solve(g)</code></pre>
         </div>
 
 
-        <!-- Reaction Game -->
+        <!-- Reaction -->
 
         <div
           class="game-panel active"
           id="game-reaction"
+          role="tabpanel"
         >
 
           <div class="game-panel-head">
@@ -1128,6 +1113,7 @@ solve(g)</code></pre>
         <div
           class="game-panel"
           id="game-snake"
+          role="tabpanel"
         >
 
           <div class="game-panel-head">
@@ -1176,12 +1162,42 @@ solve(g)</code></pre>
               </p>
 
 
-              <div class="snake-controls">
+              <div
+                class="snake-controls"
+                aria-label="Snake controls"
+              >
 
-                <button data-dir="up" type="button">↑</button>
-                <button data-dir="left" type="button">←</button>
-                <button data-dir="down" type="button">↓</button>
-                <button data-dir="right" type="button">→</button>
+                <button
+                  data-dir="up"
+                  type="button"
+                  aria-label="Move up"
+                >
+                  ↑
+                </button>
+
+                <button
+                  data-dir="left"
+                  type="button"
+                  aria-label="Move left"
+                >
+                  ←
+                </button>
+
+                <button
+                  data-dir="down"
+                  type="button"
+                  aria-label="Move down"
+                >
+                  ↓
+                </button>
+
+                <button
+                  data-dir="right"
+                  type="button"
+                  aria-label="Move right"
+                >
+                  →
+                </button>
 
               </div>
 
@@ -1197,6 +1213,7 @@ solve(g)</code></pre>
         <div
           class="game-panel"
           id="game-sql"
+          role="tabpanel"
         >
 
           <div class="game-panel-head">
@@ -1258,17 +1275,24 @@ solve(g)</code></pre>
 
       <div class="contact-main reveal">
 
-        <div>
+        <div class="contact-copy">
 
-          <p>
-            INFORMATION SYSTEMS · DATA / REPORTING · BUSINESS SYSTEMS ·
-            TECHNOLOGY SUPPORT · INTERNSHIPS · ENTRY-LEVEL OPPORTUNITIES
+          <p class="contact-focus">
+            DATA &amp; REPORTING · INFORMATION SYSTEMS · BUSINESS SYSTEMS ·
+            APPLICATION SUPPORT · TECHNOLOGY SUPPORT
           </p>
 
           <h2>
             Think I could be useful to your team?
             I'd be happy to hear from you.
           </h2>
+
+          <p>
+            I'm available full-time from 30 October 2026 through the summer
+            and open to part-time work alongside university during 2027.
+            I'm based in Wellington and open to suitable opportunities
+            elsewhere in New Zealand.
+          </p>
 
         </div>
 
@@ -1290,14 +1314,10 @@ solve(g)</code></pre>
           gandhiviraj2006@gmail.com
         </a>
 
-        <a href="tel:+64220866850">
-          022 086 6850
-        </a>
-
         <a
           href="https://github.com/VTXZenyx"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           GitHub ↗
         </a>
@@ -1305,9 +1325,9 @@ solve(g)</code></pre>
         <a
           href="resume.pdf"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
-          Tech CV ↗
+          CV ↗
         </a>
 
       </div>
@@ -1328,7 +1348,7 @@ solve(g)</code></pre>
     </span>
 
     <span>
-      Information Systems × Data × Technology
+      Systems × Data × People
     </span>
 
     <a href="#home">
@@ -1353,6 +1373,7 @@ solve(g)</code></pre>
       role="dialog"
       aria-modal="true"
       aria-labelledby="modalTitle"
+      aria-describedby="modalDesc"
     >
 
       <button
@@ -1406,7 +1427,7 @@ solve(g)</code></pre>
   </div>
 
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 
 </body>
 </html>
