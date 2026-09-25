@@ -1,6 +1,7 @@
 (() => {
   "use strict";
 
+
   /* =========================================================
      01. HELPERS
      ========================================================= */
@@ -11,21 +12,53 @@
   const $$ = (selector, parent = document) =>
     [...parent.querySelectorAll(selector)];
 
-  const getStoredNumber = (key, fallback = 0) => {
-    const value = Number(localStorage.getItem(key));
 
-    return Number.isFinite(value)
-      ? value
-      : fallback;
+  const getStoredNumber = (key, fallback = 0) => {
+    try {
+      const storedValue =
+        localStorage.getItem(key);
+
+      if (storedValue === null) {
+        return fallback;
+      }
+
+      const value =
+        Number(storedValue);
+
+      return Number.isFinite(value)
+        ? value
+        : fallback;
+    } catch {
+      return fallback;
+    }
   };
+
 
   const setStoredNumber = (key, value) => {
     try {
-      localStorage.setItem(key, String(value));
+      localStorage.setItem(
+        key,
+        String(value)
+      );
     } catch {
-      /* localStorage may be blocked by the browser */
+      /*
+        Storage may be disabled or blocked.
+        The website should continue working normally.
+      */
     }
   };
+
+
+  const prefersReducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+
+  const hasFinePointer =
+    window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    );
 
 
   /* =========================================================
@@ -33,30 +66,151 @@
      ========================================================= */
 
   const PROJECTS = {
-    waid: {
-      kicker: "APPLICATION DEVELOPMENT · 2026",
 
-      title: "Course Enrolment Web App",
+    sql: {
+      kicker:
+        "SQL · SQLITE · DATABASE DESIGN",
+
+      title:
+        "SQL & Relational Database Portfolio",
 
       desc:
-        "A working web application that turns course-enrolment business rules into interactive application logic. Students can log in, browse courses, enrol or drop courses, and receive feedback when prerequisites, timetable clashes or approval rules affect an enrolment.",
+        "A collection of SQL and relational database work focused on querying, organising and working with structured data. I have used joins, subqueries, grouped analysis, relational keys and database design across university exercises and project work.",
 
       evidence: [
         [
-          "WHAT I BUILT",
-          "Login, course browsing, enrol/drop actions and status feedback"
+          "QUERYING",
+          "Filtering, multi-table joins, self joins, GROUP BY, HAVING and aggregate queries"
         ],
         [
-          "BUSINESS LOGIC",
-          "Prerequisites, timetable clashes, approval-required enrolments and course limits"
+          "SUBQUERIES",
+          "Subqueries used within larger queries to work with grouped and calculated results"
+        ],
+        [
+          "DATABASE DESIGN",
+          "Primary keys, foreign keys, composite keys, relationships and normalisation"
+        ],
+        [
+          "DATABASE OPERATIONS",
+          "CREATE, INSERT, UPDATE, DELETE and creating tables from query results"
+        ],
+        [
+          "R + SQLITE",
+          "Used DBI and RSQLite to connect R to SQLite databases, write tables and run SQL queries"
+        ]
+      ],
+
+      tags: [
+        "SQL",
+        "SQLITE",
+        "JOINS",
+        "SUBQUERIES",
+        "DATABASE DESIGN",
+        "DBI / RSQLITE"
+      ],
+
+      actions: [
+        {
+          label:
+            "View SQL portfolio ↗",
+
+          url:
+            "https://github.com/VTXZenyx/sql-database-portfolio",
+
+          type:
+            "primary"
+        }
+      ]
+    },
+
+
+    r: {
+      kicker:
+        "R · DATA ANALYSIS · VISUALISATION",
+
+      title:
+        "R Data Analysis",
+
+      desc:
+        "Data analysis work completed in R using an Excel-based archaeological dataset. I imported, cleaned and transformed data, worked with related datasets, produced grouped summaries and created visualisations to explore patterns in the data.",
+
+      evidence: [
+        [
+          "DATA IMPORT",
+          "Worked with Excel data using readxl and inspected related datasets before analysis"
+        ],
+        [
+          "CLEANING",
+          "Used dplyr to select, rename, filter and transform variables and clean inconsistent text values"
+        ],
+        [
+          "ANALYSIS",
+          "Produced grouped summaries across historical periods and demographic categories"
+        ],
+        [
+          "VISUALISATION",
+          "Used ggplot2 to explore strontium isotope measurements and patterns in the data"
+        ],
+        [
+          "DOCUMENTATION",
+          "Used R Markdown to combine code, output, visualisations and written interpretation"
+        ]
+      ],
+
+      tags: [
+        "R",
+        "RSTUDIO",
+        "DPLYR",
+        "GGPLOT2",
+        "READXL",
+        "R MARKDOWN"
+      ],
+
+      actions: [
+        {
+          label:
+            "View R portfolio ↗",
+
+          url:
+            "https://github.com/VTXZenyx/r-data-programming-portfolio",
+
+          type:
+            "primary"
+        }
+      ]
+    },
+
+
+    waid: {
+      kicker:
+        "APPLICATION · BUSINESS RULES · SYSTEMS",
+
+      title:
+        "Course Enrolment Web Application",
+
+      desc:
+        "A working course-enrolment application that applies business rules through application logic. Users can log in, browse courses, enrol and withdraw while the system checks relevant enrolment conditions.",
+
+      evidence: [
+        [
+          "APPLICATION",
+          "Login, course browsing, enrolment and withdrawal functionality"
+        ],
+        [
+          "BUSINESS RULES",
+          "Prerequisites, course-load requirements, GPA requirements, approval requirements and timetable clashes"
         ],
         [
           "DATA",
-          "External course/student JSON with fallback sample data"
+          "Structured course and student information used within the application"
         ],
         [
-          "TOOLS",
-          "HTML, CSS, Vue.js and Python through Brython"
+          "TECHNOLOGIES",
+          "HTML, CSS, Vue.js, Python through Brython and JSON"
+        ],
+        [
+          "INFORMATION SYSTEMS",
+          "Turned defined business rules and requirements into working application behaviour"
         ]
       ],
 
@@ -65,139 +219,74 @@
         "CSS",
         "VUE.JS",
         "PYTHON / BRYTHON",
-        "JSON"
+        "JSON",
+        "BUSINESS RULES"
       ],
 
       actions: [
-        [
-          "View live app ↗",
-          "https://vtxzenyx.github.io/course-enrolment-web-app/",
-          "primary"
-        ],
-        [
-          "View GitHub ↗",
-          "https://github.com/VTXZenyx/course-enrolment-web-app",
-          "ghost"
-        ]
+        {
+          label:
+            "View live app ↗",
+
+          url:
+            "https://vtxzenyx.github.io/course-enrolment-web-app/",
+
+          type:
+            "primary"
+        },
+        {
+          label:
+            "View GitHub ↗",
+
+          url:
+            "https://github.com/VTXZenyx/course-enrolment-web-app",
+
+          type:
+            "ghost"
+        }
       ]
-    },
-
-
-    sql: {
-      kicker: "SQL · SQLITE · DATABASE DESIGN",
-
-      title: "SQL & Relational Database Portfolio",
-
-      desc:
-        "A portfolio of my university database work, organised by topic. It includes SQL query files, relational database design, normalisation work, database evidence and practical work completed using SQLite and DB Browser for SQLite.",
-
-      evidence: [
-        [
-          "QUERYING",
-          "Filtering, multi-table joins, GROUP BY, HAVING and aggregate analysis"
-        ],
-        [
-          "ADVANCED SQL",
-          "Nested and correlated subqueries, self joins and date/time functions"
-        ],
-        [
-          "DATABASE DESIGN",
-          "Functional dependencies, normalisation, primary keys, foreign keys and composite keys"
-        ],
-        [
-          "OPERATIONS",
-          "DDL/DML, transactions, ACID concepts and SQL views"
-        ],
-        [
-          "TOOLS",
-          "SQLite, DB Browser for SQLite and Draw.io"
-        ]
-      ],
-
-      tags: [
-        "SQL",
-        "SQLITE",
-        "DB BROWSER",
-        "SUBQUERIES",
-        "NORMALISATION",
-        "TRANSACTIONS"
-      ],
-
-      actions: [
-        [
-          "View SQL portfolio ↗",
-          "https://github.com/VTXZenyx/sql-database-portfolio",
-          "primary"
-        ]
-      ]
-    },
-
-
-    r: {
-      kicker: "R · RSTUDIO · R MARKDOWN",
-
-      title: "R Programming & Data Analysis",
-
-      desc:
-        "University work using R and RStudio for programming and data analysis. I use R Markdown to combine executable code with written explanations and am continuing to develop my skills as I work with more datasets and analysis tasks.",
-
-      evidence: [
-        [
-          "TOOLS",
-          "R, RStudio and R Markdown"
-        ],
-        [
-          "PROGRAMMING",
-          "Vectors, indexing, logical filtering, matrices and debugging"
-        ],
-        [
-          "DATA",
-          "Missing values and working with CSV datasets"
-        ],
-        [
-          "CURRENT FOCUS",
-          "Continuing to develop my R programming and data-analysis skills"
-        ]
-      ],
-
-      tags: [
-        "R",
-        "RSTUDIO",
-        "R MARKDOWN",
-        "CSV"
-      ],
-
-      actions: []
     },
 
 
     systems: {
-      kicker: "INFORMATION SYSTEMS",
+      kicker:
+        "INFORMATION SYSTEMS · ANALYSIS",
 
-      title: "Systems Thinking & Stakeholder Analysis",
+      title:
+        "Business & Systems Analysis",
 
       desc:
-        "Systems and business-analysis work where I looked at stakeholders, relationships, system boundaries, feedback and trade-offs before jumping straight to a solution.",
+        "Information Systems work focused on understanding users, stakeholders and the problems that systems are intended to solve before developing possible responses.",
 
       evidence: [
         [
-          "FOCUS",
-          "People, processes, technology and system context"
+          "USER RESEARCH",
+          "Worked with user and stakeholder research, including interviews"
         ],
         [
-          "METHODS",
-          "Stakeholder analysis, systems thinking and problem framing"
+          "ANALYSIS",
+          "Analysed evidence and recurring themes to better understand problems and user needs"
         ],
         [
-          "GOAL",
-          "Understand the problem clearly before designing a response"
+          "REQUIREMENTS",
+          "Worked with business rules, requirements and stakeholder needs"
+        ],
+        [
+          "PROBLEM DEFINITION",
+          "Used structured problem framing before moving towards possible solutions"
+        ],
+        [
+          "SOLUTION DEVELOPMENT",
+          "Developed ideas and used prototyping and testing to refine possible responses"
         ]
       ],
 
       tags: [
+        "USER RESEARCH",
         "STAKEHOLDERS",
-        "SYSTEMS",
-        "PROBLEM FRAMING"
+        "REQUIREMENTS",
+        "PROBLEM DEFINITION",
+        "PROTOTYPING"
       ],
 
       actions: []
@@ -206,71 +295,220 @@
 
 
   /* =========================================================
-     03. LOCAL TIME + FOOTER YEAR
+     03. FOOTER YEAR
      ========================================================= */
 
-  function initClock() {
-    const clock = $("#clock");
-    const year = $("#year");
+  function initFooterYear() {
+    const year =
+      $("#year");
 
-    if (year) {
-      year.textContent =
-        new Date().getFullYear();
+    if (!year) {
+      return;
     }
 
-    const updateClock = () => {
-      if (!clock) return;
-
-      try {
-        clock.textContent =
-          new Intl.DateTimeFormat(
-            "en-NZ",
-            {
-              timeZone: "Pacific/Auckland",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false
-            }
-          ).format(new Date());
-      } catch {
-        clock.textContent =
-          new Date().toLocaleTimeString(
-            [],
-            {
-              hour: "2-digit",
-              minute: "2-digit"
-            }
-          );
-      }
-    };
-
-    updateClock();
-
-    setInterval(
-      updateClock,
-      30_000
-    );
+    year.textContent =
+      new Date().getFullYear();
   }
 
 
   /* =========================================================
-     04. CURSOR HALO
+     04. MOBILE NAVIGATION
+     ========================================================= */
+
+  function initMobileNavigation() {
+    const toggle =
+      $("#navToggle");
+
+    const navigation =
+      $("#primaryNav");
+
+    if (
+      !toggle ||
+      !navigation
+    ) {
+      return;
+    }
+
+
+    const setOpen =
+      (isOpen) => {
+        navigation.classList.toggle(
+          "open",
+          isOpen
+        );
+
+        toggle.setAttribute(
+          "aria-expanded",
+          String(isOpen)
+        );
+
+        toggle.setAttribute(
+          "aria-label",
+          isOpen
+            ? "Close navigation"
+            : "Open navigation"
+        );
+      };
+
+
+    const isOpen = () =>
+      navigation.classList.contains(
+        "open"
+      );
+
+
+    toggle.addEventListener(
+      "click",
+      () => {
+        setOpen(
+          !isOpen()
+        );
+      }
+    );
+
+
+    $$(
+      "a",
+      navigation
+    ).forEach(
+      (link) => {
+        link.addEventListener(
+          "click",
+          () => {
+            setOpen(false);
+          }
+        );
+      }
+    );
+
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (!isOpen()) {
+          return;
+        }
+
+        if (
+          navigation.contains(
+            event.target
+          ) ||
+          toggle.contains(
+            event.target
+          )
+        ) {
+          return;
+        }
+
+        setOpen(false);
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key !== "Escape" ||
+          !isOpen()
+        ) {
+          return;
+        }
+
+        setOpen(false);
+
+        toggle.focus();
+      }
+    );
+
+
+    const desktopQuery =
+      window.matchMedia(
+        "(min-width: 821px)"
+      );
+
+
+    const handleDesktopChange =
+      (event) => {
+        if (event.matches) {
+          setOpen(false);
+        }
+      };
+
+
+    if (
+      desktopQuery.addEventListener
+    ) {
+      desktopQuery.addEventListener(
+        "change",
+        handleDesktopChange
+      );
+    } else {
+      desktopQuery.addListener(
+        handleDesktopChange
+      );
+    }
+  }
+
+
+  /* =========================================================
+     05. CURSOR HALO
      ========================================================= */
 
   function initCursorHalo() {
     const halo =
       $(".cursor-halo");
 
-    if (!halo) return;
+    if (!halo) {
+      return;
+    }
+
+
+    if (
+      !hasFinePointer.matches ||
+      prefersReducedMotion.matches
+    ) {
+      halo.style.display =
+        "none";
+
+      return;
+    }
+
+
+    let frame = null;
+    let x = 0;
+    let y = 0;
+
+
+    const draw =
+      () => {
+        halo.style.left =
+          `${x}px`;
+
+        halo.style.top =
+          `${y}px`;
+
+        frame = null;
+      };
+
 
     window.addEventListener(
       "pointermove",
       (event) => {
-        halo.style.left =
-          `${event.clientX}px`;
+        x =
+          event.clientX;
 
-        halo.style.top =
-          `${event.clientY}px`;
+        y =
+          event.clientY;
+
+        if (frame !== null) {
+          return;
+        }
+
+        frame =
+          requestAnimationFrame(
+            draw
+          );
       },
       {
         passive: true
@@ -280,19 +518,24 @@
 
 
   /* =========================================================
-     05. DOT-MATRIX HERO
+     06. DOT-MATRIX HERO
      ========================================================= */
 
   function initDotHero() {
     const canvas =
       $("#dotCanvas");
 
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
-    const ctx =
+
+    const context =
       canvas.getContext("2d");
 
-    if (!ctx) return;
+    if (!context) {
+      return;
+    }
 
 
     let width = 0;
@@ -301,277 +544,359 @@
 
     let points = [];
 
-    let mouseX = -9999;
-    let mouseY = -9999;
+    let pointerX = -9999;
+    let pointerY = -9999;
 
-    let animationFrame = null;
-
-
-    function buildPoints() {
-      const rect =
-        canvas.getBoundingClientRect();
-
-      dpr = Math.min(
-        window.devicePixelRatio || 1,
-        2
-      );
-
-      width = Math.max(
-        1,
-        Math.floor(rect.width)
-      );
-
-      height = Math.max(
-        1,
-        Math.floor(rect.height)
-      );
+    let drawFrame = null;
+    let resizeTimer = null;
 
 
-      canvas.width =
-        width * dpr;
-
-      canvas.height =
-        height * dpr;
-
-
-      ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-      );
-
-
-      const offscreen =
-        document.createElement("canvas");
-
-      const offCtx =
-        offscreen.getContext("2d");
-
-
-      if (!offCtx) return;
-
-
-      offscreen.width =
-        width;
-
-      offscreen.height =
-        height;
-
-
-      const fontSize =
-        Math.min(
-          width * 0.19,
-          height * 0.34
-        );
-
-
-      offCtx.clearRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-      offCtx.fillStyle =
-        "#ffffff";
-
-      offCtx.font =
-        `800 ${fontSize}px Manrope, sans-serif`;
-
-      offCtx.textAlign =
-        "center";
-
-      offCtx.textBaseline =
-        "middle";
-
-
-      offCtx.fillText(
-        "VIRAJ",
-        width / 2,
-        height * 0.34
-      );
-
-      offCtx.fillText(
-        "GANDHI",
-        width / 2,
-        height * 0.68
-      );
-
-
-      const image =
-        offCtx.getImageData(
+    const drawHero =
+      () => {
+        context.clearRect(
           0,
           0,
           width,
           height
         );
 
-      const data =
-        image.data;
 
-      const step =
-        width < 650
-          ? 7
-          : 8;
+        context.fillStyle =
+          "rgba(120, 187, 255, 0.92)";
 
 
-      points = [];
+        context.beginPath();
 
 
-      for (
-        let y = 0;
-        y < height;
-        y += step
-      ) {
         for (
-          let x = 0;
-          x < width;
-          x += step
+          const point of points
         ) {
-          const alpha =
-            data[
-              (y * width + x) *
-              4 +
-              3
-            ];
+          let x =
+            point.x;
 
-          if (alpha > 80) {
-            points.push({
-              x,
-              y
-            });
+          let y =
+            point.y;
+
+          let radius =
+            1.7;
+
+
+          if (
+            hasFinePointer.matches &&
+            !prefersReducedMotion.matches
+          ) {
+            const dx =
+              x - pointerX;
+
+            const dy =
+              y - pointerY;
+
+            const distance =
+              Math.hypot(
+                dx,
+                dy
+              );
+
+
+            if (
+              distance < 100
+            ) {
+              const strength =
+                (100 - distance) /
+                100;
+
+              const force =
+                strength * 20;
+
+
+              x +=
+                (dx /
+                  (distance || 1)) *
+                force;
+
+              y +=
+                (dy /
+                  (distance || 1)) *
+                force;
+
+
+              radius +=
+                strength * 0.8;
+            }
           }
-        }
-      }
-    }
 
 
-    function drawHero() {
-      ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-
-      for (
-        const point of points
-      ) {
-        let x =
-          point.x;
-
-        let y =
-          point.y;
-
-
-        const dx =
-          x - mouseX;
-
-        const dy =
-          y - mouseY;
-
-        const distance =
-          Math.hypot(
-            dx,
-            dy
+          context.moveTo(
+            x + radius,
+            y
           );
 
-
-        if (distance < 90) {
-          const force =
-            ((90 - distance) / 90) *
-            19;
-
-          x +=
-            (dx / (distance || 1)) *
-            force;
-
-          y +=
-            (dy / (distance || 1)) *
-            force;
-        }
-
-
-        const glow =
-          ctx.createRadialGradient(
+          context.arc(
             x,
             y,
+            radius,
             0,
-            x,
-            y,
-            4
+            Math.PI * 2
           );
+        }
 
 
-        glow.addColorStop(
-          0,
-          "rgba(130,196,255,.96)"
-        );
+        context.fill();
 
-        glow.addColorStop(
-          1,
-          "rgba(50,116,255,.08)"
-        );
+        drawFrame = null;
+      };
 
 
-        ctx.fillStyle =
-          glow;
+    const requestDraw =
+      () => {
+        if (
+          drawFrame !== null
+        ) {
+          return;
+        }
 
-        ctx.beginPath();
-
-        ctx.arc(
-          x,
-          y,
-          2.05,
-          0,
-          Math.PI * 2
-        );
-
-        ctx.fill();
-      }
+        drawFrame =
+          requestAnimationFrame(
+            drawHero
+          );
+      };
 
 
-      animationFrame =
-        requestAnimationFrame(
-          drawHero
-        );
-    }
-
-
-    canvas.addEventListener(
-      "pointermove",
-      (event) => {
+    const buildPoints =
+      () => {
         const rect =
           canvas.getBoundingClientRect();
 
-        mouseX =
-          event.clientX -
-          rect.left;
 
-        mouseY =
-          event.clientY -
-          rect.top;
-      }
-    );
+        width =
+          Math.max(
+            1,
+            Math.round(
+              rect.width
+            )
+          );
 
-
-    canvas.addEventListener(
-      "pointerleave",
-      () => {
-        mouseX = -9999;
-        mouseY = -9999;
-      }
-    );
+        height =
+          Math.max(
+            1,
+            Math.round(
+              rect.height
+            )
+          );
 
 
-    let resizeTimer;
+        dpr =
+          Math.min(
+            window.devicePixelRatio ||
+              1,
+            2
+          );
 
-    window.addEventListener(
-      "resize",
+
+        canvas.width =
+          Math.round(
+            width * dpr
+          );
+
+        canvas.height =
+          Math.round(
+            height * dpr
+          );
+
+
+        context.setTransform(
+          dpr,
+          0,
+          0,
+          dpr,
+          0,
+          0
+        );
+
+
+        const offscreen =
+          document.createElement(
+            "canvas"
+          );
+
+        const offscreenContext =
+          offscreen.getContext(
+            "2d",
+            {
+              willReadFrequently:
+                true
+            }
+          );
+
+
+        if (!offscreenContext) {
+          return;
+        }
+
+
+        offscreen.width =
+          width;
+
+        offscreen.height =
+          height;
+
+
+        const fontSize =
+          Math.min(
+            width * 0.19,
+            height * 0.34
+          );
+
+
+        offscreenContext.clearRect(
+          0,
+          0,
+          width,
+          height
+        );
+
+
+        offscreenContext.fillStyle =
+          "#ffffff";
+
+
+        offscreenContext.font =
+          `800 ${fontSize}px Manrope, sans-serif`;
+
+
+        offscreenContext.textAlign =
+          "center";
+
+
+        offscreenContext.textBaseline =
+          "middle";
+
+
+        offscreenContext.fillText(
+          "VIRAJ",
+          width / 2,
+          height * 0.34
+        );
+
+
+        offscreenContext.fillText(
+          "GANDHI",
+          width / 2,
+          height * 0.68
+        );
+
+
+        const imageData =
+          offscreenContext.getImageData(
+            0,
+            0,
+            width,
+            height
+          ).data;
+
+
+        let step = 8;
+
+
+        if (
+          width < 480
+        ) {
+          step = 6;
+        } else if (
+          width < 800
+        ) {
+          step = 7;
+        }
+
+
+        const nextPoints = [];
+
+
+        for (
+          let y = 0;
+          y < height;
+          y += step
+        ) {
+          for (
+            let x = 0;
+            x < width;
+            x += step
+          ) {
+            const alpha =
+              imageData[
+                (
+                  y * width +
+                  x
+                ) *
+                  4 +
+                3
+              ];
+
+
+            if (
+              alpha > 90
+            ) {
+              nextPoints.push({
+                x,
+                y
+              });
+            }
+          }
+        }
+
+
+        points =
+          nextPoints;
+
+
+        requestDraw();
+      };
+
+
+    if (
+      hasFinePointer.matches &&
+      !prefersReducedMotion.matches
+    ) {
+      canvas.addEventListener(
+        "pointermove",
+        (event) => {
+          const rect =
+            canvas.getBoundingClientRect();
+
+
+          pointerX =
+            event.clientX -
+            rect.left;
+
+          pointerY =
+            event.clientY -
+            rect.top;
+
+
+          requestDraw();
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      canvas.addEventListener(
+        "pointerleave",
+        () => {
+          pointerX =
+            -9999;
+
+          pointerY =
+            -9999;
+
+          requestDraw();
+        }
+      );
+    }
+
+
+    const rebuild =
       () => {
         clearTimeout(
           resizeTimer
@@ -580,38 +905,49 @@
         resizeTimer =
           setTimeout(
             buildPoints,
-            120
+            100
           );
-      }
-    );
+      };
 
 
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(
-        buildPoints
+    if (
+      "ResizeObserver"
+      in window
+    ) {
+      const resizeObserver =
+        new ResizeObserver(
+          rebuild
+        );
+
+      resizeObserver.observe(
+        canvas
+      );
+    } else {
+      window.addEventListener(
+        "resize",
+        rebuild,
+        {
+          passive: true
+        }
       );
     }
 
 
     buildPoints();
-    drawHero();
 
 
-    window.addEventListener(
-      "beforeunload",
-      () => {
-        if (animationFrame) {
-          cancelAnimationFrame(
-            animationFrame
-          );
-        }
-      }
-    );
+    if (
+      document.fonts?.ready
+    ) {
+      document.fonts.ready.then(
+        buildPoints
+      );
+    }
   }
 
 
   /* =========================================================
-     06. SCROLL REVEAL
+     07. SCROLL REVEAL
      ========================================================= */
 
   function initRevealAnimations() {
@@ -620,16 +956,18 @@
 
 
     if (
+      prefersReducedMotion.matches ||
       !(
         "IntersectionObserver"
         in window
       )
     ) {
       elements.forEach(
-        (element) =>
+        (element) => {
           element.classList.add(
             "visible"
-          )
+          );
+        }
       );
 
       return;
@@ -647,9 +985,11 @@
                 return;
               }
 
+
               entry.target.classList.add(
                 "visible"
               );
+
 
               observer.unobserve(
                 entry.target
@@ -658,29 +998,34 @@
           );
         },
         {
-          threshold: 0.12
+          threshold: 0.08,
+          rootMargin:
+            "0px 0px -30px 0px"
         }
       );
 
 
     elements.forEach(
-      (element) =>
+      (element) => {
         observer.observe(
           element
-        )
+        );
+      }
     );
   }
 
 
   /* =========================================================
-     07. PROJECT MODAL
+     08. PROJECT MODAL
      ========================================================= */
 
   function initProjectModal() {
     const modal =
       $("#projectModal");
 
-    if (!modal) return;
+    if (!modal) {
+      return;
+    }
 
 
     const title =
@@ -701,121 +1046,298 @@
     const actions =
       $("#modalActions");
 
+    const closeButton =
+      $(
+        ".project-modal-close",
+        modal
+      );
+
+    const secondaryClose =
+      $("#modalCloseSecondary");
+
+    const main =
+      $("main");
+
+    const topbar =
+      $(".topbar");
+
+
+    if (
+      !title ||
+      !kicker ||
+      !description ||
+      !evidence ||
+      !tags ||
+      !actions
+    ) {
+      return;
+    }
+
 
     let previousFocus = null;
 
 
-    function closeModal() {
-      modal.classList.remove(
-        "open"
-      );
+    const setBackgroundInert =
+      (isInert) => {
+        if (main) {
+          main.inert =
+            isInert;
+        }
 
-      modal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      document.body.style.overflow =
-        "";
-
-
-      if (previousFocus) {
-        previousFocus.focus();
-      }
-    }
+        if (topbar) {
+          topbar.inert =
+            isInert;
+        }
+      };
 
 
-    function openModal(
-      projectKey,
-      trigger
-    ) {
-      const project =
-        PROJECTS[projectKey];
-
-      if (!project) return;
-
-
-      previousFocus =
-        trigger;
-
-
-      kicker.textContent =
-        project.kicker;
-
-      title.textContent =
-        project.title;
-
-      description.textContent =
-        project.desc;
+    const getFocusableElements =
+      () =>
+        $$(
+          [
+            "a[href]",
+            "button:not([disabled])",
+            "[tabindex]:not([tabindex='-1'])"
+          ].join(","),
+          modal
+        ).filter(
+          (element) =>
+            !element.hasAttribute(
+              "hidden"
+            )
+        );
 
 
-      evidence.innerHTML =
-        project.evidence
-          .map(
-            ([label, value]) => `
-              <div>
-                <span>${label}</span>
-                <strong>${value}</strong>
-              </div>
-            `
+    const closeModal =
+      () => {
+        if (
+          !modal.classList.contains(
+            "open"
           )
-          .join("");
+        ) {
+          return;
+        }
 
 
-      tags.innerHTML =
-        project.tags
-          .map(
-            (tag) =>
-              `<span>${tag}</span>`
-          )
-          .join("");
+        modal.classList.remove(
+          "open"
+        );
 
 
-      actions.innerHTML =
-        project.actions
-          .map(
-            (
-              [
-                label,
-                url,
-                type
-              ]
-            ) => `
-              <a
-                class="button ${
-                  type === "primary"
-                    ? "button-primary"
-                    : "button-ghost"
-                } compact"
-                href="${url}"
-                target="_blank"
-                rel="noreferrer"
-              >
-                ${label}
-              </a>
-            `
-          )
-          .join("");
+        modal.setAttribute(
+          "aria-hidden",
+          "true"
+        );
 
 
-      modal.classList.add(
-        "open"
-      );
-
-      modal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      document.body.style.overflow =
-        "hidden";
+        document.body.style.overflow =
+          "";
 
 
-      $(
-        ".project-modal-close",
-        modal
-      )?.focus();
-    }
+        setBackgroundInert(
+          false
+        );
+
+
+        if (
+          previousFocus instanceof
+          HTMLElement
+        ) {
+          previousFocus.focus();
+        }
+
+
+        previousFocus = null;
+      };
+
+
+    const renderEvidence =
+      (items) => {
+        evidence.replaceChildren();
+
+
+        items.forEach(
+          ([label, value]) => {
+            const row =
+              document.createElement(
+                "div"
+              );
+
+            const labelElement =
+              document.createElement(
+                "span"
+              );
+
+            const valueElement =
+              document.createElement(
+                "strong"
+              );
+
+
+            labelElement.textContent =
+              label;
+
+            valueElement.textContent =
+              value;
+
+
+            row.append(
+              labelElement,
+              valueElement
+            );
+
+
+            evidence.append(
+              row
+            );
+          }
+        );
+      };
+
+
+    const renderTags =
+      (projectTags) => {
+        tags.replaceChildren();
+
+
+        projectTags.forEach(
+          (tag) => {
+            const tagElement =
+              document.createElement(
+                "span"
+              );
+
+            tagElement.textContent =
+              tag;
+
+
+            tags.append(
+              tagElement
+            );
+          }
+        );
+      };
+
+
+    const renderActions =
+      (projectActions) => {
+        actions.replaceChildren();
+
+
+        projectActions.forEach(
+          (action) => {
+            const link =
+              document.createElement(
+                "a"
+              );
+
+
+            link.className =
+              `button ${
+                action.type ===
+                "primary"
+                  ? "button-primary"
+                  : "button-ghost"
+              } compact`;
+
+
+            link.href =
+              action.url;
+
+
+            link.target =
+              "_blank";
+
+
+            link.rel =
+              "noopener noreferrer";
+
+
+            link.textContent =
+              action.label;
+
+
+            actions.append(
+              link
+            );
+          }
+        );
+      };
+
+
+    const openModal =
+      (
+        projectKey,
+        trigger
+      ) => {
+        const project =
+          PROJECTS[
+            projectKey
+          ];
+
+
+        if (!project) {
+          return;
+        }
+
+
+        previousFocus =
+          trigger;
+
+
+        kicker.textContent =
+          project.kicker;
+
+
+        title.textContent =
+          project.title;
+
+
+        description.textContent =
+          project.desc;
+
+
+        renderEvidence(
+          project.evidence
+        );
+
+
+        renderTags(
+          project.tags
+        );
+
+
+        renderActions(
+          project.actions
+        );
+
+
+        modal.classList.add(
+          "open"
+        );
+
+
+        modal.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+
+        document.body.style.overflow =
+          "hidden";
+
+
+        setBackgroundInert(
+          true
+        );
+
+
+        requestAnimationFrame(
+          () => {
+            closeButton?.focus();
+          }
+        );
+      };
 
 
     $$(
@@ -836,17 +1358,13 @@
     );
 
 
-    $(
-      ".project-modal-close"
-    )?.addEventListener(
+    closeButton?.addEventListener(
       "click",
       closeModal
     );
 
 
-    $(
-      "#modalCloseSecondary"
-    )?.addEventListener(
+    secondaryClose?.addEventListener(
       "click",
       closeModal
     );
@@ -856,7 +1374,8 @@
       "click",
       (event) => {
         if (
-          event.target === modal
+          event.target ===
+          modal
         ) {
           closeModal();
         }
@@ -868,13 +1387,75 @@
       "keydown",
       (event) => {
         if (
-          event.key ===
-            "Escape" &&
-          modal.classList.contains(
+          !modal.classList.contains(
             "open"
           )
         ) {
+          return;
+        }
+
+
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          event.preventDefault();
+
           closeModal();
+
+          return;
+        }
+
+
+        if (
+          event.key !==
+          "Tab"
+        ) {
+          return;
+        }
+
+
+        const focusable =
+          getFocusableElements();
+
+
+        if (
+          focusable.length === 0
+        ) {
+          return;
+        }
+
+
+        const first =
+          focusable[0];
+
+        const last =
+          focusable[
+            focusable.length - 1
+          ];
+
+
+        if (
+          event.shiftKey &&
+          document.activeElement ===
+            first
+        ) {
+          event.preventDefault();
+
+          last.focus();
+
+          return;
+        }
+
+
+        if (
+          !event.shiftKey &&
+          document.activeElement ===
+            last
+        ) {
+          event.preventDefault();
+
+          first.focus();
         }
       }
     );
@@ -882,7 +1463,7 @@
 
 
   /* =========================================================
-     08. GAME TABS
+     09. GAME TABS
      ========================================================= */
 
   function initGameTabs() {
@@ -893,49 +1474,217 @@
       $$(".game-panel");
 
 
-    tabs.forEach(
-      (button) => {
-        button.addEventListener(
-          "click",
-          () => {
-            tabs.forEach(
-              (tab) => {
-                const active =
-                  tab === button;
+    if (
+      tabs.length === 0 ||
+      panels.length === 0
+    ) {
+      return;
+    }
 
-                tab.classList.toggle(
-                  "active",
-                  active
-                );
 
-                tab.setAttribute(
-                  "aria-selected",
-                  active
-                    ? "true"
-                    : "false"
-                );
-              }
+    const activateGame =
+      (gameName) => {
+        tabs.forEach(
+          (tab) => {
+            const active =
+              tab.dataset.game ===
+              gameName;
+
+
+            tab.classList.toggle(
+              "active",
+              active
             );
 
 
-            panels.forEach(
-              (panel) => {
-                panel.classList.toggle(
-                  "active",
-                  panel.id ===
-                    `game-${button.dataset.game}`
-                );
-              }
+            tab.setAttribute(
+              "aria-selected",
+              String(active)
+            );
+
+
+            tab.tabIndex =
+              active
+                ? 0
+                : -1;
+          }
+        );
+
+
+        panels.forEach(
+          (panel) => {
+            const active =
+              panel.id ===
+              `game-${gameName}`;
+
+
+            panel.classList.toggle(
+              "active",
+              active
+            );
+
+
+            panel.hidden =
+              !active;
+
+
+            panel.setAttribute(
+              "aria-hidden",
+              String(!active)
             );
           }
         );
+
+
+        document.dispatchEvent(
+          new CustomEvent(
+            "portfolio:gamechange",
+            {
+              detail: {
+                game:
+                  gameName
+              }
+            }
+          )
+        );
+      };
+
+
+    tabs.forEach(
+      (
+        tab,
+        index
+      ) => {
+        const gameName =
+          tab.dataset.game;
+
+
+        tab.id =
+          `game-tab-${gameName}`;
+
+
+        const panel =
+          $(
+            `#game-${gameName}`
+          );
+
+
+        if (panel) {
+          panel.setAttribute(
+            "aria-labelledby",
+            tab.id
+          );
+        }
+
+
+        tab.addEventListener(
+          "click",
+          () => {
+            activateGame(
+              gameName
+            );
+          }
+        );
+
+
+        tab.addEventListener(
+          "keydown",
+          (event) => {
+            let nextIndex = null;
+
+
+            if (
+              event.key ===
+                "ArrowRight" ||
+              event.key ===
+                "ArrowDown"
+            ) {
+              nextIndex =
+                (
+                  index + 1
+                ) %
+                tabs.length;
+            }
+
+
+            if (
+              event.key ===
+                "ArrowLeft" ||
+              event.key ===
+                "ArrowUp"
+            ) {
+              nextIndex =
+                (
+                  index -
+                  1 +
+                  tabs.length
+                ) %
+                tabs.length;
+            }
+
+
+            if (
+              event.key ===
+              "Home"
+            ) {
+              nextIndex = 0;
+            }
+
+
+            if (
+              event.key ===
+              "End"
+            ) {
+              nextIndex =
+                tabs.length - 1;
+            }
+
+
+            if (
+              nextIndex ===
+              null
+            ) {
+              return;
+            }
+
+
+            event.preventDefault();
+
+
+            const nextTab =
+              tabs[nextIndex];
+
+
+            activateGame(
+              nextTab.dataset.game
+            );
+
+
+            nextTab.focus();
+          }
+        );
       }
+    );
+
+
+    const initialGame =
+      tabs.find(
+        (tab) =>
+          tab.classList.contains(
+            "active"
+          )
+      )?.dataset.game ||
+      tabs[0].dataset.game;
+
+
+    activateGame(
+      initialGame
     );
   }
 
 
   /* =========================================================
-     09. REACTION GAME
+     10. REACTION GAME
      ========================================================= */
 
   function initReactionGame() {
@@ -974,6 +1723,7 @@
     let readyAt = 0;
     let active = false;
 
+
     let best =
       getStoredNumber(
         storageKey,
@@ -982,15 +1732,49 @@
 
 
     bestElement.textContent =
-      best
+      best > 0
         ? `${best} ms`
         : "--- ms";
+
+
+    const resetRound =
+      () => {
+        if (timer) {
+          clearTimeout(
+            timer
+          );
+        }
+
+
+        timer = null;
+        active = false;
+        readyAt = 0;
+
+
+        box.classList.remove(
+          "waiting",
+          "ready"
+        );
+
+
+        text.textContent =
+          "PRESS START";
+
+
+        subtitle.textContent =
+          "Wait for the signal, then click.";
+      };
 
 
     start.addEventListener(
       "click",
       () => {
-        clearTimeout(timer);
+        if (timer) {
+          clearTimeout(
+            timer
+          );
+        }
+
 
         active = true;
         readyAt = 0;
@@ -1000,6 +1784,7 @@
           "ready"
         );
 
+
         box.classList.add(
           "waiting"
         );
@@ -1008,6 +1793,7 @@
         text.textContent =
           "WAIT...";
 
+
         subtitle.textContent =
           "Don't click yet.";
 
@@ -1015,6 +1801,9 @@
         timer =
           setTimeout(
             () => {
+              timer = null;
+
+
               readyAt =
                 performance.now();
 
@@ -1023,6 +1812,7 @@
                 "waiting"
               );
 
+
               box.classList.add(
                 "ready"
               );
@@ -1030,6 +1820,7 @@
 
               text.textContent =
                 "CLICK!";
+
 
               subtitle.textContent =
                 "Now!";
@@ -1045,12 +1836,20 @@
     box.addEventListener(
       "click",
       () => {
-        if (!active) return;
+        if (!active) {
+          return;
+        }
 
 
         if (!readyAt) {
-          clearTimeout(timer);
+          if (timer) {
+            clearTimeout(
+              timer
+            );
+          }
 
+
+          timer = null;
           active = false;
 
 
@@ -1062,8 +1861,10 @@
           text.textContent =
             "TOO EARLY";
 
+
           subtitle.textContent =
             "Start another round.";
+
 
           return;
         }
@@ -1077,6 +1878,7 @@
 
 
         active = false;
+        readyAt = 0;
 
 
         box.classList.remove(
@@ -1089,18 +1891,18 @@
 
 
         if (
-          milliseconds < 250
+          milliseconds < 220
         ) {
           subtitle.textContent =
             "Very quick.";
         } else if (
-          milliseconds < 350
+          milliseconds < 320
         ) {
           subtitle.textContent =
             "Nice reaction.";
         } else {
           subtitle.textContent =
-            "Try again.";
+            "Try another round.";
         }
 
 
@@ -1110,6 +1912,7 @@
         ) {
           best =
             milliseconds;
+
 
           setStoredNumber(
             storageKey,
@@ -1122,11 +1925,36 @@
         }
       }
     );
+
+
+    document.addEventListener(
+      "portfolio:gamechange",
+      (event) => {
+        if (
+          event.detail?.game !==
+          "reaction"
+        ) {
+          resetRound();
+        }
+      }
+    );
+
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (
+          document.hidden
+        ) {
+          resetRound();
+        }
+      }
+    );
   }
 
 
   /* =========================================================
-     10. SNAKE
+     11. SNAKE
      ========================================================= */
 
   function initSnakeGame() {
@@ -1156,10 +1984,15 @@
     }
 
 
-    const ctx =
-      canvas.getContext("2d");
+    const context =
+      canvas.getContext(
+        "2d"
+      );
 
-    if (!ctx) return;
+
+    if (!context) {
+      return;
+    }
 
 
     const cells = 20;
@@ -1186,8 +2019,10 @@
     };
 
     let loop = null;
+    let running = false;
 
     let score = 0;
+
 
     let best =
       getStoredNumber(
@@ -1200,160 +2035,219 @@
       best;
 
 
-    function spawnFood() {
-      do {
-        food = {
-          x:
-            Math.floor(
-              Math.random() *
-                cells
-            ),
+    const stopLoop =
+      () => {
+        if (loop) {
+          clearInterval(
+            loop
+          );
 
-          y:
-            Math.floor(
-              Math.random() *
-                cells
-            )
-        };
-      } while (
-        snake.some(
-          (segment) =>
-            segment.x ===
-              food.x &&
-            segment.y ===
-              food.y
-        )
-      );
-    }
+          loop = null;
+        }
+      };
 
 
-    function drawSnake() {
-      const cellSize =
-        canvas.width /
-        cells;
+    const pauseGame =
+      () => {
+        stopLoop();
+      };
 
 
-      ctx.fillStyle =
-        "#06101d";
-
-      ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-
-      ctx.strokeStyle =
-        "rgba(100,145,205,.06)";
+    const resumeGame =
+      () => {
+        if (
+          !running ||
+          loop
+        ) {
+          return;
+        }
 
 
-      for (
-        let index = 0;
-        index <= cells;
-        index++
-      ) {
-        ctx.beginPath();
+        loop =
+          setInterval(
+            step,
+            110
+          );
+      };
 
-        ctx.moveTo(
-          index * cellSize,
-          0
+
+    const spawnFood =
+      () => {
+        do {
+          food = {
+            x:
+              Math.floor(
+                Math.random() *
+                  cells
+              ),
+
+            y:
+              Math.floor(
+                Math.random() *
+                  cells
+              )
+          };
+        } while (
+          snake.some(
+            (segment) =>
+              segment.x ===
+                food.x &&
+              segment.y ===
+                food.y
+          )
         );
+      };
 
-        ctx.lineTo(
-          index * cellSize,
+
+    const drawSnake =
+      () => {
+        const cellSize =
+          canvas.width /
+          cells;
+
+
+        context.fillStyle =
+          "#06101d";
+
+
+        context.fillRect(
+          0,
+          0,
+          canvas.width,
           canvas.height
         );
 
-        ctx.stroke();
+
+        context.strokeStyle =
+          "rgba(100,145,205,.06)";
 
 
-        ctx.beginPath();
-
-        ctx.moveTo(
-          0,
-          index * cellSize
-        );
-
-        ctx.lineTo(
-          canvas.width,
-          index * cellSize
-        );
-
-        ctx.stroke();
-      }
+        context.lineWidth =
+          1;
 
 
-      snake.forEach(
-        (
-          segment,
-          index
-        ) => {
-          ctx.fillStyle =
-            index === 0
-              ? "#8ccaff"
-              : "#69d7ff";
+        for (
+          let index = 0;
+          index <= cells;
+          index++
+        ) {
+          context.beginPath();
 
 
-          ctx.fillRect(
-            segment.x *
-              cellSize +
-              2,
-            segment.y *
-              cellSize +
-              2,
-            cellSize - 4,
-            cellSize - 4
+          context.moveTo(
+            index * cellSize,
+            0
           );
+
+
+          context.lineTo(
+            index * cellSize,
+            canvas.height
+          );
+
+
+          context.stroke();
+
+
+          context.beginPath();
+
+
+          context.moveTo(
+            0,
+            index * cellSize
+          );
+
+
+          context.lineTo(
+            canvas.width,
+            index * cellSize
+          );
+
+
+          context.stroke();
         }
-      );
 
 
-      ctx.fillStyle =
-        "#67e8a5";
-
-      ctx.beginPath();
-
-      ctx.arc(
-        food.x *
-          cellSize +
-          cellSize / 2,
-
-        food.y *
-          cellSize +
-          cellSize / 2,
-
-        cellSize * 0.3,
-
-        0,
-
-        Math.PI * 2
-      );
-
-      ctx.fill();
-    }
+        snake.forEach(
+          (
+            segment,
+            index
+          ) => {
+            context.fillStyle =
+              index === 0
+                ? "#8ccaff"
+                : "#69d7ff";
 
 
-    function endGame() {
-      clearInterval(loop);
+            context.fillRect(
+              segment.x *
+                cellSize +
+                2,
 
-      loop = null;
+              segment.y *
+                cellSize +
+                2,
 
+              cellSize - 4,
 
-      if (score > best) {
-        best =
-          score;
-
-        setStoredNumber(
-          storageKey,
-          best
+              cellSize - 4
+            );
+          }
         );
 
 
-        bestElement.textContent =
-          best;
-      }
-    }
+        context.fillStyle =
+          "#67e8a5";
+
+
+        context.beginPath();
+
+
+        context.arc(
+          food.x *
+            cellSize +
+            cellSize / 2,
+
+          food.y *
+            cellSize +
+            cellSize / 2,
+
+          cellSize * 0.3,
+
+          0,
+
+          Math.PI * 2
+        );
+
+
+        context.fill();
+      };
+
+
+    const endGame =
+      () => {
+        stopLoop();
+
+        running = false;
+
+
+        if (
+          score > best
+        ) {
+          best =
+            score;
+
+
+          setStoredNumber(
+            storageKey,
+            best
+          );
+
+
+          bestElement.textContent =
+            best;
+        }
+      };
 
 
     function step() {
@@ -1379,8 +2273,27 @@
         head.y >= cells;
 
 
+      const ateFood =
+        head.x === food.x &&
+        head.y === food.y;
+
+
+      /*
+        If food is not eaten, the tail moves away during
+        this step. Excluding it prevents false collisions.
+      */
+
+      const bodyToCheck =
+        ateFood
+          ? snake
+          : snake.slice(
+              0,
+              -1
+            );
+
+
       const hitSelf =
-        snake.some(
+        bodyToCheck.some(
           (segment) =>
             segment.x ===
               head.x &&
@@ -1404,13 +2317,9 @@
       );
 
 
-      const ateFood =
-        head.x === food.x &&
-        head.y === food.y;
-
-
       if (ateFood) {
         score += 1;
+
 
         scoreElement.textContent =
           score;
@@ -1426,116 +2335,113 @@
     }
 
 
-    function startGame() {
-      clearInterval(loop);
+    const startGame =
+      () => {
+        stopLoop();
 
 
-      snake = [
-        {
-          x: 6,
-          y: 10
-        },
-        {
-          x: 5,
-          y: 10
-        },
-        {
-          x: 4,
-          y: 10
-        }
-      ];
+        snake = [
+          {
+            x: 6,
+            y: 10
+          },
+          {
+            x: 5,
+            y: 10
+          },
+          {
+            x: 4,
+            y: 10
+          }
+        ];
 
 
-      direction = {
-        x: 1,
-        y: 0
-      };
-
-      nextDirection = {
-        x: 1,
-        y: 0
-      };
-
-
-      score = 0;
-
-      scoreElement.textContent =
-        "0";
-
-
-      spawnFood();
-      drawSnake();
-
-
-      loop =
-        setInterval(
-          step,
-          110
-        );
-    }
-
-
-    function changeDirection(
-      name
-    ) {
-      const directions = {
-        up: {
-          x: 0,
-          y: -1
-        },
-
-        down: {
-          x: 0,
-          y: 1
-        },
-
-        left: {
-          x: -1,
-          y: 0
-        },
-
-        right: {
+        direction = {
           x: 1,
           y: 0
-        }
+        };
+
+
+        nextDirection = {
+          x: 1,
+          y: 0
+        };
+
+
+        score = 0;
+
+
+        scoreElement.textContent =
+          "0";
+
+
+        spawnFood();
+
+        drawSnake();
+
+
+        running = true;
+
+
+        loop =
+          setInterval(
+            step,
+            110
+          );
       };
 
 
-      const newDirection =
-        directions[name];
+    const changeDirection =
+      (name) => {
+        const directions = {
+          up: {
+            x: 0,
+            y: -1
+          },
+
+          down: {
+            x: 0,
+            y: 1
+          },
+
+          left: {
+            x: -1,
+            y: 0
+          },
+
+          right: {
+            x: 1,
+            y: 0
+          }
+        };
 
 
-      if (!newDirection) {
-        return;
-      }
+        const newDirection =
+          directions[name];
 
 
-      const reversing =
-        newDirection.x ===
-          -direction.x &&
-        newDirection.y ===
-          -direction.y;
+        if (!newDirection) {
+          return;
+        }
 
 
-      if (!reversing) {
-        nextDirection =
-          newDirection;
-      }
-    }
+        const reversing =
+          newDirection.x ===
+            -direction.x &&
+          newDirection.y ===
+            -direction.y;
+
+
+        if (!reversing) {
+          nextDirection =
+            newDirection;
+        }
+      };
 
 
     document.addEventListener(
       "keydown",
       (event) => {
-        /*
-          Only capture gaming keys while
-          the Snake tab is actually open.
-
-          This prevents arrow keys/WASD
-          from interfering with normal
-          page scrolling and navigation.
-        */
-
         if (
           snakePanel &&
           !snakePanel.classList.contains(
@@ -1546,42 +2452,65 @@
         }
 
 
-        const activeTag =
-          document.activeElement
-            ?.tagName
-            ?.toLowerCase();
+        const activeElement =
+          document.activeElement;
 
 
         if (
-          activeTag === "input" ||
-          activeTag ===
-            "textarea"
+          activeElement instanceof
+            HTMLInputElement ||
+          activeElement instanceof
+            HTMLTextAreaElement ||
+          activeElement instanceof
+            HTMLSelectElement
         ) {
           return;
         }
 
 
         const keyMap = {
-          ArrowUp: "up",
-          w: "up",
-          W: "up",
+          ArrowUp:
+            "up",
 
-          ArrowDown: "down",
-          s: "down",
-          S: "down",
+          w:
+            "up",
 
-          ArrowLeft: "left",
-          a: "left",
-          A: "left",
+          W:
+            "up",
 
-          ArrowRight: "right",
-          d: "right",
-          D: "right"
+          ArrowDown:
+            "down",
+
+          s:
+            "down",
+
+          S:
+            "down",
+
+          ArrowLeft:
+            "left",
+
+          a:
+            "left",
+
+          A:
+            "left",
+
+          ArrowRight:
+            "right",
+
+          d:
+            "right",
+
+          D:
+            "right"
         };
 
 
         const directionName =
-          keyMap[event.key];
+          keyMap[
+            event.key
+          ];
 
 
         if (!directionName) {
@@ -1590,6 +2519,7 @@
 
 
         event.preventDefault();
+
 
         changeDirection(
           directionName
@@ -1620,11 +2550,38 @@
     );
 
 
-    /*
-      Initial non-moving board.
-      The game starts only after
-      the user presses Start.
-    */
+    document.addEventListener(
+      "portfolio:gamechange",
+      (event) => {
+        if (
+          event.detail?.game ===
+          "snake"
+        ) {
+          resumeGame();
+        } else {
+          pauseGame();
+        }
+      }
+    );
+
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (
+          document.hidden
+        ) {
+          pauseGame();
+        } else if (
+          snakePanel?.classList.contains(
+            "active"
+          )
+        ) {
+          resumeGame();
+        }
+      }
+    );
+
 
     snake = [
       {
@@ -1641,13 +2598,15 @@
       }
     ];
 
+
     spawnFood();
+
     drawSnake();
   }
 
 
   /* =========================================================
-     11. SQL QUIZ
+     12. SQL QUIZ
      ========================================================= */
 
   function initSqlQuiz() {
@@ -1693,9 +2652,9 @@
           "ORDER BY"
         ],
 
-        correct: 1
+        correct:
+          1
       },
-
 
       {
         code:
@@ -1705,15 +2664,15 @@
           "What does GROUP BY do here?",
 
         answers: [
-          "Deletes duplicates",
+          "Deletes duplicate rows",
           "Creates country groups for the aggregate",
-          "Sorts countries",
-          "Changes the table"
+          "Sorts countries alphabetically",
+          "Changes the original table"
         ],
 
-        correct: 1
+        correct:
+          1
       },
-
 
       {
         code:
@@ -1725,13 +2684,13 @@
         answers: [
           "Zero values",
           "Empty strings only",
-          "Missing / NULL values",
+          "Missing or NULL values",
           "False values"
         ],
 
-        correct: 2
+        correct:
+          2
       },
-
 
       {
         code:
@@ -1743,13 +2702,13 @@
         answers: [
           "To combine related rows from two tables",
           "To rename a table",
-          "To delete duplicate columns",
-          "To make a new database"
+          "To remove duplicate columns",
+          "To create a new database"
         ],
 
-        correct: 0
+        correct:
+          0
       },
-
 
       {
         code:
@@ -1760,12 +2719,13 @@
 
         answers: [
           "Filtering grouped or aggregate results",
-          "Choosing columns",
-          "Creating a table",
+          "Choosing which columns to display",
+          "Creating a new table",
           "Changing a primary key"
         ],
 
-        correct: 0
+        correct:
+          0
       }
     ];
 
@@ -1773,10 +2733,17 @@
     let currentQuestion = 0;
     let score = 0;
 
+
     let best =
-      getStoredNumber(
-        storageKey,
-        0
+      Math.min(
+        5,
+        Math.max(
+          0,
+          getStoredNumber(
+            storageKey,
+            0
+          )
+        )
       );
 
 
@@ -1784,77 +2751,190 @@
       `${best}/5`;
 
 
-    function renderQuestion() {
-      const current =
-        questions[
-          currentQuestion
-        ];
+    const renderQuestion =
+      () => {
+        const current =
+          questions[
+            currentQuestion
+          ];
 
 
-      progress.textContent =
-        `Question ${
-          currentQuestion + 1
-        } of ${
-          questions.length
-        }`;
+        progress.textContent =
+          `Question ${
+            currentQuestion + 1
+          } of ${
+            questions.length
+          }`;
 
 
-      quiz.innerHTML = `
-        <div class="sql-question">
-
-          <code>
-            ${current.code}
-          </code>
-
-          <h4>
-            ${current.question}
-          </h4>
-
-          <div class="sql-answers">
-
-            ${current.answers
-              .map(
-                (
-                  answer,
-                  index
-                ) => `
-                  <button
-                    class="sql-answer"
-                    type="button"
-                    data-answer="${index}"
-                  >
-                    ${answer}
-                  </button>
-                `
-              )
-              .join("")}
-
-          </div>
-
-        </div>
-      `;
+        quiz.replaceChildren();
 
 
-      $$(
-        ".sql-answer",
-        quiz
-      ).forEach(
-        (button) => {
-          button.addEventListener(
-            "click",
-            () => {
-              chooseAnswer(
-                Number(
-                  button.dataset
-                    .answer
-                ),
-                button
-              );
-            }
+        const questionBox =
+          document.createElement(
+            "div"
           );
+
+
+        questionBox.className =
+          "sql-question";
+
+
+        const code =
+          document.createElement(
+            "code"
+          );
+
+
+        code.textContent =
+          current.code;
+
+
+        const heading =
+          document.createElement(
+            "h4"
+          );
+
+
+        heading.textContent =
+          current.question;
+
+
+        const answers =
+          document.createElement(
+            "div"
+          );
+
+
+        answers.className =
+          "sql-answers";
+
+
+        current.answers.forEach(
+          (
+            answer,
+            index
+          ) => {
+            const button =
+              document.createElement(
+                "button"
+              );
+
+
+            button.className =
+              "sql-answer";
+
+
+            button.type =
+              "button";
+
+
+            button.dataset.answer =
+              String(index);
+
+
+            button.textContent =
+              answer;
+
+
+            button.addEventListener(
+              "click",
+              () => {
+                chooseAnswer(
+                  index,
+                  button
+                );
+              }
+            );
+
+
+            answers.append(
+              button
+            );
+          }
+        );
+
+
+        questionBox.append(
+          code,
+          heading,
+          answers
+        );
+
+
+        quiz.append(
+          questionBox
+        );
+      };
+
+
+    const finishQuiz =
+      () => {
+        if (
+          score > best
+        ) {
+          best =
+            score;
+
+
+          setStoredNumber(
+            storageKey,
+            best
+          );
+
+
+          bestElement.textContent =
+            `${best}/5`;
         }
-      );
-    }
+
+
+        quiz.replaceChildren();
+
+
+        const result =
+          document.createElement(
+            "div"
+          );
+
+
+        result.className =
+          "sql-question";
+
+
+        const heading =
+          document.createElement(
+            "h4"
+          );
+
+
+        heading.textContent =
+          `You scored ${score}/5`;
+
+
+        const message =
+          document.createElement(
+            "p"
+          );
+
+
+        message.textContent =
+          "Small quiz, real database fundamentals.";
+
+
+        result.append(
+          heading,
+          message
+        );
+
+
+        quiz.append(
+          result
+        );
+
+
+        progress.textContent =
+          "Complete";
+      };
 
 
     function chooseAnswer(
@@ -1887,6 +2967,7 @@
       ) {
         score += 1;
 
+
         selectedButton.classList.add(
           "correct"
         );
@@ -1904,7 +2985,7 @@
       }
 
 
-      setTimeout(
+      window.setTimeout(
         () => {
           currentQuestion += 1;
 
@@ -1926,42 +3007,6 @@
     }
 
 
-    function finishQuiz() {
-      if (score > best) {
-        best =
-          score;
-
-        setStoredNumber(
-          storageKey,
-          best
-        );
-
-
-        bestElement.textContent =
-          `${best}/5`;
-      }
-
-
-      quiz.innerHTML = `
-        <div class="sql-question">
-
-          <h4>
-            You scored ${score}/5
-          </h4>
-
-          <p>
-            Small quiz, real database fundamentals.
-          </p>
-
-        </div>
-      `;
-
-
-      progress.textContent =
-        "Complete";
-    }
-
-
     restart.addEventListener(
       "click",
       () => {
@@ -1978,11 +3023,13 @@
 
 
   /* =========================================================
-     12. INITIALISE WEBSITE
+     13. INITIALISE WEBSITE
      ========================================================= */
 
   function init() {
-    initClock();
+    initFooterYear();
+
+    initMobileNavigation();
 
     initCursorHalo();
 
@@ -2008,9 +3055,13 @@
   ) {
     document.addEventListener(
       "DOMContentLoaded",
-      init
+      init,
+      {
+        once: true
+      }
     );
   } else {
     init();
   }
+
 })();
