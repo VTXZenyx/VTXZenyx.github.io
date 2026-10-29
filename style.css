@@ -1,71 +1,53 @@
+
 /* =========================================================
-   01. DESIGN TOKENS
+   VIRAJ GANDHI | PORTFOLIO
+   Complete stylesheet for the updated index.html
    ========================================================= */
+
+/* 01. DESIGN SYSTEM */
 
 :root {
   color-scheme: dark;
 
   --bg: #07101f;
   --bg-deep: #040913;
-
   --surface: #0a1628;
   --surface-2: #0d1c33;
-  --surface-soft: rgba(13, 28, 51, 0.72);
+  --surface-soft: rgba(13, 28, 51, .78);
 
-  --line: rgba(145, 180, 232, 0.12);
-  --line-strong: rgba(145, 180, 232, 0.22);
+  --line: rgba(145, 180, 232, .13);
+  --line-strong: rgba(145, 180, 232, .24);
 
   --text: #edf5ff;
-  --muted: #98abc4;
-  --muted-2: #7187a7;
+  --muted: #a6b8d0;
+  --muted-2: #849bb9;
 
   --blue: #4d8dff;
-  --blue-light: #79bcff;
+  --blue-light: #88c5ff;
   --cyan: #68dcff;
   --green: #67e8a5;
-  --danger: #ff6f91;
+  --danger: #ff829c;
 
-  --mono:
-    "IBM Plex Mono",
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    monospace;
+  --mono: "IBM Plex Mono", ui-monospace,
+    SFMono-Regular, Menlo, Consolas, monospace;
 
-  --sans:
-    "Manrope",
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  --sans: "Manrope", Inter, system-ui,
+    -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 
   --max: 1320px;
-
-  --page-pad:
-    clamp(20px, 4vw, 64px);
-
-  --section-space:
-    clamp(78px, 9vw, 120px);
+  --page-pad: clamp(20px, 4vw, 64px);
+  --section-space: clamp(76px, 9vw, 116px);
 
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
 
-  --shadow-soft:
-    0 18px 55px rgba(0, 0, 0, 0.18);
-
-  --shadow:
-    0 24px 80px rgba(0, 0, 0, 0.26);
+  --shadow-soft: 0 18px 55px rgba(0, 0, 0, .22);
+  --shadow: 0 24px 75px rgba(0, 0, 0, .32);
 }
 
-
-/* =========================================================
-   02. RESET / GLOBAL
-   ========================================================= */
+/* 02. RESET AND ACCESSIBILITY */
 
 *,
 *::before,
@@ -74,39 +56,34 @@
 }
 
 html {
-  scroll-behavior: smooth;
-
   background: var(--bg-deep);
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
   margin: 0;
-
   min-width: 320px;
-
-  overflow-x: hidden;
-
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
-
-  font-family: var(--sans);
-  line-height: 1.5;
-
+  font: 400 16px/1.6 var(--sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 main {
+  position: relative;
+  z-index: 1;
   display: block;
 }
 
 section {
-  scroll-margin-top: 88px;
+  scroll-margin-top: 90px;
 }
 
 a {
   color: inherit;
-
   text-decoration: none;
 }
 
@@ -119,15 +96,12 @@ select {
 
 button {
   color: inherit;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button {
   touch-action: manipulation;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
 }
 
 img,
@@ -142,181 +116,138 @@ img {
 }
 
 ::selection {
-  background: rgba(77, 141, 255, 0.35);
-  color: white;
+  background: rgba(77, 141, 255, .4);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
 }
 
 .sr-only {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   padding: 0;
   margin: -1px;
-
   overflow: hidden;
-
   clip: rect(0, 0, 0, 0);
   clip-path: inset(50%);
-
   white-space: nowrap;
-
   border: 0;
 }
 
 .skip-link {
   position: fixed;
-
-  left: 18px;
-  top: 14px;
-
-  z-index: 999;
-
+  top: 12px;
+  left: 16px;
+  z-index: 200;
   padding: 10px 14px;
-
   border-radius: 10px;
-
   background: var(--text);
   color: var(--bg-deep);
-
   font-size: 12px;
   font-weight: 800;
-
   transform: translateY(-160%);
-
-  transition: transform 0.2s ease;
+  transition: transform .2s ease;
 }
 
 .skip-link:focus {
   transform: translateY(0);
 }
 
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--blue-light);
-  outline-offset: 4px;
-
-  border-radius: 8px;
-}
-
-
-/* =========================================================
-   03. BACKGROUND EFFECTS
-   ========================================================= */
+/* 03. BACKGROUND EFFECTS */
 
 .page-grid {
   position: fixed;
   inset: 0;
-
-  z-index: -4;
-
+  z-index: 0;
   pointer-events: none;
-
-  opacity: 0.75;
+  opacity: .55;
 
   background-image:
     linear-gradient(
-      rgba(101, 146, 210, 0.032) 1px,
+      rgba(101,146,210,.045) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(101, 146, 210, 0.032) 1px,
+      rgba(101,146,210,.045) 1px,
       transparent 1px
     );
 
   background-size: 64px 64px;
 
-  mask-image:
-    linear-gradient(
-      to bottom,
-      #000 0%,
-      rgba(0, 0, 0, 0.8) 65%,
-      transparent 100%
-    );
-
   -webkit-mask-image:
     linear-gradient(
       to bottom,
-      #000 0%,
-      rgba(0, 0, 0, 0.8) 65%,
-      transparent 100%
+      #000,
+      rgba(0,0,0,.75) 65%,
+      transparent
+    );
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      #000,
+      rgba(0,0,0,.75) 65%,
+      transparent
     );
 }
 
 .noise {
   position: fixed;
   inset: 0;
-
-  z-index: 80;
-
+  z-index: 60;
   pointer-events: none;
-
-  opacity: 0.018;
+  opacity: .017;
 
   background-image:
-    url(
-      "data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E"
-    );
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 }
 
 .cursor-halo {
   position: fixed;
-
+  z-index: 0;
   width: 420px;
   height: 420px;
-
-  z-index: -2;
-
   border-radius: 50%;
-
   pointer-events: none;
-
   transform: translate(-50%, -50%);
-
   background:
     radial-gradient(
       circle,
-      rgba(77, 141, 255, 0.075),
+      rgba(77,141,255,.08),
       transparent 67%
     );
-
-  transition: opacity 0.2s ease;
+  transition: opacity .2s ease;
 }
 
-
-/* =========================================================
-   04. NAVIGATION
-   ========================================================= */
+/* 04. NAVIGATION */
 
 .topbar {
   position: sticky;
   top: 0;
-
   z-index: 50;
 
   display: grid;
-
   grid-template-columns:
-    minmax(180px, 1fr)
+    minmax(130px,1fr)
     auto
-    minmax(180px, 1fr);
+    minmax(130px,1fr);
 
   align-items: center;
-
-  gap: 24px;
+  gap: 16px;
 
   width: 100%;
+  min-height: 66px;
 
   padding:
-    15px
+    12px
     max(
       var(--page-pad),
-      calc(
-        (100vw - var(--max)) / 2
-        + var(--page-pad)
-      )
+      calc((100vw - var(--max))/2 + var(--page-pad))
     );
 
   border-bottom: 1px solid var(--line);
@@ -324,23 +255,20 @@ button:focus-visible {
   background:
     linear-gradient(
       to bottom,
-      rgba(7, 16, 31, 0.94),
-      rgba(7, 16, 31, 0.82)
+      rgba(7,16,31,.96),
+      rgba(7,16,31,.86)
     );
 
-  backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
 }
 
 .brand {
   justify-self: start;
-
-  color: #eef5ff;
-
+  color: #f0f6ff;
   font-size: 14px;
   font-weight: 800;
-
-  letter-spacing: -0.02em;
+  letter-spacing: -.025em;
 }
 
 .brand-name {
@@ -349,72 +277,61 @@ button:focus-visible {
 
 .topnav {
   display: flex;
+  justify-content: center;
   align-items: center;
-
-  gap: 2px;
+  gap: 1px;
 }
 
 .topnav a,
 .nav-github {
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
-  min-height: 38px;
-
-  padding: 0 11px;
-
+  min-height: 40px;
+  padding: 0 10px;
   border-radius: 9px;
 
-  color: #91a5c0;
-
+  color: #a1b5d0;
   font-size: 11px;
   font-weight: 800;
 
   transition:
-    color 0.18s ease,
-    background 0.18s ease;
+    color .18s ease,
+    background .18s ease;
 }
 
 .nav-github {
   justify-self: end;
-
   color: var(--blue-light);
 }
 
 .nav-toggle {
   display: none;
-
   position: relative;
 
-  width: 42px;
-  height: 42px;
-
+  width: 44px;
+  height: 44px;
   padding: 0;
 
-  border: 1px solid var(--line);
-  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 11px;
 
-  background: rgba(255, 255, 255, 0.025);
-
+  background: rgba(255,255,255,.03);
   cursor: pointer;
 }
 
 .nav-toggle span {
   position: absolute;
-
-  left: 11px;
-
+  left: 12px;
   width: 18px;
-  height: 1.5px;
-
+  height: 2px;
   border-radius: 2px;
-
   background: var(--text);
 
   transition:
-    transform 0.2s ease,
-    top 0.2s ease;
+    transform .2s ease,
+    top .2s ease;
 }
 
 .nav-toggle span:first-child {
@@ -422,97 +339,80 @@ button:focus-visible {
 }
 
 .nav-toggle span:last-child {
-  top: 23px;
+  top: 24px;
 }
 
 .nav-toggle[aria-expanded="true"] span:first-child {
   top: 20px;
-
   transform: rotate(45deg);
 }
 
 .nav-toggle[aria-expanded="true"] span:last-child {
   top: 20px;
-
   transform: rotate(-45deg);
 }
 
-
-/* =========================================================
-   05. HERO
-   ========================================================= */
+/* 05. HERO AND ANIMATED NAME */
 
 .hero {
   position: relative;
-
   isolation: isolate;
 
   width: 100%;
   max-width: var(--max);
-
   margin: 0 auto;
 
   padding:
-    clamp(28px, 4vw, 46px)
+    clamp(28px,4vw,46px)
     var(--page-pad)
-    clamp(72px, 8vw, 104px);
+    clamp(78px,8vw,106px);
 
   overflow: hidden;
 }
 
 .hero-orb {
   position: absolute;
-
   z-index: -1;
-
   border-radius: 50%;
-
   pointer-events: none;
-
-  opacity: 0.48;
+  opacity: .5;
 }
 
 .hero-orb-a {
-  width: clamp(280px, 34vw, 450px);
-  height: clamp(280px, 34vw, 450px);
-
+  width: clamp(280px,34vw,450px);
+  aspect-ratio: 1;
   right: -4%;
   top: 4%;
-
   background:
     radial-gradient(
       circle,
-      rgba(77, 141, 255, 0.16),
-      transparent 69%
+      rgba(77,141,255,.18),
+      transparent 70%
     );
 }
 
 .hero-orb-b {
-  width: 290px;
-  height: 290px;
-
-  left: 4%;
-  top: 48%;
-
+  width: 300px;
+  aspect-ratio: 1;
+  left: 3%;
+  top: 45%;
   background:
     radial-gradient(
       circle,
-      rgba(104, 220, 255, 0.08),
+      rgba(104,220,255,.10),
       transparent 70%
     );
 }
 
 .hero-orb-c {
   width: 280px;
-  height: 280px;
-
-  right: 25%;
+  aspect-ratio: 1;
+  right: 23%;
   bottom: 0;
-
   background:
     radial-gradient(
       circle,
-      rgba(38, 100, 255, 0.085),
+      rgba(38,100,255,.10),
       transparent 70%
     );
 }
@@ -521,47 +421,32 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  gap: 18px;
-
-  color: #7189aa;
-
-  font:
-    600 10px var(--mono);
-
-  letter-spacing: 0.11em;
+  gap: 16px;
+  color: #8ca6c9;
+  font: 600 10px/1.5 var(--mono);
+  letter-spacing: .105em;
 }
 
 .hero-title-wrap {
   position: relative;
-
   width: 100%;
-  height:
-    clamp(300px, 34vw, 455px);
-
+  height: clamp(300px,34vw,455px);
   margin-top: 12px;
 }
 
 .hero-title-wrap canvas {
   display: block;
-
   width: 100%;
   height: 100%;
 }
 
 .hero-bottom {
   display: grid;
-
   grid-template-columns:
-    minmax(0, 1.32fr)
-    minmax(280px, 0.68fr);
-
+    minmax(0,1.32fr)
+    minmax(280px,.68fr);
+  gap: clamp(36px,5vw,70px);
   align-items: end;
-
-  gap:
-    clamp(36px, 5vw, 70px);
-
-  margin-top: 0;
 }
 
 .hero-copy {
@@ -570,112 +455,89 @@ button:focus-visible {
 
 .hero-copy p {
   margin: 0;
-
-  color: #a6b8d0;
-
-  font-size:
-    clamp(17px, 1.55vw, 21px);
-
-  line-height: 1.68;
-
-  letter-spacing: -0.018em;
+  color: #afc1d7;
+  font-size: clamp(16px,1.5vw,20px);
+  line-height: 1.7;
+  letter-spacing: -.015em;
 }
 
 .hero-copy p + p {
-  margin-top: 13px;
+  margin-top: 16px;
+}
+
+.hero-copy .hero-intro {
+  color: #c1d2e5;
 }
 
 .hero-copy strong {
-  color: #f0f6ff;
-
+  color: #f4f8ff;
   font-weight: 700;
 }
 
-.hero-intro {
-  color: #b5c7dd !important;
-}
-
-
-/* =========================================================
-   06. BUTTONS
-   ========================================================= */
+/* 06. BUTTONS */
 
 .hero-actions,
 .resume-actions {
   display: flex;
   flex-wrap: wrap;
-
-  gap: 10px;
-
-  margin-top: 25px;
+  gap: 11px;
+  margin-top: 26px;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 9px;
 
-  min-height: 44px;
-
-  padding: 0 16px;
+  min-height: 46px;
+  padding: 0 17px;
 
   border: 1px solid var(--line-strong);
   border-radius: 11px;
 
   font-size: 12px;
   font-weight: 800;
-
+  line-height: 1.3;
+  text-align: center;
   cursor: pointer;
 
   transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
 }
 
 .button-primary {
   border-color: transparent;
-
   background:
     linear-gradient(
       135deg,
       #397cff,
       #66adff
     );
-
   color: #fff;
-
   box-shadow:
-    0 10px 28px
-    rgba(60, 124, 255, 0.2);
+    0 10px 28px rgba(60,124,255,.2);
 }
 
 .button-ghost {
-  background:
-    rgba(255, 255, 255, 0.018);
-
-  color: #bfd0e8;
+  background: rgba(255,255,255,.025);
+  color: #d2e1f3;
 }
 
+.button.compact,
 .compact {
-  min-height: 38px;
-
+  min-height: 39px;
   padding: 0 13px;
-
   font-size: 11px;
 }
 
-
-/* =========================================================
-   07. STATUS CARD
-   ========================================================= */
+/* 07. AVAILABILITY CARD */
 
 .status-card {
   width: 100%;
-
   padding: 18px 20px;
 
   border: 1px solid var(--line-strong);
@@ -684,8 +546,8 @@ button:focus-visible {
   background:
     linear-gradient(
       145deg,
-      rgba(13, 28, 51, 0.72),
-      rgba(8, 18, 35, 0.64)
+      rgba(13,28,51,.86),
+      rgba(8,18,35,.77)
     );
 
   box-shadow: var(--shadow-soft);
@@ -696,18 +558,13 @@ button:focus-visible {
   align-items: center;
   justify-content: space-between;
 
-  gap: 16px;
-
-  min-height: 43px;
-
+  gap: 15px;
+  min-height: 45px;
   border-bottom: 1px solid var(--line);
 
-  color: #7187a8;
-
-  font:
-    500 9px var(--mono);
-
-  letter-spacing: 0.07em;
+  color: #91a9c9;
+  font: 500 10px/1.4 var(--mono);
+  letter-spacing: .04em;
 }
 
 .status-row:last-child {
@@ -715,67 +572,49 @@ button:focus-visible {
 }
 
 .status-row strong {
-  color: #d1def0;
-
-  font-size: 9px;
-
+  color: #dce7f6;
+  font: 600 10px/1.5 var(--mono);
   text-align: right;
+  overflow-wrap: anywhere;
 }
 
 .status-row-main {
   justify-content: flex-start;
-
   gap: 10px;
 }
 
 .status-row-main strong {
-  color: #e0ecfb;
+  color: #eaf4ff;
 }
 
 .live-dot {
-  width: 7px;
-  height: 7px;
-
+  width: 8px;
+  height: 8px;
   flex: 0 0 auto;
-
   border-radius: 50%;
-
   background: var(--green);
-
-  animation: pulse 2s infinite;
+  animation: pulse 2.2s infinite;
 }
 
 @keyframes pulse {
   0% {
     box-shadow:
-      0 0 0 0
-      rgba(103, 232, 165, 0.38);
+      0 0 0 0 rgba(103,232,165,.38);
   }
 
-  65% {
-    box-shadow:
-      0 0 0 8px
-      rgba(103, 232, 165, 0);
-  }
-
+  70%,
   100% {
     box-shadow:
-      0 0 0 0
-      rgba(103, 232, 165, 0);
+      0 0 0 8px rgba(103,232,165,0);
   }
 }
 
-
-/* =========================================================
-   08. COMMON SECTION STYLES
-   ========================================================= */
+/* 08. SECTION HEADINGS */
 
 .section {
   width: 100%;
   max-width: var(--max);
-
   margin: 0 auto;
-
   padding:
     var(--section-space)
     var(--page-pad);
@@ -783,41 +622,30 @@ button:focus-visible {
 
 .section-head {
   display: grid;
-
   grid-template-columns:
-    minmax(180px, 0.35fr)
-    minmax(0, 1.65fr);
-
-  gap:
-    clamp(28px, 5vw, 70px);
-
-  margin-bottom:
-    clamp(34px, 4vw, 54px);
+    minmax(165px,.35fr)
+    minmax(0,1.65fr);
+  gap: clamp(28px,5vw,70px);
+  margin-bottom: clamp(34px,4vw,54px);
 }
 
 .section-id {
   display: flex;
   align-items: center;
-
+  align-self: start;
   gap: 11px;
-
   padding-top: 7px;
 }
 
 .section-no {
-  color: var(--blue);
-
-  font:
-    600 12px var(--mono);
+  color: var(--blue-light);
+  font: 600 12px var(--mono);
 }
 
 .eyebrow {
-  color: #758baa;
-
-  font:
-    600 10px var(--mono);
-
-  letter-spacing: 0.11em;
+  color: #8aa0be;
+  font: 600 10px/1.6 var(--mono);
+  letter-spacing: .12em;
 }
 
 .section-heading-copy {
@@ -828,52 +656,40 @@ button:focus-visible {
 .resume-copy h2,
 .contact-main h2 {
   margin: 0;
-
-  font-size:
-    clamp(38px, 5vw, 68px);
-
-  line-height: 1;
-
-  letter-spacing: -0.05em;
+  font-size: clamp(37px,5vw,68px);
+  line-height: 1.09;
+  letter-spacing: -.052em;
+  overflow-wrap: normal;
 }
 
 .section-head h2 em {
-  color: #7f9abe;
-
+  color: #97afd0;
   font-style: normal;
 }
 
 .section-intro {
-  max-width: 650px;
-
-  margin: 19px 0 0;
-
+  max-width: 670px;
+  margin: 20px 0 0;
   color: var(--muted);
-
   font-size: 15px;
-
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
-
-/* =========================================================
-   09. PROJECT GRID
-   ========================================================= */
+/* 09. PROJECT GRID AND CARDS */
 
 .project-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(2,minmax(0,1fr));
   gap: 18px;
+  align-items: stretch;
 }
 
 .project-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   min-width: 0;
-
   overflow: hidden;
 
   border: 1px solid var(--line-strong);
@@ -882,39 +698,35 @@ button:focus-visible {
   background:
     linear-gradient(
       155deg,
-      rgba(13, 29, 53, 0.78),
-      rgba(6, 16, 31, 0.92)
+      rgba(13,29,53,.84),
+      rgba(6,16,31,.95)
     );
 
   box-shadow:
-    0 16px 50px
-    rgba(0, 0, 0, 0.11);
+    0 16px 50px rgba(0,0,0,.12);
 
   transition:
-    transform 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease;
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease;
 }
 
 .project-card--hero,
 .project-card--wide {
   grid-column: 1 / -1;
-
   display: grid;
-
   grid-template-columns:
-    minmax(0, 1.08fr)
-    minmax(350px, 0.92fr);
+    minmax(0,1.08fr)
+    minmax(0,.92fr);
+  align-items: stretch;
 }
 
 .project-card--hero .project-topline,
 .project-card--wide .project-topline {
   position: absolute;
-
   top: 0;
   left: 0;
   right: 0;
-
   z-index: 3;
 }
 
@@ -922,60 +734,50 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  gap: 18px;
+  gap: 14px;
 
   min-height: 44px;
-
-  padding: 0 17px;
+  padding: 10px 17px;
 
   border-bottom: 1px solid var(--line);
+  background: rgba(6,16,31,.8);
+  color: #9bb0cb;
 
-  background:
-    rgba(6, 16, 31, 0.76);
+  font: 600 9px/1.35 var(--mono);
+  letter-spacing: .08em;
 
-  color: #748aaa;
-
-  font:
-    600 9px var(--mono);
-
-  letter-spacing: 0.09em;
-
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
+.project-topline span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 
-/* =========================================================
-   10. PROJECT PREVIEWS
-   ========================================================= */
+.project-topline span:last-child {
+  flex: 0 0 auto;
+}
 
 .project-preview {
   position: relative;
-
-  min-height: 300px;
-
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 310px;
   overflow: hidden;
-
   border-bottom: 1px solid var(--line);
-
   background: #081325;
 }
 
 .project-card--hero .project-preview,
 .project-card--wide .project-preview {
-  min-height: 480px;
-
+  min-height: 445px;
   padding-top: 44px;
-
   border-right: 1px solid var(--line);
   border-bottom: 0;
 }
 
-
-/* =========================================================
-   11. SQL PREVIEW
-   ========================================================= */
+/* 10. SQL CODE PREVIEW */
 
 .project-preview--sql-code {
   display: flex;
@@ -983,15 +785,15 @@ button:focus-visible {
   justify-content: center;
 
   padding:
-    68px
-    clamp(20px, 3vw, 34px)
+    64px
+    clamp(20px,3vw,34px)
     28px;
 
   background:
     radial-gradient(
       circle at 82% 12%,
-      rgba(77, 141, 255, 0.13),
-      transparent 37%
+      rgba(77,141,255,.15),
+      transparent 40%
     ),
     linear-gradient(
       155deg,
@@ -1002,99 +804,71 @@ button:focus-visible {
 
 .sql-code-window {
   width: 100%;
-  max-width: 610px;
-
+  max-width: 640px;
+  min-width: 0;
   overflow: hidden;
 
-  border: 1px solid rgba(117, 166, 228, 0.22);
+  border: 1px solid rgba(117,166,228,.26);
   border-radius: 15px;
-
   background: #07101d;
 
   box-shadow:
-    0 16px 38px
-    rgba(0, 0, 0, 0.22);
+    0 18px 40px rgba(0,0,0,.25);
 }
 
 .sql-window-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 12px;
 
   min-height: 39px;
-
-  padding: 0 13px;
-
+  padding: 0 14px;
   border-bottom: 1px solid var(--line);
 
-  color: #7189aa;
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.08em;
+  color: #8ea5c4;
+  font: 600 9px var(--mono);
+  letter-spacing: .08em;
 }
 
 .sql-code-window pre {
+  max-width: 100%;
   margin: 0;
-
-  padding:
-    20px
-    18px
-    17px;
-
+  padding: 20px 18px 17px;
   overflow-x: auto;
 
-  color: #bbcbe0;
-
+  color: #c4d3e5;
   font:
-    500 clamp(8px, 0.85vw, 10px) / 1.75
+    500 clamp(8px,.86vw,10px)/1.75
     var(--mono);
 
   white-space: pre;
-
   scrollbar-width: thin;
 }
 
 .sql-keyword {
-  color: #73baff;
+  color: #79c2ff;
 }
 
 .sql-window-tags {
   display: flex;
   flex-wrap: wrap;
-
   gap: 6px;
-
-  padding:
-    0
-    16px
-    16px;
+  padding: 0 16px 16px;
 }
 
 .sql-window-tags span {
   padding: 5px 7px;
-
-  border: 1px solid rgba(93, 145, 211, 0.16);
+  border: 1px solid rgba(93,145,211,.2);
   border-radius: 7px;
+  background: rgba(77,141,255,.045);
+  color: #95acc9;
 
-  background:
-    rgba(77, 141, 255, 0.035);
-
-  color: #7891b1;
-
-  font:
-    600 7px var(--mono);
-
-  letter-spacing: 0.055em;
+  font: 600 8px var(--mono);
+  letter-spacing: .035em;
 }
 
-
-/* =========================================================
-   12. R PREVIEW
-   ========================================================= */
+/* 11. R, AI AND WORKFLOW PREVIEWS */
 
 .visual-preview {
   display: flex;
@@ -1106,8 +880,8 @@ button:focus-visible {
   background:
     radial-gradient(
       circle at 75% 15%,
-      rgba(77, 141, 255, 0.13),
-      transparent 37%
+      rgba(77,141,255,.15),
+      transparent 39%
     ),
     linear-gradient(
       150deg,
@@ -1118,76 +892,83 @@ button:focus-visible {
 
 .r-visual {
   display: block;
-
-  padding:
-    50px
-    28px
-    28px;
+  padding: 48px 27px 26px;
 }
 
 .console-head {
   padding-bottom: 12px;
-
   border-bottom: 1px solid var(--line);
-
-  color: #73baff;
-
-  font:
-    600 9px var(--mono);
-
-  letter-spacing: 0.1em;
+  color: #8cc8ff;
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .08em;
 }
 
 .r-visual pre {
-  margin: 20px 0 0;
-
+  max-width: 100%;
+  margin: 21px 0 0;
   overflow-x: auto;
-
-  color: #a5b7ce;
+  color: #b7c8db;
 
   font:
-    500 10px / 1.9
+    500 clamp(9px,.85vw,11px)/1.85
     var(--mono);
 
   white-space: pre;
+  scrollbar-width: thin;
 }
 
 .r-visual code {
   color: inherit;
-
   font: inherit;
 }
 
 .r-status {
   display: flex;
   flex-wrap: wrap;
-
   gap: 6px;
-
   margin-top: 20px;
 }
 
 .r-status span {
   padding: 5px 7px;
-
   border: 1px solid var(--line);
   border-radius: 7px;
+  background: rgba(77,141,255,.04);
+  color: #91acca;
 
-  background:
-    rgba(77, 141, 255, 0.03);
-
-  color: #7895b8;
-
-  font:
-    600 7px var(--mono);
-
-  letter-spacing: 0.055em;
+  font: 600 8px var(--mono);
+  letter-spacing: .035em;
 }
 
+.project-card:nth-child(5) .r-visual {
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(104,220,255,.12),
+      transparent 45%
+    ),
+    linear-gradient(
+      150deg,
+      #0d2035,
+      #071220
+    );
+}
 
-/* =========================================================
-   13. COURSE ENROLMENT PREVIEW
-   ========================================================= */
+.project-card:nth-child(6) .r-visual {
+  background:
+    radial-gradient(
+      circle at 85% 16%,
+      rgba(103,232,165,.09),
+      transparent 44%
+    ),
+    linear-gradient(
+      150deg,
+      #0c2131,
+      #071220
+    );
+}
+
+/* 12. LIVE COURSE ENROLMENT PREVIEW */
 
 .project-preview--live {
   display: flex;
@@ -1196,13 +977,13 @@ button:focus-visible {
 
   padding:
     68px
-    clamp(18px, 3vw, 28px)
-    24px !important;
+    clamp(16px,3vw,28px)
+    26px !important;
 
   background:
     radial-gradient(
       circle at 18% 18%,
-      rgba(77, 141, 255, 0.11),
+      rgba(77,141,255,.13),
       transparent 36%
     ),
     linear-gradient(
@@ -1215,59 +996,42 @@ button:focus-visible {
 .live-browser-shell {
   width: 100%;
   max-width: 720px;
-
+  min-width: 0;
   overflow: hidden;
 
-  border: 1px solid rgba(128, 177, 239, 0.25);
+  border: 1px solid rgba(128,177,239,.28);
   border-radius: 17px;
-
   background: #f7f9fc;
 
   box-shadow:
-    0 20px 48px
-    rgba(0, 0, 0, 0.24);
+    0 20px 48px rgba(0,0,0,.26);
 }
 
 .live-browser-bar {
   display: grid;
-
   grid-template-columns:
-    auto
-    minmax(0, 1fr)
-    auto;
-
+    auto minmax(0,1fr) auto;
   align-items: center;
-
   gap: 12px;
 
-  min-height: 38px;
-
+  min-height: 39px;
   padding: 0 12px;
-
-  border-bottom:
-    1px solid
-    rgba(64, 92, 128, 0.17);
+  border-bottom: 1px solid rgba(64,92,128,.17);
 
   background: #0b1930;
-
-  color: #7a91b0;
-
-  font:
-    500 8px var(--mono);
+  color: #93a9c8;
+  font: 500 9px var(--mono);
 }
 
 .live-browser-dots {
   display: flex;
-
   gap: 5px;
 }
 
 .live-browser-dots span {
   width: 7px;
   height: 7px;
-
   border-radius: 50%;
-
   background: #294971;
 }
 
@@ -1281,76 +1045,57 @@ button:focus-visible {
 
 .live-browser-address {
   min-width: 0;
-
   overflow: hidden;
-
   text-align: center;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
 .live-browser-bar a {
   color: var(--blue-light);
-
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .live-browser-viewport--image {
   display: block;
-
   width: 100%;
-
-  aspect-ratio: 16 / 9;
-
+  aspect-ratio: 16/9;
   overflow: hidden;
-
   background: #eef3f9;
 }
 
 .live-browser-viewport--image img {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: top left;
 
   transition:
-    transform 0.25s ease,
-    filter 0.25s ease;
+    transform .3s ease,
+    filter .3s ease;
 }
 
-
-/* =========================================================
-   14. SYSTEMS PREVIEW
-   ========================================================= */
+/* 13. PEOPLE, PROCESS, TECH, DATA DIAGRAM */
 
 .systems-visual {
   position: relative;
-
-  min-height: 300px;
+  min-height: 310px;
 }
 
 .systems-visual svg {
   position: absolute;
-
   inset: 0;
-
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .systems-visual path {
   fill: none;
-
-  stroke:
-    rgba(114, 183, 255, 0.31);
-
+  stroke: rgba(114,183,255,.35);
   stroke-width: 2;
-
   stroke-dasharray: 8 9;
-
   animation: dash 13s linear infinite;
 }
 
@@ -1362,30 +1107,24 @@ button:focus-visible {
 
 .system-node {
   position: absolute;
-
   z-index: 2;
-
   display: grid;
   place-items: center;
 
-  width: 105px;
+  width: 106px;
   height: 58px;
 
   border: 1px solid var(--line-strong);
   border-radius: 14px;
 
   background: #0c2039;
+  color: #c4d6ed;
 
-  color: #afc5df;
-
-  font:
-    700 9px var(--mono);
-
-  letter-spacing: 0.08em;
+  font: 700 10px var(--mono);
+  letter-spacing: .07em;
 
   box-shadow:
-    0 13px 30px
-    rgba(0, 0, 0, 0.16);
+    0 13px 30px rgba(0,0,0,.17);
 }
 
 .n1 {
@@ -1408,96 +1147,73 @@ button:focus-visible {
   bottom: 17%;
 }
 
-
-/* =========================================================
-   15. PROJECT CONTENT
-   ========================================================= */
+/* 14. PROJECT DESCRIPTIONS AND LINKS */
 
 .project-copy {
-  padding:
-    26px
-    25px
-    28px;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 27px 25px 28px;
+  min-width: 0;
 }
 
 .project-card--hero .project-copy,
 .project-card--wide .project-copy {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-
   padding:
     68px
-    clamp(28px, 4vw, 52px)
-    40px;
+    clamp(26px,4vw,50px)
+    39px;
 }
 
 .project-title-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-
-  gap: 18px;
+  gap: 16px;
+  min-width: 0;
 }
 
 .project-title-row h3 {
   margin: 0;
-
-  font-size:
-    clamp(22px, 2.25vw, 34px);
-
-  line-height: 1.08;
-
-  letter-spacing: -0.043em;
+  font-size: clamp(22px,2.2vw,33px);
+  line-height: 1.16;
+  letter-spacing: -.044em;
+  overflow-wrap: break-word;
 }
 
 .project-year {
   flex: 0 0 auto;
-
   padding-top: 4px;
-
-  color: #7389a9;
-
-  font:
-    600 9px var(--mono);
-
-  letter-spacing: 0.07em;
+  color: #94a9c5;
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .07em;
 }
 
 .project-copy > p {
-  margin: 15px 0 0;
-
-  color: #99acc5;
-
+  margin: 17px 0 0;
+  color: #abbdd3;
   font-size: 14px;
-
-  line-height: 1.72;
+  line-height: 1.78;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-
-  gap: 6px;
-
-  margin-top: 19px;
+  gap: 7px;
+  margin-top: 20px;
 }
 
 .tags span {
   padding: 5px 8px;
-
   border: 1px solid var(--line);
   border-radius: 8px;
 
-  background:
-    rgba(77, 141, 255, 0.03);
+  background: rgba(77,141,255,.04);
+  color: #a0b4d0;
 
-  color: #829abc;
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.055em;
+  font: 600 8px/1.5 var(--mono);
+  letter-spacing: .04em;
 }
 
 .project-actions {
@@ -1505,59 +1221,57 @@ button:focus-visible {
   align-items: center;
   flex-wrap: wrap;
 
-  gap: 10px;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 24px;
+}
 
-  margin-top: 23px;
-
-  padding-top: 18px;
-
-  border-top: 1px solid var(--line);
+.project-actions::before {
+  content: "";
+  display: block;
+  flex-basis: 100%;
+  height: 1px;
+  margin-bottom: 5px;
+  background: var(--line);
 }
 
 .project-actions a,
 .text-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 
-  min-height: 38px;
+  min-height: 40px;
+  padding: 9px 11px;
 
-  padding: 0 11px;
-
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 9px;
 
-  background:
-    rgba(255, 255, 255, 0.016);
-
-  color: #c8d9f2;
+  background: rgba(255,255,255,.02);
+  color: #d8e7fa;
 
   cursor: pointer;
-
-  font-size: 11px;
-  font-weight: 800;
+  font: 800 11px/1.3 var(--sans);
+  text-align: center;
 
   transition:
-    transform 0.18s ease,
-    color 0.18s ease,
-    border-color 0.18s ease,
-    background 0.18s ease;
+    transform .18s ease,
+    color .18s ease,
+    border-color .18s ease,
+    background .18s ease;
 }
 
 .project-link--primary {
   border-color:
-    rgba(114, 183, 255, 0.29) !important;
+    rgba(114,183,255,.32) !important;
 
   background:
-    rgba(77, 141, 255, 0.08) !important;
+    rgba(77,141,255,.095) !important;
 
-  color:
-    #8fc7ff !important;
+  color: #a2d2ff !important;
 }
 
-
-/* =========================================================
-   16. SKILLS
-   ========================================================= */
+/* 15. SKILLS */
 
 .stack-board {
   border-top: 1px solid var(--line);
@@ -1565,68 +1279,52 @@ button:focus-visible {
 
 .stack-row {
   display: grid;
-
   grid-template-columns:
-    46px
-    minmax(180px, 0.7fr)
-    minmax(0, 1.3fr)
+    42px
+    minmax(170px,.7fr)
+    minmax(0,1.3fr)
     auto;
 
   align-items: center;
-
-  gap: 22px;
-
-  min-height: 92px;
-
-  padding: 8px 0;
+  gap: 20px;
+  min-height: 100px;
+  padding: 15px 0;
 
   border-bottom: 1px solid var(--line);
 
   transition:
-    background 0.18s ease,
-    padding-inline 0.18s ease;
+    background .18s ease,
+    padding-inline .18s ease;
 }
 
 .stack-row > span {
-  color: #627d9f;
-
-  font:
-    500 10px var(--mono);
+  color: #869cba;
+  font: 500 10px var(--mono);
 }
 
 .stack-row strong {
   font-size: 17px;
-
-  letter-spacing: -0.02em;
+  line-height: 1.4;
+  letter-spacing: -.025em;
 }
 
 .stack-row p {
+  min-width: 0;
   margin: 0;
-
-  color: #91a4bd;
-
+  color: #a6b8d0;
   font-size: 13px;
-
-  line-height: 1.65;
+  line-height: 1.8;
 }
 
 .stack-row b {
-  color: var(--blue-light);
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.09em;
-
+  color: #9acaff;
+  font: 600 8px var(--mono);
+  letter-spacing: .085em;
   text-align: right;
-
   white-space: nowrap;
 }
 
-
-/* =========================================================
-   17. ABOUT
-   ========================================================= */
+/* 16. ABOUT */
 
 .about-section {
   max-width: none;
@@ -1634,53 +1332,37 @@ button:focus-visible {
   padding-left:
     max(
       var(--page-pad),
-      calc(
-        (100vw - var(--max)) / 2
-        + var(--page-pad)
-      )
+      calc((100vw - var(--max))/2 + var(--page-pad))
     );
 
   padding-right:
     max(
       var(--page-pad),
-      calc(
-        (100vw - var(--max)) / 2
-        + var(--page-pad)
-      )
+      calc((100vw - var(--max))/2 + var(--page-pad))
     );
 
   background:
     linear-gradient(
       90deg,
-      rgba(77, 141, 255, 0.04),
-      transparent 45%
+      rgba(77,141,255,.055),
+      transparent 48%
     ),
     #081326;
 }
 
 .about-grid {
   display: grid;
-
   grid-template-columns:
-    minmax(300px, 0.78fr)
-    minmax(0, 1.22fr);
-
-  gap:
-    clamp(42px, 7vw, 110px);
+    minmax(280px,.76fr)
+    minmax(0,1.24fr);
+  gap: clamp(42px,7vw,110px);
 }
 
 .about-heading h2 {
-  margin:
-    22px
-    0
-    0;
-
-  font-size:
-    clamp(52px, 6.6vw, 98px);
-
-  line-height: 0.87;
-
-  letter-spacing: -0.062em;
+  margin: 22px 0 0;
+  font-size: clamp(52px,6.6vw,98px);
+  line-height: .9;
+  letter-spacing: -.065em;
 }
 
 .about-heading h2 span {
@@ -1688,53 +1370,37 @@ button:focus-visible {
 }
 
 .about-copy {
-  max-width: 760px;
+  max-width: 765px;
+  min-width: 0;
 }
 
 .about-copy .lead {
-  margin:
-    0
-    0
-    26px;
-
-  color: #eef5ff;
-
-  font-size:
-    clamp(21px, 2.5vw, 33px);
-
-  line-height: 1.4;
-
-  letter-spacing: -0.03em;
+  margin: 0 0 27px;
+  color: #f1f7ff;
+  font-size: clamp(21px,2.4vw,31px);
+  line-height: 1.48;
+  letter-spacing: -.028em;
 }
 
 .about-copy > p:not(.lead) {
-  margin:
-    0
-    0
-    18px;
-
-  color: #a0b1c8;
-
+  margin: 0 0 20px;
+  color: #afc0d5;
   font-size: 15px;
-
-  line-height: 1.78;
+  line-height: 1.85;
 }
 
 .about-facts {
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  margin-top: 34px;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  margin-top: 38px;
 
   border-top: 1px solid var(--line);
   border-left: 1px solid var(--line);
 }
 
 .about-facts div {
-  min-height: 100px;
-
+  min-width: 0;
+  min-height: 104px;
   padding: 17px;
 
   border-right: 1px solid var(--line);
@@ -1743,112 +1409,79 @@ button:focus-visible {
 
 .about-facts span {
   display: block;
-
-  color: #7288a8;
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.1em;
+  color: #91a8c7;
+  font: 600 9px var(--mono);
+  letter-spacing: .09em;
 }
 
 .about-facts strong {
   display: block;
-
-  margin-top: 16px;
-
+  margin-top: 14px;
+  color: #e2edfa;
   font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: break-word;
 }
 
-
-/* =========================================================
-   18. RESUME
-   ========================================================= */
+/* 17. CV VIEWER */
 
 .resume-section {
   display: grid;
-
   grid-template-columns:
-    minmax(300px, 0.78fr)
-    minmax(0, 1.22fr);
+    minmax(290px,.78fr)
+    minmax(0,1.22fr);
 
   align-items: center;
-
-  gap:
-    clamp(42px, 7vw, 90px);
+  gap: clamp(38px,7vw,90px);
 }
 
 .resume-copy h2 {
   margin-top: 18px;
-
-  font-size:
-    clamp(40px, 5vw, 66px);
+  font-size: clamp(40px,5vw,66px);
 }
 
 .resume-copy > p {
   max-width: 500px;
-
-  margin:
-    20px
-    0
-    0;
-
+  margin: 20px 0 0;
   color: var(--muted);
-
   font-size: 15px;
-
-  line-height: 1.75;
+  line-height: 1.85;
 }
 
 .resume-viewer {
   min-width: 0;
-
   overflow: hidden;
 
   border: 1px solid var(--line-strong);
   border-radius: 20px;
 
   background: #07101f;
-
   box-shadow: var(--shadow-soft);
 }
 
 .viewer-bar {
   display: grid;
-
-  grid-template-columns:
-    1fr
-    auto
-    1fr;
-
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-
-  gap: 14px;
+  gap: 12px;
 
   min-height: 46px;
-
   padding: 0 15px;
-
   border-bottom: 1px solid var(--line);
 
-  color: #8ca1bd;
-
-  font:
-    500 9px var(--mono);
+  color: #9ab0ce;
+  font: 500 9px var(--mono);
 }
 
 .viewer-bar > div {
   display: flex;
-
   gap: 6px;
 }
 
 .viewer-dot {
   width: 7px;
   height: 7px;
-
   border-radius: 50%;
-
   background: #29446c;
 }
 
@@ -1862,54 +1495,41 @@ button:focus-visible {
 
 .viewer-bar a {
   justify-self: end;
-
   color: var(--blue-light);
 }
 
 .resume-viewer object {
   display: block;
-
   width: 100%;
-  height:
-    min(64vh, 610px);
-
+  height: min(66vh,640px);
+  min-height: 430px;
   border: 0;
-
   background: #fff;
 }
 
 .pdf-fallback {
-  padding:
-    56px
-    24px;
-
+  padding: 56px 24px;
   color: #17243a;
-
   text-align: center;
 }
 
 .pdf-fallback a {
   color: #174da8;
-
   text-decoration: underline;
 }
 
-
-/* =========================================================
-   19. PLAYGROUND
-   ========================================================= */
+/* 18. PLAYGROUND SHELL */
 
 .game-shell {
   overflow: hidden;
-
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
 
   background:
     linear-gradient(
       160deg,
-      rgba(13, 30, 56, 0.86),
-      rgba(7, 18, 35, 0.9)
+      rgba(13,30,56,.9),
+      rgba(7,18,35,.94)
     );
 
   box-shadow: var(--shadow-soft);
@@ -1917,15 +1537,10 @@ button:focus-visible {
 
 .game-tabs {
   display: flex;
-
   gap: 6px;
-
   padding: 10px;
-
   overflow-x: auto;
-
   border-bottom: 1px solid var(--line);
-
   scrollbar-width: none;
 }
 
@@ -1935,54 +1550,49 @@ button:focus-visible {
 
 .game-tab {
   flex: 0 0 auto;
-
-  min-height: 40px;
-
-  padding: 0 15px;
+  min-height: 43px;
+  padding: 0 17px;
 
   border: 1px solid transparent;
   border-radius: 10px;
 
   background: transparent;
-
-  color: #8297b5;
+  color: #a1b4d0;
 
   cursor: pointer;
-
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
+
+  transition:
+    background .2s ease,
+    color .2s ease;
 }
 
 .game-tab.active {
-  border-color:
-    rgba(114, 183, 255, 0.23);
-
-  background:
-    rgba(77, 141, 255, 0.085);
-
-  color: #dceaff;
+  border-color: rgba(114,183,255,.27);
+  background: rgba(77,141,255,.11);
+  color: #e2efff;
 }
 
 .game-panel {
   display: none;
-
-  padding:
-    clamp(20px, 3vw, 36px);
+  padding: clamp(20px,3vw,36px);
 }
 
 .game-panel.active {
   display: block;
-
-  animation:
-    panel-in 0.3s ease both;
+  animation: panel-in .3s ease both;
 }
 
 @keyframes panel-in {
   from {
     opacity: 0;
+    transform: translateY(6px);
+  }
 
-    transform:
-      translateY(6px);
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -1991,53 +1601,38 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
 }
 
 .game-panel-head > div:first-child span {
-  color: #7891b1;
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.1em;
+  color: #97aecc;
+  font: 600 9px var(--mono);
+  letter-spacing: .1em;
 }
 
 .game-panel-head h3 {
-  margin:
-    6px
-    0
-    0;
-
-  font-size:
-    clamp(25px, 3vw, 40px);
-
-  letter-spacing: -0.04em;
+  margin: 7px 0 0;
+  font-size: clamp(25px,3vw,40px);
+  line-height: 1.2;
+  letter-spacing: -.04em;
 }
 
 .score-chip {
-  padding: 10px 12px;
-
+  padding: 11px 13px;
   border: 1px solid var(--line);
   border-radius: 10px;
 
-  color: #8297b5;
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.07em;
+  color: #9db1ce;
+  font: 600 9px var(--mono);
+  letter-spacing: .06em;
+  white-space: nowrap;
 }
 
 .score-chip strong {
-  color: #d1e4ff;
+  color: #d7eaff;
 }
 
-
-/* =========================================================
-   20. REACTION GAME
-   ========================================================= */
+/* 19. REACTION GAME */
 
 .reaction-box {
   display: flex;
@@ -2047,129 +1642,114 @@ button:focus-visible {
 
   width: 100%;
   min-height: 320px;
-
-  margin:
-    24px
-    0
-    17px;
+  margin: 25px 0 18px;
+  padding: 24px;
 
   border: 1px solid var(--line-strong);
   border-radius: 18px;
 
   background: #0a172a;
-
   cursor: pointer;
+  text-align: center;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease;
 }
 
 .reaction-box strong {
-  font-size:
-    clamp(25px, 4vw, 52px);
-
-  letter-spacing: -0.04em;
+  font-size: clamp(25px,4vw,52px);
+  line-height: 1.2;
+  letter-spacing: -.04em;
 }
 
 .reaction-box small {
-  margin-top: 9px;
-
-  color: #7e95b3;
+  margin-top: 11px;
+  color: #a6bbd5;
+  font-size: 13px;
 }
 
 .reaction-box.waiting {
+  border-color: rgba(255,130,156,.32);
   background: #331620;
 }
 
 .reaction-box.ready {
+  border-color: rgba(103,232,165,.44);
   background: #0c3b31;
 }
 
 .game-footer {
-  color: #748aaa;
-
-  font-size: 11px;
+  color: #95aaca;
+  font-size: 12px;
 }
 
-
-/* =========================================================
-   21. SNAKE
-   ========================================================= */
+/* 20. SNAKE GAME */
 
 .snake-layout {
   display: grid;
-
   grid-template-columns:
-    minmax(0, 1fr)
-    220px;
-
-  gap: 22px;
-
-  margin-top: 25px;
+    minmax(0,1fr) 220px;
+  align-items: start;
+  gap: 24px;
+  margin-top: 26px;
 }
 
 .snake-layout canvas {
-  width:
-    min(100%, 500px);
-
-  aspect-ratio: 1;
+  display: block;
+  width: min(100%,500px);
+  height: auto;
+  aspect-ratio: 1/1;
 
   border: 1px solid var(--line-strong);
   border-radius: 16px;
-
   background: #06101d;
 }
 
 .snake-side {
   display: flex;
   flex-direction: column;
-
+  align-items: flex-start;
   gap: 15px;
 }
 
 .score-big {
+  width: 100%;
   padding: 17px;
-
   border: 1px solid var(--line);
   border-radius: 13px;
 }
 
 .score-big span {
-  color: #7087a7;
-
-  font:
-    600 8px var(--mono);
+  color: #90a6c3;
+  font: 600 9px var(--mono);
 }
 
 .score-big strong {
   display: block;
-
   margin-top: 4px;
-
-  font-size: 34px;
+  font-size: 36px;
 }
 
 .snake-side p {
-  color: #8298b5;
-
+  margin: 0;
+  color: #a4b8d0;
   font-size: 12px;
-
-  line-height: 1.6;
+  line-height: 1.75;
 }
 
 .snake-controls {
   display: none;
-
-  grid-template-columns:
-    repeat(3, 48px);
-
-  gap: 5px;
+  grid-template-columns: repeat(3,49px);
+  gap: 7px;
 }
 
 .snake-controls button {
-  height: 44px;
-
+  height: 46px;
   border: 1px solid var(--line-strong);
-  border-radius: 9px;
-
-  background: #0c1d34;
+  border-radius: 10px;
+  background: #10243f;
+  cursor: pointer;
 }
 
 .snake-controls button:nth-child(1) {
@@ -2191,104 +1771,91 @@ button:focus-visible {
   grid-row: 2;
 }
 
-
-/* =========================================================
-   22. SQL QUIZ
-   ========================================================= */
+/* 21. SQL QUIZ */
 
 .sql-quiz {
-  margin:
-    24px
-    0;
+  margin: 24px 0;
 }
 
 .sql-question {
-  padding: 20px;
-
+  padding: 22px;
   border: 1px solid var(--line);
   border-radius: 15px;
-
-  background:
-    rgba(3, 12, 25, 0.34);
+  background: rgba(3,12,25,.38);
 }
 
 .sql-question code {
-  color: #9ed0ff;
-
-  font:
-    500 12px / 1.7
-    var(--mono);
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: #a8d7ff;
+  font: 500 12px/1.75 var(--mono);
 }
 
 .sql-question h4 {
-  margin:
-    13px
-    0
-    17px;
-
+  margin: 15px 0 18px;
   font-size: 18px;
+  line-height: 1.45;
+}
+
+.sql-question p {
+  color: var(--muted);
 }
 
 .sql-answers {
   display: grid;
-
   grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 8px;
+    repeat(2,minmax(0,1fr));
+  gap: 9px;
 }
 
 .sql-answer {
-  min-height: 45px;
+  min-height: 48px;
+  padding: 11px 13px;
 
-  padding: 11px 12px;
-
-  border: 1px solid var(--line);
-  border-radius: 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
 
   background: #0b1a2e;
-
-  color: #bac9dc;
+  color: #c9d9eb;
 
   cursor: pointer;
-
+  font-size: 13px;
+  line-height: 1.55;
   text-align: left;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease;
 }
 
 .sql-answer.correct {
-  border-color:
-    rgba(103, 232, 165, 0.5);
-
-  background:
-    rgba(103, 232, 165, 0.08);
+  border-color: rgba(103,232,165,.55);
+  background: rgba(103,232,165,.12);
+  color: #e0fff0;
 }
 
 .sql-answer.wrong {
-  border-color:
-    rgba(255, 111, 145, 0.45);
-
-  background:
-    rgba(255, 111, 145, 0.07);
+  border-color: rgba(255,111,145,.55);
+  background: rgba(255,111,145,.11);
+  color: #ffe5eb;
 }
 
+.sql-answer:disabled {
+  cursor: default;
+}
 
-/* =========================================================
-   23. CONTACT
-   ========================================================= */
+/* 22. CONTACT AND FOOTER */
 
 .contact-section {
   padding:
-    clamp(70px, 8vw, 100px)
+    clamp(72px,8vw,104px)
     max(
       var(--page-pad),
-      calc(
-        (100vw - var(--max)) / 2
-        + var(--page-pad)
-      )
+      calc((100vw - var(--max))/2 + var(--page-pad))
     );
 
   border-top: 1px solid var(--line);
-
   background: #050c18;
 }
 
@@ -2297,32 +1864,20 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
 
-  color: #7187a5;
-
-  font:
-    600 9px var(--mono);
-
-  letter-spacing: 0.09em;
+  color: #93a9c5;
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .08em;
 }
 
 .contact-main {
   display: grid;
-
   grid-template-columns:
-    minmax(0, 1fr)
-    auto;
-
+    minmax(0,1fr) auto;
   align-items: end;
-
-  gap:
-    clamp(32px, 5vw, 70px);
-
-  margin:
-    42px
-    0;
+  gap: clamp(32px,5vw,70px);
+  margin: 42px 0;
 }
 
 .contact-copy {
@@ -2330,63 +1885,36 @@ button:focus-visible {
 }
 
 .contact-focus {
-  margin:
-    0
-    0
-    17px;
-
-  color: var(--blue-light);
-
-  font:
-    600 9px var(--mono);
-
-  line-height: 1.7;
-
-  letter-spacing: 0.09em;
+  margin: 0 0 18px;
+  color: #96ccff;
+  font: 600 9px/1.8 var(--mono);
+  letter-spacing: .085em;
 }
 
 .contact-main h2 {
-  font-size:
-    clamp(39px, 5.5vw, 74px);
+  font-size: clamp(37px,5.4vw,73px);
 }
 
 .contact-main .contact-copy > p:last-child {
-  max-width: 700px;
-
-  margin:
-    22px
-    0
-    0;
-
+  max-width: 710px;
+  margin: 23px 0 0;
   color: var(--muted);
-
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 400;
-
-  line-height: 1.75;
-
+  font: 400 14px/1.85 var(--sans);
   letter-spacing: 0;
 }
 
 .contact-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-
+  justify-content: space-between;
   gap: 20px;
 
-  min-height: 52px;
-
-  padding:
-    0
-    0
-    4px;
+  min-height: 54px;
+  padding: 0 0 4px;
 
   border-bottom: 1px solid var(--line-strong);
-
   font-size: 12px;
   font-weight: 800;
-
   white-space: nowrap;
 }
 
@@ -2397,75 +1925,49 @@ button:focus-visible {
 .contact-footer {
   justify-content: flex-start;
   flex-wrap: wrap;
-
-  gap:
-    13px
-    26px;
-
-  padding-top: 23px;
-
+  gap: 13px 26px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
 }
 
 .contact-footer a {
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
-
-
-/* =========================================================
-   24. FOOTER
-   ========================================================= */
 
 .site-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
 
   padding:
-    20px
+    21px
     max(
       var(--page-pad),
-      calc(
-        (100vw - var(--max)) / 2
-        + var(--page-pad)
-      )
+      calc((100vw - var(--max))/2 + var(--page-pad))
     );
 
-  border-top:
-    1px solid
-    rgba(255, 255, 255, 0.04);
-
+  border-top: 1px solid rgba(255,255,255,.05);
   background: var(--bg-deep);
 
-  color: #587091;
-
-  font:
-    500 9px var(--mono);
+  color: #829bb9;
+  font: 500 10px/1.5 var(--mono);
 }
 
-
-/* =========================================================
-   25. PROJECT MODAL
-   ========================================================= */
+/* 23. PROJECT DETAILS MODAL */
 
 .project-modal {
   position: fixed;
   inset: 0;
-
   z-index: 100;
 
   display: none;
   place-items: center;
+  padding: 22px;
 
-  padding: 20px;
-
-  background:
-    rgba(1, 6, 13, 0.8);
-
-  backdrop-filter: blur(12px);
+  background: rgba(1,6,13,.83);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .project-modal.open {
@@ -2474,18 +1976,12 @@ button:focus-visible {
 
 .project-modal-card {
   position: relative;
-
-  width:
-    min(700px, 100%);
-
-  max-height: 88dvh;
-
+  width: min(700px,100%);
+  max-height: min(88vh,88dvh);
   overflow-y: auto;
-
   overscroll-behavior: contain;
 
-  padding:
-    clamp(24px, 4vw, 32px);
+  padding: clamp(24px,4vw,34px);
 
   border: 1px solid var(--line-strong);
   border-radius: 21px;
@@ -2498,257 +1994,198 @@ button:focus-visible {
     );
 
   box-shadow:
-    0 28px 100px
-    rgba(0, 0, 0, 0.52);
+    0 28px 100px rgba(0,0,0,.55);
 
-  animation:
-    modal-in 0.23s ease both;
+  animation: modal-in .23s ease both;
 }
 
 @keyframes modal-in {
   from {
     opacity: 0;
+    transform: translateY(8px) scale(.985);
+  }
 
-    transform:
-      translateY(8px)
-      scale(0.985);
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
 .project-modal-close {
   position: absolute;
-
   right: 14px;
   top: 14px;
 
   display: grid;
   place-items: center;
 
-  width: 38px;
-  height: 38px;
-
+  width: 40px;
+  height: 40px;
   padding: 0;
 
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 10px;
 
-  background:
-    rgba(255, 255, 255, 0.025);
-
+  background: rgba(255,255,255,.04);
   cursor: pointer;
-
-  font-size: 21px;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .modal-kicker {
   color: var(--blue-light);
-
-  font:
-    600 9px var(--mono);
-
-  letter-spacing: 0.1em;
+  font: 600 9px var(--mono);
+  letter-spacing: .1em;
 }
 
 .project-modal-card h3 {
-  margin:
-    12px
-    46px
-    12px
-    0;
-
-  font-size:
-    clamp(28px, 4vw, 44px);
-
-  line-height: 1.05;
-
-  letter-spacing: -0.045em;
+  margin: 13px 45px 14px 0;
+  font-size: clamp(27px,4vw,44px);
+  line-height: 1.12;
+  letter-spacing: -.04em;
 }
 
 .project-modal-card > p {
-  color: #a4b5cc;
-
-  line-height: 1.75;
+  margin: 0;
+  color: #b4c6dc;
+  font-size: 14px;
+  line-height: 1.85;
 }
 
 .modal-evidence {
   display: grid;
-
-  gap: 8px;
-
-  margin-top: 22px;
-
-  padding: 15px;
+  gap: 12px;
+  margin-top: 23px;
+  padding: 17px;
 
   border: 1px solid var(--line);
   border-radius: 13px;
-
-  background:
-    rgba(3, 12, 25, 0.37);
+  background: rgba(3,12,25,.38);
 }
 
 .modal-evidence div {
   display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 16px;
 
-  grid-template-columns:
-    130px
-    1fr;
-
-  gap: 17px;
-
-  color: #9fb0c7;
-
+  color: #b7c8de;
   font-size: 12px;
+  line-height: 1.65;
 }
 
 .modal-evidence span {
-  color: #748db1;
-
-  font:
-    600 8px var(--mono);
-
-  letter-spacing: 0.065em;
+  color: #94acce;
+  font: 600 9px/1.7 var(--mono);
+  letter-spacing: .06em;
 }
 
 .modal-actions {
   display: flex;
   flex-wrap: wrap;
-
   gap: 9px;
-
-  margin-top: 25px;
+  margin-top: 22px;
 }
 
 .modal-secondary-close {
-  margin-top: 9px;
+  margin-top: 14px;
 }
 
-
-/* =========================================================
-   26. SCROLL REVEAL
-   ========================================================= */
+/* 24. REVEAL ANIMATION */
 
 .reveal {
   opacity: 0;
-
-  transform:
-    translateY(22px);
+  transform: translateY(22px);
 
   transition:
-    opacity 0.65s ease,
-    transform 0.65s
-      cubic-bezier(
-        0.2,
-        0.7,
-        0.2,
-        1
-      );
+    opacity .65s ease,
+    transform .65s cubic-bezier(.2,.7,.2,1);
 }
 
 .reveal.visible {
   opacity: 1;
-
   transform: none;
 }
 
-
-/* =========================================================
-   27. HOVER DEVICES
-   ========================================================= */
+/* 25. POINTER AND HOVER STATES */
 
 @media (hover: hover) and (pointer: fine) {
 
   .topnav a:hover,
   .nav-github:hover {
-    color: var(--text);
-
-    background:
-      rgba(255, 255, 255, 0.04);
+    color: #fff;
+    background: rgba(255,255,255,.055);
   }
 
   .button-primary:hover {
-    transform:
-      translateY(-2px);
-
+    transform: translateY(-2px);
     box-shadow:
-      0 14px 34px
-      rgba(60, 124, 255, 0.27);
+      0 15px 36px rgba(60,124,255,.3);
   }
 
   .button-ghost:hover {
-    border-color:
-      rgba(114, 183, 255, 0.35);
-
-    background:
-      rgba(255, 255, 255, 0.045);
+    border-color: rgba(114,183,255,.42);
+    background: rgba(255,255,255,.06);
   }
 
   .project-card:hover {
-    transform:
-      translateY(-3px);
-
-    border-color:
-      rgba(114, 183, 255, 0.31);
-
+    transform: translateY(-3px);
+    border-color: rgba(114,183,255,.35);
     box-shadow:
-      0 20px 55px
-      rgba(0, 0, 0, 0.16);
+      0 22px 60px rgba(0,0,0,.2);
   }
 
   .project-actions a:hover,
   .text-button:hover {
-    transform:
-      translateY(-1px);
-
-    border-color:
-      rgba(114, 183, 255, 0.37);
-
-    background:
-      rgba(77, 141, 255, 0.075);
-
-    color: var(--blue-light);
+    transform: translateY(-1px);
+    border-color: rgba(114,183,255,.45);
+    background: rgba(77,141,255,.1);
+    color: #a9d7ff;
   }
 
   .live-browser-viewport--image:hover img {
-    transform:
-      scale(1.01);
-
-    filter:
-      brightness(1.02);
+    transform: scale(1.012);
+    filter: brightness(1.03);
   }
 
   .stack-row:hover {
     padding-inline: 10px;
-
-    background:
-      rgba(77, 141, 255, 0.028);
+    background: rgba(77,141,255,.035);
   }
 
   .game-tab:hover {
-    background:
-      rgba(255, 255, 255, 0.025);
-
-    color: #dceaff;
+    background: rgba(255,255,255,.045);
+    color: #e3efff;
   }
 
-  .sql-answer:hover {
-    border-color:
-      rgba(114, 183, 255, 0.34);
+  .sql-answer:not(:disabled):hover {
+    border-color: rgba(114,183,255,.48);
   }
 
-  .contact-footer a:hover {
-    color: #bad2f1;
+  .contact-footer a:hover,
+  .site-footer a:hover {
+    color: #cee4ff;
+  }
+
+  .contact-link:hover {
+    color: #a8d6ff;
+    border-color: var(--blue-light);
   }
 }
 
+/* 26. SMALL DESKTOPS */
 
-/* =========================================================
-   28. SMALL LAPTOP / TABLET LANDSCAPE
-   ========================================================= */
+@media (max-width: 1100px) {
 
-@media (max-width: 1080px) {
+  .topbar {
+    grid-template-columns:
+      minmax(110px,1fr)
+      auto
+      minmax(80px,1fr);
+    gap: 8px;
+  }
 
-  :root {
-    --max: 980px;
+  .topnav a {
+    padding-inline: 8px;
   }
 
   .hero-bottom,
@@ -2762,11 +2199,11 @@ button:focus-visible {
   }
 
   .hero-copy {
-    max-width: 760px;
+    max-width: 790px;
   }
 
   .status-card {
-    max-width: 560px;
+    max-width: 590px;
   }
 
   .project-card--hero,
@@ -2777,7 +2214,6 @@ button:focus-visible {
   .project-card--hero .project-preview,
   .project-card--wide .project-preview {
     min-height: 390px;
-
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
@@ -2786,7 +2222,7 @@ button:focus-visible {
   .project-card--wide .project-copy {
     padding:
       31px
-      clamp(24px, 4vw, 42px)
+      clamp(24px,4vw,42px)
       34px;
   }
 
@@ -2803,29 +2239,24 @@ button:focus-visible {
   }
 }
 
-
-/* =========================================================
-   29. TABLET / MOBILE NAVIGATION
-   ========================================================= */
+/* 27. TABLETS AND MOBILE NAVIGATION */
 
 @media (max-width: 820px) {
 
   :root {
-    --page-pad:
-      clamp(18px, 5vw, 32px);
+    --page-pad: clamp(18px,5vw,32px);
+    --section-space: clamp(68px,10vw,88px);
+  }
 
-    --section-space:
-      clamp(70px, 10vw, 88px);
+  html {
+    scroll-padding-top: 78px;
   }
 
   .topbar {
-    grid-template-columns:
-      1fr
-      auto;
-
+    grid-template-columns: 1fr auto;
     gap: 12px;
-
-    padding-block: 12px;
+    min-height: 64px;
+    padding-block: 10px;
   }
 
   .brand {
@@ -2834,7 +2265,6 @@ button:focus-visible {
 
   .nav-toggle {
     display: block;
-
     justify-self: end;
   }
 
@@ -2844,7 +2274,6 @@ button:focus-visible {
 
   .topnav {
     position: absolute;
-
     top: calc(100% + 8px);
     left: var(--page-pad);
     right: var(--page-pad);
@@ -2854,21 +2283,18 @@ button:focus-visible {
     align-items: stretch;
 
     gap: 2px;
-
     padding: 8px;
 
     border: 1px solid var(--line-strong);
     border-radius: 14px;
 
-    background:
-      rgba(8, 18, 35, 0.97);
+    background: rgba(8,18,35,.98);
 
     box-shadow:
-      0 18px 50px
-      rgba(0, 0, 0, 0.32);
+      0 18px 50px rgba(0,0,0,.38);
 
-    backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
   }
 
   .topnav.open,
@@ -2878,52 +2304,31 @@ button:focus-visible {
 
   .topnav a {
     justify-content: flex-start;
-
-    min-height: 44px;
-
-    padding:
-      0
-      13px;
-
+    min-height: 46px;
+    padding-inline: 13px;
     font-size: 12px;
   }
 
-
-  /* Hero */
-
   .hero {
-    padding-top: 24px;
-  }
-
-  .hero-meta {
-    font-size: 9px;
+    padding-top: 25px;
   }
 
   .hero-title-wrap {
-    height:
-      clamp(270px, 45vw, 370px);
+    height: clamp(265px,45vw,365px);
   }
 
   .hero-copy p {
-    font-size:
-      clamp(17px, 3vw, 20px);
+    font-size: clamp(17px,3vw,20px);
   }
-
-
-  /* Sections */
 
   .section-head {
     grid-template-columns: 1fr;
-
-    gap: 17px;
+    gap: 16px;
   }
 
   .section-id {
     padding-top: 0;
   }
-
-
-  /* Projects */
 
   .project-grid {
     grid-template-columns: 1fr;
@@ -2944,37 +2349,19 @@ button:focus-visible {
   }
 
   .project-preview--live {
-    padding:
-      63px
-      16px
-      18px !important;
+    padding: 63px 16px 18px !important;
   }
 
   .project-preview--sql-code {
-    padding:
-      62px
-      18px
-      20px;
+    padding: 63px 18px 20px;
   }
-
-
-  /* Skills */
 
   .stack-row {
     grid-template-columns:
-      34px
-      minmax(0, 1fr)
-      auto;
-
-    gap:
-      7px
-      14px;
-
+      32px minmax(0,1fr) auto;
+    gap: 8px 15px;
     min-height: 0;
-
-    padding:
-      18px
-      0;
+    padding: 19px 0;
   }
 
   .stack-row strong {
@@ -2982,28 +2369,17 @@ button:focus-visible {
   }
 
   .stack-row p {
-    grid-column:
-      2 / -1;
-
-    margin-top: 3px;
+    grid-column: 2 / -1;
+    margin-top: 4px;
   }
-
-
-  /* About */
 
   .about-grid {
     gap: 38px;
   }
 
-
-  /* Resume */
-
   .resume-section {
-    gap: 40px;
+    gap: 42px;
   }
-
-
-  /* Games */
 
   .game-panel-head,
   .game-footer {
@@ -3019,9 +2395,6 @@ button:focus-visible {
     display: grid;
   }
 
-
-  /* Contact */
-
   .contact-main {
     grid-template-columns: 1fr;
   }
@@ -3035,10 +2408,7 @@ button:focus-visible {
   }
 }
 
-
-/* =========================================================
-   30. MOBILE
-   ========================================================= */
+/* 28. MOBILE PHONES */
 
 @media (max-width: 620px) {
 
@@ -3050,21 +2420,16 @@ button:focus-visible {
     scroll-margin-top: 76px;
   }
 
-
-  /* Hero */
-
   .hero-meta {
     align-items: flex-start;
     flex-direction: column;
-
     gap: 5px;
+    font-size: 9px;
   }
 
   .hero-title-wrap {
-    height:
-      clamp(220px, 63vw, 300px);
-
-    margin-top: 6px;
+    height: clamp(215px,63vw,300px);
+    margin-top: 7px;
   }
 
   .hero-bottom {
@@ -3072,17 +2437,14 @@ button:focus-visible {
   }
 
   .hero-copy p {
-    font-size: 17px;
-
-    line-height: 1.65;
+    font-size: 16px;
+    line-height: 1.73;
   }
 
   .hero-actions {
     display: grid;
-
     grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
+      repeat(2,minmax(0,1fr));
     width: 100%;
   }
 
@@ -3095,32 +2457,30 @@ button:focus-visible {
   }
 
   .status-row {
-    min-height: 40px;
+    min-height: 43px;
   }
 
-
-  /* Section headings */
+  .status-row,
+  .status-row strong {
+    font-size: 9px;
+  }
 
   .section-head h2,
   .resume-copy h2 {
-    font-size:
-      clamp(35px, 10vw, 48px);
+    font-size: clamp(34px,9.7vw,48px);
   }
 
-
-  /* Projects */
+  .section-intro {
+    font-size: 14px;
+  }
 
   .project-card {
     border-radius: 18px;
   }
 
   .project-topline {
-    min-height: 40px;
-
-    padding:
-      0
-      13px;
-
+    min-height: 42px;
+    padding: 9px 13px;
     font-size: 8px;
   }
 
@@ -3130,64 +2490,51 @@ button:focus-visible {
   }
 
   .project-preview {
-    min-height: 250px;
+    min-height: 255px;
   }
 
   .project-copy,
   .project-card--hero .project-copy,
   .project-card--wide .project-copy {
-    padding:
-      22px
-      19px
-      24px;
+    padding: 23px 19px 25px;
   }
 
   .project-title-row {
     flex-direction: column;
-
-    gap: 4px;
+    gap: 5px;
   }
 
   .project-title-row h3 {
-    font-size:
-      clamp(24px, 7vw, 30px);
+    font-size: clamp(23px,6.5vw,30px);
   }
 
   .project-year {
     order: -1;
-
     padding-top: 0;
   }
 
   .project-copy > p {
-    font-size: 13.5px;
-
-    line-height: 1.7;
+    font-size: 13px;
+    line-height: 1.77;
   }
 
   .project-actions {
     align-items: stretch;
-
     flex-direction: column;
+  }
+
+  .project-actions::before {
+    margin-bottom: 4px;
   }
 
   .project-actions a,
   .text-button {
-    justify-content: center;
-
     width: 100%;
-
-    min-height: 42px;
+    min-height: 44px;
   }
 
-
-  /* SQL */
-
   .project-preview--sql-code {
-    padding:
-      58px
-      12px
-      16px;
+    padding: 58px 12px 17px;
   }
 
   .sql-window-bar {
@@ -3195,45 +2542,25 @@ button:focus-visible {
   }
 
   .sql-code-window pre {
-    padding:
-      16px
-      13px
-      14px;
-
+    padding: 16px 13px 14px;
     font-size: 7.5px;
   }
 
   .sql-window-tags {
-    padding:
-      0
-      13px
-      13px;
+    padding: 0 13px 13px;
   }
 
-
-  /* R */
-
   .r-visual {
-    padding:
-      48px
-      18px
-      20px;
+    padding: 47px 17px 20px;
   }
 
   .r-visual pre {
-    font-size: 8px;
+    font-size: 9px;
   }
 
-
-  /* Course application */
-
   .project-preview--live {
-    min-height: 330px !important;
-
-    padding:
-      58px
-      11px
-      15px !important;
+    min-height: 325px !important;
+    padding: 58px 11px 15px !important;
   }
 
   .live-browser-shell {
@@ -3242,14 +2569,9 @@ button:focus-visible {
 
   .live-browser-bar {
     grid-template-columns:
-      auto
-      minmax(0, 1fr);
-
+      auto minmax(0,1fr);
     min-height: 35px;
-
-    padding:
-      0
-      10px;
+    padding-inline: 10px;
   }
 
   .live-browser-bar a {
@@ -3258,21 +2580,16 @@ button:focus-visible {
 
   .live-browser-address {
     text-align: left;
-
     font-size: 7px;
   }
-
-
-  /* Systems */
 
   .systems-visual {
     min-height: 260px;
   }
 
   .system-node {
-    width: 70px;
-    height: 43px;
-
+    width: 74px;
+    height: 44px;
     font-size: 7px;
   }
 
@@ -3284,31 +2601,21 @@ button:focus-visible {
     right: 6%;
   }
 
-
-  /* Skills */
-
   .stack-row {
-    grid-template-columns:
-      28px
-      1fr;
+    grid-template-columns: 28px 1fr;
+  }
+
+  .stack-row p,
+  .stack-row b {
+    grid-column: 2;
   }
 
   .stack-row b {
-    grid-column: 2;
-
     text-align: left;
   }
 
-  .stack-row p {
-    grid-column: 2;
-  }
-
-
-  /* About */
-
   .about-heading h2 {
-    font-size:
-      clamp(48px, 16vw, 68px);
+    font-size: clamp(48px,15vw,68px);
   }
 
   .about-copy .lead {
@@ -3323,14 +2630,9 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-
-  /* CV */
-
   .resume-actions {
     display: grid;
-
     grid-template-columns: 1fr;
-
     width: 100%;
   }
 
@@ -3341,9 +2643,6 @@ button:focus-visible {
   .resume-viewer {
     display: none;
   }
-
-
-  /* Playground */
 
   .game-shell {
     border-radius: 18px;
@@ -3361,19 +2660,14 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-
-  /* Contact */
-
   .contact-kicker {
     align-items: flex-start;
     flex-direction: column;
-
     gap: 6px;
   }
 
   .contact-main h2 {
-    font-size:
-      clamp(37px, 10.5vw, 52px);
+    font-size: clamp(36px,10vw,52px);
   }
 
   .contact-footer {
@@ -3381,51 +2675,31 @@ button:focus-visible {
     flex-direction: column;
   }
 
-  .contact-footer a {
-    white-space: normal;
-  }
-
-
-  /* Footer */
-
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
-
     gap: 10px;
   }
 
-
-  /* Modal */
-
   .project-modal {
     align-items: end;
-
     padding: 10px;
   }
 
   .project-modal-card {
     width: 100%;
     max-height: 91dvh;
-
-    padding:
-      24px
-      19px;
-
+    padding: 24px 19px;
     border-radius: 20px;
   }
 
   .modal-evidence div {
     grid-template-columns: 1fr;
-
     gap: 4px;
   }
 }
 
-
-/* =========================================================
-   31. VERY SMALL MOBILE
-   ========================================================= */
+/* 29. NARROW PHONES */
 
 @media (max-width: 380px) {
 
@@ -3440,12 +2714,8 @@ button:focus-visible {
   .status-row {
     align-items: flex-start;
     flex-direction: column;
-
     gap: 4px;
-
-    padding:
-      10px
-      0;
+    padding: 10px 0;
   }
 
   .status-row-main {
@@ -3469,21 +2739,18 @@ button:focus-visible {
   }
 
   .game-tab {
-    min-height: 38px;
+    min-height: 40px;
+    padding-inline: 12px;
+  }
 
-    padding:
-      0
-      12px;
+  .viewer-bar {
+    grid-template-columns: 1fr auto;
   }
 }
 
+/* 30. TOUCH SCREENS */
 
-/* =========================================================
-   32. TOUCH DEVICES
-   ========================================================= */
-
-@media (hover: none),
-(pointer: coarse) {
+@media (hover: none), (pointer: coarse) {
 
   .cursor-halo {
     display: none;
@@ -3502,10 +2769,7 @@ button:focus-visible {
   }
 }
 
-
-/* =========================================================
-   33. REDUCED MOTION
-   ========================================================= */
+/* 31. REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -3516,19 +2780,13 @@ button:focus-visible {
   *,
   *::before,
   *::after {
-    animation-duration:
-      0.001ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.001ms !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
   }
 
   .reveal {
     opacity: 1;
-
     transform: none;
   }
 
@@ -3537,10 +2795,7 @@ button:focus-visible {
   }
 }
 
-
-/* =========================================================
-   34. PRINT
-   ========================================================= */
+/* 32. PRINT */
 
 @media print {
 
@@ -3551,26 +2806,77 @@ button:focus-visible {
   .hero-orb,
   .playground-section,
   .project-modal,
-  .resume-viewer {
+  .resume-viewer,
+  .hero-actions,
+  .project-actions,
+  .contact-link {
     display: none !important;
   }
 
-  body {
-    background: white;
-    color: black;
+  html,
+  body,
+  .about-section,
+  .contact-section {
+    background: #fff !important;
+    color: #000 !important;
   }
 
   .section,
   .hero,
   .contact-section {
     max-width: none;
+    padding: 30px 0;
+  }
 
-    padding:
-      30px
-      0;
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .project-card {
+    break-inside: avoid;
+    border-color: #bbb;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .project-copy p,
+  .about-copy > p:not(.lead),
+  .stack-row p,
+  .section-intro,
+  .contact-main .contact-copy > p:last-child {
+    color: #333;
+  }
+
+  .project-preview,
+  .hero-title-wrap {
+    display: none;
+  }
+
+  .project-card--hero,
+  .project-card--wide {
+    display: block;
+  }
+
+  .project-card--hero .project-topline,
+  .project-card--wide .project-topline {
+    position: static;
+  }
+
+  .project-card--hero .project-copy,
+  .project-card--wide .project-copy,
+  .project-copy {
+    padding: 20px;
+  }
+
+  .about-heading h2,
+  .section-head h2,
+  .resume-copy h2,
+  .contact-main h2 {
+    color: #000;
   }
 
   a {
-    color: black;
+    color: #000;
   }
 }
