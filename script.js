@@ -1,102 +1,84 @@
+
 (() => {
   "use strict";
 
-
   /* =========================================================
-     01. HELPERS
+     01. SHARED HELPERS
      ========================================================= */
 
   const $ = (selector, parent = document) =>
     parent.querySelector(selector);
 
   const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
+    Array.from(parent.querySelectorAll(selector));
 
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
 
-  const getStoredNumber = (key, fallback = 0) => {
+  const finePointer = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  );
+
+  function readNumber(key, fallback = 0) {
     try {
-      const storedValue =
-        localStorage.getItem(key);
+      const raw = localStorage.getItem(key);
 
-      if (storedValue === null) {
+      if (raw === null) {
         return fallback;
       }
 
-      const value =
-        Number(storedValue);
+      const value = Number(raw);
 
-      return Number.isFinite(value)
+      return Number.isFinite(value) && value >= 0
         ? value
         : fallback;
     } catch {
       return fallback;
     }
-  };
+  }
 
-
-  const setStoredNumber = (key, value) => {
+  function saveNumber(key, value) {
     try {
-      localStorage.setItem(
-        key,
-        String(value)
-      );
+      localStorage.setItem(key, String(value));
     } catch {
-      /*
-        Storage may be disabled or blocked.
-        The website should continue working normally.
-      */
+      // Games continue working if storage is unavailable.
     }
-  };
-
-
-  const prefersReducedMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
-
-
-  const hasFinePointer =
-    window.matchMedia(
-      "(hover: hover) and (pointer: fine)"
-    );
-
+  }
 
   /* =========================================================
      02. PROJECT INFORMATION
      ========================================================= */
 
   const PROJECTS = {
-
     sql: {
-      kicker:
-        "SQL · SQLITE · DATABASE DESIGN",
+      kicker: "SQL · SQLITE · DATABASE DESIGN",
 
-      title:
-        "SQL & Relational Database Portfolio",
+      title: "SQL & Relational Database Portfolio",
 
       desc:
-        "A collection of SQL and relational database work focused on querying, organising and working with structured data. I have used joins, subqueries, grouped analysis, relational keys and database design across university exercises and project work.",
+        "This is a collection of the SQL and database work I've done while learning how to organise, query and understand relational data. I particularly like how a query can turn several connected tables into an answer that's actually useful.",
 
       evidence: [
         [
           "QUERYING",
-          "Filtering, multi-table joins, self joins, GROUP BY, HAVING and aggregate queries"
+          "Filtering, multi-table joins, self joins, grouping, HAVING and aggregate functions."
         ],
         [
           "SUBQUERIES",
-          "Subqueries used within larger queries to work with grouped and calculated results"
+          "Building nested queries and working with calculated or grouped results."
         ],
         [
           "DATABASE DESIGN",
-          "Primary keys, foreign keys, composite keys, relationships and normalisation"
+          "Relationships, primary and foreign keys, composite keys and normalisation."
         ],
         [
           "DATABASE OPERATIONS",
-          "CREATE, INSERT, UPDATE, DELETE and creating tables from query results"
+          "Using CREATE, INSERT, UPDATE and DELETE in database exercises."
         ],
         [
           "R + SQLITE",
-          "Used DBI and RSQLite to connect R to SQLite databases, write tables and run SQL queries"
+          "Connecting R to SQLite with DBI and RSQLite to work with database tables."
         ]
       ],
 
@@ -106,178 +88,99 @@
         "JOINS",
         "SUBQUERIES",
         "DATABASE DESIGN",
-        "DBI / RSQLITE"
+        "RSQLITE"
       ],
 
       actions: [
         {
-          label:
-            "View SQL portfolio ↗",
-
-          url:
-            "https://github.com/VTXZenyx/sql-database-portfolio",
-
-          type:
-            "primary"
+          label: "View SQL portfolio ↗",
+          url: "https://github.com/VTXZenyx/sql-database-portfolio",
+          primary: true
         }
       ]
     },
 
-
     r: {
-      kicker:
-        "R · DATA ANALYSIS · VISUALISATION",
+      kicker: "R · SQL · DATA202",
 
-      title:
-        "R Data Analysis",
+      title: "Data Analysis & Programming",
 
       desc:
-        "Data analysis work completed in R using an Excel-based archaeological dataset. I imported, cleaned and transformed data, worked with related datasets, produced grouped summaries and created visualisations to explore patterns in the data.",
+        "This is where I've put together work from DATA202 and an additional AI-assisted clustering exploration. It's a mix of R, SQL, data cleaning, visualisations and simulations. I wanted one place where I could look back at what I've learned and share the code behind it.",
 
       evidence: [
         [
-          "DATA IMPORT",
-          "Worked with Excel data using readxl and inspected related datasets before analysis"
+          "DINOSAUR FOSSILS",
+          "Working with fossil data and exploring geographic patterns through visualisation."
         ],
         [
-          "CLEANING",
-          "Used dplyr to select, rename, filter and transform variables and clean inconsistent text values"
+          "ANCIENT EGYPT",
+          "Importing, cleaning and analysing isotope data, then interpreting the results in R."
         ],
         [
-          "ANALYSIS",
-          "Produced grouped summaries across historical periods and demographic categories"
+          "FORMULA 1 SQL",
+          "Working with related tables and SQL queries to answer questions about racing data."
         ],
         [
-          "VISUALISATION",
-          "Used ggplot2 to explore strontium isotope measurements and patterns in the data"
+          "PROBABILITY",
+          "Using R sampling and simulations to explore probability and repeated experiments."
+        ],
+        [
+          "CLUSTERING",
+          "An AI-assisted extension exploring unsupervised learning and comparing clustering methods."
         ],
         [
           "DOCUMENTATION",
-          "Used R Markdown to combine code, output, visualisations and written interpretation"
+          "R Markdown, source code and supporting project notes published on GitHub."
         ]
       ],
 
       tags: [
         "R",
-        "RSTUDIO",
         "DPLYR",
         "GGPLOT2",
-        "READXL",
+        "SQL",
+        "SIMULATION",
         "R MARKDOWN"
       ],
 
       actions: [
         {
-          label:
-            "View R portfolio ↗",
-
-          url:
-            "https://github.com/VTXZenyx/r-data-programming-portfolio",
-
-          type:
-            "primary"
+          label: "Explore DATA202 projects ↗",
+          url: "https://github.com/VTXZenyx/data-analysis-and-programming",
+          primary: true
         }
       ]
     },
-
-
-    waid: {
-      kicker:
-        "APPLICATION · BUSINESS RULES · SYSTEMS",
-
-      title:
-        "Course Enrolment Web Application",
-
-      desc:
-        "A working course-enrolment application that applies business rules through application logic. Users can log in, browse courses, enrol and withdraw while the system checks relevant enrolment conditions.",
-
-      evidence: [
-        [
-          "APPLICATION",
-          "Login, course browsing, enrolment and withdrawal functionality"
-        ],
-        [
-          "BUSINESS RULES",
-          "Prerequisites, course-load requirements, GPA requirements, approval requirements and timetable clashes"
-        ],
-        [
-          "DATA",
-          "Structured course and student information used within the application"
-        ],
-        [
-          "TECHNOLOGIES",
-          "HTML, CSS, Vue.js, Python through Brython and JSON"
-        ],
-        [
-          "INFORMATION SYSTEMS",
-          "Turned defined business rules and requirements into working application behaviour"
-        ]
-      ],
-
-      tags: [
-        "HTML",
-        "CSS",
-        "VUE.JS",
-        "PYTHON / BRYTHON",
-        "JSON",
-        "BUSINESS RULES"
-      ],
-
-      actions: [
-        {
-          label:
-            "View live app ↗",
-
-          url:
-            "https://vtxzenyx.github.io/course-enrolment-web-app/",
-
-          type:
-            "primary"
-        },
-        {
-          label:
-            "View GitHub ↗",
-
-          url:
-            "https://github.com/VTXZenyx/course-enrolment-web-app",
-
-          type:
-            "ghost"
-        }
-      ]
-    },
-
 
     systems: {
-      kicker:
-        "INFORMATION SYSTEMS · ANALYSIS",
+      kicker: "INFORMATION SYSTEMS · USER RESEARCH",
 
-      title:
-        "Business & Systems Analysis",
+      title: "Business & Systems Analysis",
 
       desc:
-        "Information Systems work focused on understanding users, stakeholders and the problems that systems are intended to solve before developing possible responses.",
+        "In INFO203, I worked on a question that came up in student life: how do you keep a good first interaction going? My group's idea became 'See you next tutorial', a small prototype for following up with someone after class. The project taught me that understanding people comes before designing a solution.",
 
       evidence: [
         [
-          "USER RESEARCH",
-          "Worked with user and stakeholder research, including interviews"
+          "RESEARCH",
+          "Explored students' experiences through interviews and looked for recurring needs."
         ],
         [
-          "ANALYSIS",
-          "Analysed evidence and recurring themes to better understand problems and user needs"
+          "PROBLEM",
+          "Focused on hesitation around following up after meeting someone and practical barriers to making plans."
         ],
         [
-          "REQUIREMENTS",
-          "Worked with business rules, requirements and stakeholder needs"
+          "IDEAS",
+          "Compared alternative concepts before choosing 'See you next tutorial'."
         ],
         [
-          "PROBLEM DEFINITION",
-          "Used structured problem framing before moving towards possible solutions"
+          "PROTOTYPING",
+          "Designed an invite flow with editable wording, tutorial choices and meeting details."
         ],
         [
-          "SOLUTION DEVELOPMENT",
-          "Developed ideas and used prototyping and testing to refine possible responses"
+          "USER TESTING",
+          "Tested prototype versions, reviewed feedback and refined the flow and statuses."
         ]
       ],
 
@@ -285,1424 +188,1105 @@
         "USER RESEARCH",
         "STAKEHOLDERS",
         "REQUIREMENTS",
-        "PROBLEM DEFINITION",
-        "PROTOTYPING"
+        "PROTOTYPING",
+        "TESTING"
+      ],
+
+      actions: []
+    },
+
+    waid: {
+      kicker: "WEB APP · BUSINESS RULES",
+
+      title: "Course Enrolment Web Application",
+
+      desc:
+        "I built a course enrolment application where students can sign in, browse courses, enrol and withdraw. The interesting part for me was translating real enrolment rules into checks that the application can make, instead of just building the screens.",
+
+      evidence: [
+        [
+          "USER FLOW",
+          "Login, course browsing, enrolment and withdrawal."
+        ],
+        [
+          "VALIDATION",
+          "Prerequisites, course-load limits, GPA requirements and timetable-clash checks."
+        ],
+        [
+          "STRUCTURED DATA",
+          "Student and course information used to drive what the app shows and allows."
+        ],
+        [
+          "TOOLS",
+          "HTML, CSS, Vue.js, Python through Brython and JSON."
+        ],
+        [
+          "SYSTEMS THINKING",
+          "Turning requirements and business rules into application behaviour."
+        ]
+      ],
+
+      tags: [
+        "HTML",
+        "CSS",
+        "VUE.JS",
+        "BRYTHON",
+        "JSON",
+        "BUSINESS RULES"
+      ],
+
+      actions: [
+        {
+          label: "Open live application ↗",
+          url: "https://vtxzenyx.github.io/course-enrolment-web-app/",
+          primary: true
+        },
+        {
+          label: "View source on GitHub ↗",
+          url: "https://github.com/VTXZenyx/course-enrolment-web-app",
+          primary: false
+        }
+      ]
+    },
+
+    cricket: {
+      kicker: "PERSONAL PROJECT · AI · VOICE",
+
+      title: "AI Cricket Mentor",
+
+      desc:
+        "I wanted to see how far I could take a cricket-themed AI idea beyond a normal chatbot. The project explores a local language model, conversation, knowledge retrieval and voice input and output. It's a practical way for me to understand what the pieces of an AI application actually do.",
+
+      evidence: [
+        [
+          "LOCAL AI",
+          "Exploring language-model inference through a local setup."
+        ],
+        [
+          "CONVERSATION",
+          "Handling prompts and generating streaming responses."
+        ],
+        [
+          "VOICE",
+          "Connecting speech recognition and voice output to an assistant interface."
+        ],
+        [
+          "LEARNING",
+          "Understanding how application components connect, including their limitations."
+        ],
+        [
+          "STATUS",
+          "Personal project documented in the GitHub repository; not presented as a production service."
+        ]
+      ],
+
+      tags: [
+        "AI",
+        "PYTHON",
+        "LOCAL LLM",
+        "VOICE",
+        "PERSONAL PROJECT"
+      ],
+
+      actions: [
+        {
+          label: "View AI Cricket Mentor ↗",
+          url: "https://github.com/VTXZenyx/ai-cricket-virat-kohli-app",
+          primary: true
+        }
+      ]
+    },
+
+    trading: {
+      kicker: "PLANNED PROJECT · AI · MARKET ANALYSIS",
+
+      title: "AI Trading Analyser",
+
+      desc:
+        "This is an idea I'm still researching. I used to follow markets and trade quite a bit when I was younger, and both winning and losing trades taught me a lot. Now I want to explore whether an AI tool can help me work through market data more carefully, rather than just making a decision from a chart alone.",
+
+      evidence: [
+        [
+          "CHARTS",
+          "Plan to analyse hourly candles, trends, price levels, volume and technical indicators."
+        ],
+        [
+          "RESEARCH",
+          "Plan to check relevant news, posts on X and potentially prediction-market information with timestamps and source checks."
+        ],
+        [
+          "DECISIONS",
+          "Explore long, short and no-trade assessments with reasons for each decision."
+        ],
+        [
+          "RISK",
+          "Plan to evaluate entries, stop-losses, take-profit levels and position sizing with clear risk limits."
+        ],
+        [
+          "TESTING FIRST",
+          "Start with historical tests and paper trading, including fees and losing trades, before considering real money."
+        ],
+        [
+          "STATUS",
+          "Concept and research stage. There is no completed trading bot or verified profit record yet."
+        ]
+      ],
+
+      tags: [
+        "PLANNING",
+        "AI",
+        "CANDLESTICKS",
+        "NEWS",
+        "RISK",
+        "PAPER TRADING"
       ],
 
       actions: []
     }
   };
 
-
   /* =========================================================
      03. FOOTER YEAR
      ========================================================= */
 
   function initFooterYear() {
-    const year =
-      $("#year");
+    const year = $("#year");
 
-    if (!year) {
-      return;
+    if (year) {
+      year.textContent = String(new Date().getFullYear());
     }
-
-    year.textContent =
-      new Date().getFullYear();
   }
-
 
   /* =========================================================
      04. MOBILE NAVIGATION
      ========================================================= */
 
   function initMobileNavigation() {
-    const toggle =
-      $("#navToggle");
+    const toggle = $("#navToggle");
+    const nav = $("#primaryNav");
 
-    const navigation =
-      $("#primaryNav");
-
-    if (
-      !toggle ||
-      !navigation
-    ) {
+    if (!toggle || !nav) {
       return;
     }
 
-
-    const setOpen =
-      (isOpen) => {
-        navigation.classList.toggle(
-          "open",
-          isOpen
-        );
-
-        toggle.setAttribute(
-          "aria-expanded",
-          String(isOpen)
-        );
-
-        toggle.setAttribute(
-          "aria-label",
-          isOpen
-            ? "Close navigation"
-            : "Open navigation"
-        );
-      };
-
-
     const isOpen = () =>
-      navigation.classList.contains(
-        "open"
+      nav.classList.contains("open");
+
+    function setOpen(open) {
+      nav.classList.toggle("open", open);
+      nav.classList.remove("is-open");
+
+      toggle.setAttribute(
+        "aria-expanded",
+        String(open)
       );
 
-
-    toggle.addEventListener(
-      "click",
-      () => {
-        setOpen(
-          !isOpen()
-        );
-      }
-    );
-
-
-    $$(
-      "a",
-      navigation
-    ).forEach(
-      (link) => {
-        link.addEventListener(
-          "click",
-          () => {
-            setOpen(false);
-          }
-        );
-      }
-    );
-
-
-    document.addEventListener(
-      "click",
-      (event) => {
-        if (!isOpen()) {
-          return;
-        }
-
-        if (
-          navigation.contains(
-            event.target
-          ) ||
-          toggle.contains(
-            event.target
-          )
-        ) {
-          return;
-        }
-
-        setOpen(false);
-      }
-    );
-
-
-    document.addEventListener(
-      "keydown",
-      (event) => {
-        if (
-          event.key !== "Escape" ||
-          !isOpen()
-        ) {
-          return;
-        }
-
-        setOpen(false);
-
-        toggle.focus();
-      }
-    );
-
-
-    const desktopQuery =
-      window.matchMedia(
-        "(min-width: 821px)"
-      );
-
-
-    const handleDesktopChange =
-      (event) => {
-        if (event.matches) {
-          setOpen(false);
-        }
-      };
-
-
-    if (
-      desktopQuery.addEventListener
-    ) {
-      desktopQuery.addEventListener(
-        "change",
-        handleDesktopChange
-      );
-    } else {
-      desktopQuery.addListener(
-        handleDesktopChange
+      toggle.setAttribute(
+        "aria-label",
+        open ? "Close navigation" : "Open navigation"
       );
     }
-  }
 
+    toggle.addEventListener("click", () => {
+      setOpen(!isOpen());
+    });
+
+    $$("a", nav).forEach(link => {
+      link.addEventListener("click", () => {
+        setOpen(false);
+      });
+    });
+
+    document.addEventListener("click", event => {
+      if (
+        isOpen() &&
+        !nav.contains(event.target) &&
+        !toggle.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && isOpen()) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    const desktop = window.matchMedia(
+      "(min-width: 821px)"
+    );
+
+    const desktopChanged = event => {
+      if (event.matches) {
+        setOpen(false);
+      }
+    };
+
+    if (desktop.addEventListener) {
+      desktop.addEventListener(
+        "change",
+        desktopChanged
+      );
+    } else {
+      desktop.addListener(desktopChanged);
+    }
+  }
 
   /* =========================================================
      05. CURSOR HALO
      ========================================================= */
 
   function initCursorHalo() {
-    const halo =
-      $(".cursor-halo");
+    const halo = $(".cursor-halo");
 
     if (!halo) {
       return;
     }
 
-
-    if (
-      !hasFinePointer.matches ||
-      prefersReducedMotion.matches
-    ) {
-      halo.style.display =
-        "none";
-
-      return;
-    }
-
-
-    let frame = null;
+    let frame = 0;
     let x = 0;
     let y = 0;
 
+    function syncVisibility() {
+      halo.style.display =
+        finePointer.matches && !reducedMotion.matches
+          ? ""
+          : "none";
+    }
 
-    const draw =
-      () => {
-        halo.style.left =
-          `${x}px`;
+    syncVisibility();
 
-        halo.style.top =
-          `${y}px`;
+    finePointer.addEventListener?.(
+      "change",
+      syncVisibility
+    );
 
-        frame = null;
-      };
-
+    reducedMotion.addEventListener?.(
+      "change",
+      syncVisibility
+    );
 
     window.addEventListener(
       "pointermove",
-      (event) => {
-        x =
-          event.clientX;
-
-        y =
-          event.clientY;
-
-        if (frame !== null) {
+      event => {
+        if (halo.style.display === "none") {
           return;
         }
 
-        frame =
-          requestAnimationFrame(
-            draw
-          );
+        x = event.clientX;
+        y = event.clientY;
+
+        if (frame) {
+          return;
+        }
+
+        frame = requestAnimationFrame(() => {
+          halo.style.left = `${x}px`;
+          halo.style.top = `${y}px`;
+          frame = 0;
+        });
       },
-      {
-        passive: true
-      }
+      { passive: true }
     );
   }
 
-
   /* =========================================================
-     06. DOT-MATRIX HERO
+     06. ANIMATED DOT-MATRIX NAME
      ========================================================= */
 
   function initDotHero() {
-    const canvas =
-      $("#dotCanvas");
+    const canvas = $("#dotCanvas");
+    const ctx = canvas?.getContext("2d");
 
-    if (!canvas) {
+    if (!canvas || !ctx) {
       return;
     }
-
-
-    const context =
-      canvas.getContext("2d");
-
-    if (!context) {
-      return;
-    }
-
 
     let width = 0;
     let height = 0;
-    let dpr = 1;
-
     let points = [];
 
     let pointerX = -9999;
     let pointerY = -9999;
 
-    let drawFrame = null;
-    let resizeTimer = null;
+    let drawFrame = 0;
+    let resizeTimer = 0;
 
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
 
-    const drawHero =
-      () => {
-        context.clearRect(
-          0,
-          0,
-          width,
-          height
-        );
+      ctx.fillStyle =
+        "rgba(128, 197, 255, 0.96)";
 
+      ctx.beginPath();
 
-        context.fillStyle =
-          "rgba(120, 187, 255, 0.92)";
+      for (const point of points) {
+        let x = point.x;
+        let y = point.y;
+        let radius = point.radius;
 
-
-        context.beginPath();
-
-
-        for (
-          const point of points
+        if (
+          finePointer.matches &&
+          !reducedMotion.matches
         ) {
-          let x =
-            point.x;
+          const dx = x - pointerX;
+          const dy = y - pointerY;
+          const distance = Math.hypot(dx, dy);
 
-          let y =
-            point.y;
+          if (distance < 105) {
+            const strength =
+              (105 - distance) / 105;
 
-          let radius =
-            1.7;
+            const push = strength * 21;
 
+            x += (dx / (distance || 1)) * push;
+            y += (dy / (distance || 1)) * push;
 
-          if (
-            hasFinePointer.matches &&
-            !prefersReducedMotion.matches
-          ) {
-            const dx =
-              x - pointerX;
-
-            const dy =
-              y - pointerY;
-
-            const distance =
-              Math.hypot(
-                dx,
-                dy
-              );
-
-
-            if (
-              distance < 100
-            ) {
-              const strength =
-                (100 - distance) /
-                100;
-
-              const force =
-                strength * 20;
-
-
-              x +=
-                (dx /
-                  (distance || 1)) *
-                force;
-
-              y +=
-                (dy /
-                  (distance || 1)) *
-                force;
-
-
-              radius +=
-                strength * 0.8;
-            }
+            radius += strength * 0.8;
           }
-
-
-          context.moveTo(
-            x + radius,
-            y
-          );
-
-          context.arc(
-            x,
-            y,
-            radius,
-            0,
-            Math.PI * 2
-          );
         }
 
+        ctx.moveTo(x + radius, y);
 
-        context.fill();
+        ctx.arc(
+          x,
+          y,
+          radius,
+          0,
+          Math.PI * 2
+        );
+      }
 
-        drawFrame = null;
-      };
+      ctx.fill();
+      drawFrame = 0;
+    }
 
+    function scheduleDraw() {
+      if (!drawFrame) {
+        drawFrame = requestAnimationFrame(draw);
+      }
+    }
 
-    const requestDraw =
-      () => {
+    function build() {
+      const rect = canvas.getBoundingClientRect();
+
+      width = Math.round(rect.width);
+      height = Math.round(rect.height);
+
+      if (width < 10 || height < 10) {
+        return;
+      }
+
+      const dpr = Math.min(
+        window.devicePixelRatio || 1,
+        2
+      );
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+
+      ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+      );
+
+      const offscreen =
+        document.createElement("canvas");
+
+      offscreen.width = width;
+      offscreen.height = height;
+
+      const off = offscreen.getContext(
+        "2d",
+        { willReadFrequently: true }
+      );
+
+      if (!off) {
+        return;
+      }
+
+      let fontSize = Math.min(
+        width * 0.205,
+        height * 0.35
+      );
+
+      off.textAlign = "center";
+      off.textBaseline = "middle";
+      off.fillStyle = "#fff";
+
+      // Make both names fit on smaller screens.
+      for (let attempt = 0; attempt < 20; attempt++) {
+        off.font =
+          `800 ${fontSize}px Manrope, sans-serif`;
+
+        const nameWidth = Math.max(
+          off.measureText("VIRAJ").width,
+          off.measureText("GANDHI").width
+        );
+
+        if (nameWidth <= width * 0.94) {
+          break;
+        }
+
+        fontSize *= 0.95;
+      }
+
+      off.fillText(
+        "VIRAJ",
+        width / 2,
+        height * 0.32
+      );
+
+      off.fillText(
+        "GANDHI",
+        width / 2,
+        height * 0.69
+      );
+
+      const pixels = off.getImageData(
+        0,
+        0,
+        width,
+        height
+      ).data;
+
+      const step =
+        width < 480
+          ? 6
+          : width < 800
+            ? 7
+            : 8;
+
+      const nextPoints = [];
+
+      for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+          const alpha =
+            pixels[(y * width + x) * 4 + 3];
+
+          if (alpha > 100) {
+            nextPoints.push({
+              x,
+              y,
+              radius: width < 480 ? 1.45 : 1.7
+            });
+          }
+        }
+      }
+
+      points = nextPoints;
+      scheduleDraw();
+    }
+
+    function scheduleBuild() {
+      clearTimeout(resizeTimer);
+
+      resizeTimer = setTimeout(build, 90);
+    }
+
+    canvas.addEventListener(
+      "pointermove",
+      event => {
         if (
-          drawFrame !== null
+          !finePointer.matches ||
+          reducedMotion.matches
         ) {
           return;
         }
 
-        drawFrame =
-          requestAnimationFrame(
-            drawHero
-          );
-      };
-
-
-    const buildPoints =
-      () => {
         const rect =
           canvas.getBoundingClientRect();
 
+        pointerX =
+          event.clientX - rect.left;
 
-        width =
-          Math.max(
-            1,
-            Math.round(
-              rect.width
-            )
-          );
+        pointerY =
+          event.clientY - rect.top;
 
-        height =
-          Math.max(
-            1,
-            Math.round(
-              rect.height
-            )
-          );
+        scheduleDraw();
+      },
+      { passive: true }
+    );
 
-
-        dpr =
-          Math.min(
-            window.devicePixelRatio ||
-              1,
-            2
-          );
-
-
-        canvas.width =
-          Math.round(
-            width * dpr
-          );
-
-        canvas.height =
-          Math.round(
-            height * dpr
-          );
-
-
-        context.setTransform(
-          dpr,
-          0,
-          0,
-          dpr,
-          0,
-          0
-        );
-
-
-        const offscreen =
-          document.createElement(
-            "canvas"
-          );
-
-        const offscreenContext =
-          offscreen.getContext(
-            "2d",
-            {
-              willReadFrequently:
-                true
-            }
-          );
-
-
-        if (!offscreenContext) {
-          return;
-        }
-
-
-        offscreen.width =
-          width;
-
-        offscreen.height =
-          height;
-
-
-        const fontSize =
-          Math.min(
-            width * 0.19,
-            height * 0.34
-          );
-
-
-        offscreenContext.clearRect(
-          0,
-          0,
-          width,
-          height
-        );
-
-
-        offscreenContext.fillStyle =
-          "#ffffff";
-
-
-        offscreenContext.font =
-          `800 ${fontSize}px Manrope, sans-serif`;
-
-
-        offscreenContext.textAlign =
-          "center";
-
-
-        offscreenContext.textBaseline =
-          "middle";
-
-
-        offscreenContext.fillText(
-          "VIRAJ",
-          width / 2,
-          height * 0.34
-        );
-
-
-        offscreenContext.fillText(
-          "GANDHI",
-          width / 2,
-          height * 0.68
-        );
-
-
-        const imageData =
-          offscreenContext.getImageData(
-            0,
-            0,
-            width,
-            height
-          ).data;
-
-
-        let step = 8;
-
-
-        if (
-          width < 480
-        ) {
-          step = 6;
-        } else if (
-          width < 800
-        ) {
-          step = 7;
-        }
-
-
-        const nextPoints = [];
-
-
-        for (
-          let y = 0;
-          y < height;
-          y += step
-        ) {
-          for (
-            let x = 0;
-            x < width;
-            x += step
-          ) {
-            const alpha =
-              imageData[
-                (
-                  y * width +
-                  x
-                ) *
-                  4 +
-                3
-              ];
-
-
-            if (
-              alpha > 90
-            ) {
-              nextPoints.push({
-                x,
-                y
-              });
-            }
-          }
-        }
-
-
-        points =
-          nextPoints;
-
-
-        requestDraw();
-      };
-
-
-    if (
-      hasFinePointer.matches &&
-      !prefersReducedMotion.matches
-    ) {
-      canvas.addEventListener(
-        "pointermove",
-        (event) => {
-          const rect =
-            canvas.getBoundingClientRect();
-
-
-          pointerX =
-            event.clientX -
-            rect.left;
-
-          pointerY =
-            event.clientY -
-            rect.top;
-
-
-          requestDraw();
-        },
-        {
-          passive: true
-        }
-      );
-
-
-      canvas.addEventListener(
-        "pointerleave",
-        () => {
-          pointerX =
-            -9999;
-
-          pointerY =
-            -9999;
-
-          requestDraw();
-        }
-      );
-    }
-
-
-    const rebuild =
+    canvas.addEventListener(
+      "pointerleave",
       () => {
-        clearTimeout(
-          resizeTimer
-        );
+        pointerX = -9999;
+        pointerY = -9999;
+        scheduleDraw();
+      }
+    );
 
-        resizeTimer =
-          setTimeout(
-            buildPoints,
-            100
-          );
-      };
+    reducedMotion.addEventListener?.(
+      "change",
+      scheduleDraw
+    );
 
+    finePointer.addEventListener?.(
+      "change",
+      scheduleDraw
+    );
 
-    if (
-      "ResizeObserver"
-      in window
-    ) {
-      const resizeObserver =
-        new ResizeObserver(
-          rebuild
-        );
-
-      resizeObserver.observe(
-        canvas
-      );
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(
+        scheduleBuild
+      ).observe(canvas);
     } else {
       window.addEventListener(
         "resize",
-        rebuild,
-        {
-          passive: true
-        }
+        scheduleBuild,
+        { passive: true }
       );
     }
 
+    build();
 
-    buildPoints();
-
-
-    if (
-      document.fonts?.ready
-    ) {
-      document.fonts.ready.then(
-        buildPoints
-      );
+    if (document.fonts?.ready) {
+      document.fonts.ready
+        .then(build)
+        .catch(() => {});
     }
   }
-
 
   /* =========================================================
      07. SCROLL REVEAL
      ========================================================= */
 
   function initRevealAnimations() {
-    const elements =
-      $$(".reveal");
+    const elements = $$(".reveal");
 
+    if (!elements.length) {
+      return;
+    }
 
     if (
-      prefersReducedMotion.matches ||
-      !(
-        "IntersectionObserver"
-        in window
-      )
+      reducedMotion.matches ||
+      !("IntersectionObserver" in window)
     ) {
-      elements.forEach(
-        (element) => {
-          element.classList.add(
-            "visible"
-          );
-        }
-      );
+      elements.forEach(element => {
+        element.classList.add("visible");
+      });
 
       return;
     }
 
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) {
+            continue;
+          }
 
-    const observer =
-      new IntersectionObserver(
-        (entries) => {
-          entries.forEach(
-            (entry) => {
-              if (
-                !entry.isIntersecting
-              ) {
-                return;
-              }
-
-
-              entry.target.classList.add(
-                "visible"
-              );
-
-
-              observer.unobserve(
-                entry.target
-              );
-            }
-          );
-        },
-        {
-          threshold: 0.08,
-          rootMargin:
-            "0px 0px -30px 0px"
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
         }
-      );
+      },
+      {
+        threshold: 0.06,
+        rootMargin: "0px 0px -20px 0px"
+      }
+    );
 
+    elements.forEach(element => {
+      observer.observe(element);
+    });
 
-    elements.forEach(
-      (element) => {
-        observer.observe(
-          element
-        );
+    reducedMotion.addEventListener?.(
+      "change",
+      event => {
+        if (event.matches) {
+          elements.forEach(element => {
+            element.classList.add("visible");
+          });
+
+          observer.disconnect();
+        }
       }
     );
   }
 
-
   /* =========================================================
-     08. PROJECT MODAL
+     08. PROJECT DETAILS MODAL
      ========================================================= */
 
   function initProjectModal() {
-    const modal =
-      $("#projectModal");
+    const modal = $("#projectModal");
 
     if (!modal) {
       return;
     }
 
+    const card = $(".project-modal-card", modal);
+    const kicker = $("#modalKicker");
+    const title = $("#modalTitle");
+    const description = $("#modalDesc");
+    const evidence = $("#modalEvidence");
+    const tags = $("#modalTags");
+    const actions = $("#modalActions");
 
-    const title =
-      $("#modalTitle");
+    const closeButton = $(
+      ".project-modal-close",
+      modal
+    );
 
-    const kicker =
-      $("#modalKicker");
+    const secondaryClose = $(
+      "#modalCloseSecondary"
+    );
 
-    const description =
-      $("#modalDesc");
-
-    const evidence =
-      $("#modalEvidence");
-
-    const tags =
-      $("#modalTags");
-
-    const actions =
-      $("#modalActions");
-
-    const closeButton =
-      $(
-        ".project-modal-close",
-        modal
-      );
-
-    const secondaryClose =
-      $("#modalCloseSecondary");
-
-    const main =
-      $("main");
-
-    const topbar =
-      $(".topbar");
-
+    const main = $("main");
+    const topbar = $(".topbar");
+    const footer = $(".site-footer");
 
     if (
+      !card ||
       !title ||
       !kicker ||
       !description ||
       !evidence ||
       !tags ||
-      !actions
+      !actions ||
+      !closeButton
     ) {
       return;
     }
 
-
     let previousFocus = null;
+    let previousOverflow = "";
 
+    /*
+      The updated HTML already has buttons for SQL,
+      Business & Systems Analysis and Course Enrolment.
 
-    const setBackgroundInert =
-      (isInert) => {
-        if (main) {
-          main.inert =
-            isInert;
-        }
+      Add matching detail buttons for the other three
+      projects without changing their GitHub links.
+    */
 
-        if (topbar) {
-          topbar.inert =
-            isInert;
-        }
-      };
+    const newProjectKeys = new Map([
+      ["Data Analysis & Programming", "r"],
+      ["AI Cricket Mentor", "cricket"],
+      ["AI Trading Analyser", "trading"]
+    ]);
 
+    $$(".project-grid .project-card").forEach(
+      projectCard => {
+        const projectName = $(
+          ".project-title-row h3",
+          projectCard
+        )?.textContent.trim();
 
-    const getFocusableElements =
-      () =>
-        $$(
-          [
-            "a[href]",
-            "button:not([disabled])",
-            "[tabindex]:not([tabindex='-1'])"
-          ].join(","),
-          modal
-        ).filter(
-          (element) =>
-            !element.hasAttribute(
-              "hidden"
-            )
+        const projectKey =
+          newProjectKeys.get(projectName);
+
+        const actionArea = $(
+          ".project-actions",
+          projectCard
         );
 
-
-    const closeModal =
-      () => {
         if (
-          !modal.classList.contains(
-            "open"
-          )
+          !projectKey ||
+          !actionArea ||
+          $("[data-open-project]", actionArea)
         ) {
           return;
         }
 
-
-        modal.classList.remove(
-          "open"
-        );
-
-
-        modal.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-
-
-        document.body.style.overflow =
-          "";
-
-
-        setBackgroundInert(
-          false
-        );
-
-
-        if (
-          previousFocus instanceof
-          HTMLElement
-        ) {
-          previousFocus.focus();
-        }
-
-
-        previousFocus = null;
-      };
-
-
-    const renderEvidence =
-      (items) => {
-        evidence.replaceChildren();
-
-
-        items.forEach(
-          ([label, value]) => {
-            const row =
-              document.createElement(
-                "div"
-              );
-
-            const labelElement =
-              document.createElement(
-                "span"
-              );
-
-            const valueElement =
-              document.createElement(
-                "strong"
-              );
-
-
-            labelElement.textContent =
-              label;
-
-            valueElement.textContent =
-              value;
-
-
-            row.append(
-              labelElement,
-              valueElement
-            );
-
-
-            evidence.append(
-              row
-            );
-          }
-        );
-      };
-
-
-    const renderTags =
-      (projectTags) => {
-        tags.replaceChildren();
-
-
-        projectTags.forEach(
-          (tag) => {
-            const tagElement =
-              document.createElement(
-                "span"
-              );
-
-            tagElement.textContent =
-              tag;
-
-
-            tags.append(
-              tagElement
-            );
-          }
-        );
-      };
-
-
-    const renderActions =
-      (projectActions) => {
-        actions.replaceChildren();
-
-
-        projectActions.forEach(
-          (action) => {
-            const link =
-              document.createElement(
-                "a"
-              );
-
-
-            link.className =
-              `button ${
-                action.type ===
-                "primary"
-                  ? "button-primary"
-                  : "button-ghost"
-              } compact`;
-
-
-            link.href =
-              action.url;
-
-
-            link.target =
-              "_blank";
-
-
-            link.rel =
-              "noopener noreferrer";
-
-
-            link.textContent =
-              action.label;
-
-
-            actions.append(
-              link
-            );
-          }
-        );
-      };
-
-
-    const openModal =
-      (
-        projectKey,
-        trigger
-      ) => {
-        const project =
-          PROJECTS[
-            projectKey
-          ];
-
-
-        if (!project) {
-          return;
-        }
-
-
-        previousFocus =
-          trigger;
-
-
-        kicker.textContent =
-          project.kicker;
-
-
-        title.textContent =
-          project.title;
-
-
-        description.textContent =
-          project.desc;
-
-
-        renderEvidence(
-          project.evidence
-        );
-
-
-        renderTags(
-          project.tags
-        );
-
-
-        renderActions(
-          project.actions
-        );
-
-
-        modal.classList.add(
-          "open"
-        );
-
-
-        modal.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-
-        document.body.style.overflow =
-          "hidden";
-
-
-        setBackgroundInert(
-          true
-        );
-
-
-        requestAnimationFrame(
-          () => {
-            closeButton?.focus();
-          }
-        );
-      };
-
-
-    $$(
-      "[data-open-project]"
-    ).forEach(
-      (button) => {
-        button.addEventListener(
-          "click",
-          () => {
-            openModal(
-              button.dataset
-                .openProject,
-              button
-            );
-          }
-        );
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className = "text-button";
+        button.dataset.openProject = projectKey;
+        button.textContent = "Project details →";
+
+        actionArea.prepend(button);
       }
     );
 
+    function setInert(value) {
+      for (const element of [
+        main,
+        topbar,
+        footer
+      ]) {
+        if (element) {
+          element.inert = value;
+        }
+      }
+    }
 
-    closeButton?.addEventListener(
+    function focusables() {
+      return $$(
+        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])",
+        modal
+      ).filter(element =>
+        element.getClientRects().length &&
+        !element.closest("[hidden]")
+      );
+    }
+
+    function closeModal() {
+      if (!modal.classList.contains("open")) {
+        return;
+      }
+
+      modal.classList.remove("open");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      document.body.style.overflow =
+        previousOverflow;
+
+      setInert(false);
+
+      document.dispatchEvent(
+        new CustomEvent(
+          "portfolio:modalchange",
+          {
+            detail: { open: false }
+          }
+        )
+      );
+
+      if (previousFocus?.isConnected) {
+        previousFocus.focus();
+      }
+
+      previousFocus = null;
+    }
+
+    function openModal(key, trigger) {
+      const project =
+        Object.prototype.hasOwnProperty.call(
+          PROJECTS,
+          key
+        )
+          ? PROJECTS[key]
+          : null;
+
+      if (!project) {
+        return;
+      }
+
+      previousFocus = trigger;
+
+      previousOverflow =
+        document.body.style.overflow;
+
+      kicker.textContent = project.kicker;
+      title.textContent = project.title;
+      description.textContent = project.desc;
+
+      evidence.replaceChildren();
+      tags.replaceChildren();
+      actions.replaceChildren();
+
+      for (const [label, value] of project.evidence) {
+        const row =
+          document.createElement("div");
+
+        const labelElement =
+          document.createElement("span");
+
+        const valueElement =
+          document.createElement("strong");
+
+        labelElement.textContent = label;
+        valueElement.textContent = value;
+
+        row.append(
+          labelElement,
+          valueElement
+        );
+
+        evidence.append(row);
+      }
+
+      for (const tag of project.tags) {
+        const chip =
+          document.createElement("span");
+
+        chip.textContent = tag;
+        tags.append(chip);
+      }
+
+      for (const action of project.actions) {
+        const link =
+          document.createElement("a");
+
+        link.className =
+          `button ${
+            action.primary
+              ? "button-primary"
+              : "button-ghost"
+          } compact`;
+
+        link.href = action.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = action.label;
+
+        actions.append(link);
+      }
+
+      modal.classList.add("open");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      document.body.style.overflow =
+        "hidden";
+
+      setInert(true);
+      card.scrollTop = 0;
+
+      document.dispatchEvent(
+        new CustomEvent(
+          "portfolio:modalchange",
+          {
+            detail: { open: true }
+          }
+        )
+      );
+
+      closeButton.focus();
+    }
+
+    document.addEventListener(
+      "click",
+      event => {
+        const trigger =
+          event.target.closest?.(
+            "[data-open-project]"
+          );
+
+        if (trigger) {
+          openModal(
+            trigger.dataset.openProject,
+            trigger
+          );
+        }
+      }
+    );
+
+    closeButton.addEventListener(
       "click",
       closeModal
     );
-
 
     secondaryClose?.addEventListener(
       "click",
       closeModal
     );
 
-
     modal.addEventListener(
       "click",
-      (event) => {
-        if (
-          event.target ===
-          modal
-        ) {
+      event => {
+        if (event.target === modal) {
           closeModal();
         }
       }
     );
 
-
     document.addEventListener(
       "keydown",
-      (event) => {
-        if (
-          !modal.classList.contains(
-            "open"
-          )
-        ) {
+      event => {
+        if (!modal.classList.contains("open")) {
           return;
         }
 
-
-        if (
-          event.key ===
-          "Escape"
-        ) {
+        if (event.key === "Escape") {
           event.preventDefault();
-
           closeModal();
-
           return;
         }
 
-
-        if (
-          event.key !==
-          "Tab"
-        ) {
+        if (event.key !== "Tab") {
           return;
         }
 
+        const items = focusables();
 
-        const focusable =
-          getFocusableElements();
-
-
-        if (
-          focusable.length === 0
-        ) {
+        if (!items.length) {
+          event.preventDefault();
+          card.focus();
           return;
         }
 
-
-        const first =
-          focusable[0];
-
-        const last =
-          focusable[
-            focusable.length - 1
-          ];
-
+        const first = items[0];
+        const last = items[items.length - 1];
+        const current = document.activeElement;
 
         if (
           event.shiftKey &&
-          document.activeElement ===
-            first
+          (
+            current === first ||
+            !modal.contains(current)
+          )
         ) {
           event.preventDefault();
-
           last.focus();
-
-          return;
-        }
-
-
-        if (
+        } else if (
           !event.shiftKey &&
-          document.activeElement ===
-            last
+          (
+            current === last ||
+            !modal.contains(current)
+          )
         ) {
           event.preventDefault();
-
           first.focus();
         }
       }
     );
   }
 
-
   /* =========================================================
-     09. GAME TABS
+     09. PLAYGROUND GAME TABS
      ========================================================= */
 
   function initGameTabs() {
-    const tabs =
-      $$(".game-tab");
+    const tabs = $$(".game-tab");
+    const panels = $$(".game-panel");
 
-    const panels =
-      $$(".game-panel");
-
-
-    if (
-      tabs.length === 0 ||
-      panels.length === 0
-    ) {
+    if (!tabs.length || !panels.length) {
       return;
     }
 
+    function activate(name) {
+      tabs.forEach(tab => {
+        const selected =
+          tab.dataset.game === name;
 
-    const activateGame =
-      (gameName) => {
-        tabs.forEach(
-          (tab) => {
-            const active =
-              tab.dataset.game ===
-              gameName;
-
-
-            tab.classList.toggle(
-              "active",
-              active
-            );
-
-
-            tab.setAttribute(
-              "aria-selected",
-              String(active)
-            );
-
-
-            tab.tabIndex =
-              active
-                ? 0
-                : -1;
-          }
+        tab.classList.toggle(
+          "active",
+          selected
         );
 
-
-        panels.forEach(
-          (panel) => {
-            const active =
-              panel.id ===
-              `game-${gameName}`;
-
-
-            panel.classList.toggle(
-              "active",
-              active
-            );
-
-
-            panel.hidden =
-              !active;
-
-
-            panel.setAttribute(
-              "aria-hidden",
-              String(!active)
-            );
-          }
+        tab.setAttribute(
+          "aria-selected",
+          String(selected)
         );
 
+        tab.tabIndex = selected ? 0 : -1;
+      });
 
-        document.dispatchEvent(
-          new CustomEvent(
-            "portfolio:gamechange",
-            {
-              detail: {
-                game:
-                  gameName
-              }
-            }
-          )
-        );
-      };
+      panels.forEach(panel => {
+        const selected =
+          panel.id === `game-${name}`;
 
-
-    tabs.forEach(
-      (
-        tab,
-        index
-      ) => {
-        const gameName =
-          tab.dataset.game;
-
-
-        tab.id =
-          `game-tab-${gameName}`;
-
-
-        const panel =
-          $(
-            `#game-${gameName}`
-          );
-
-
-        if (panel) {
-          panel.setAttribute(
-            "aria-labelledby",
-            tab.id
-          );
-        }
-
-
-        tab.addEventListener(
-          "click",
-          () => {
-            activateGame(
-              gameName
-            );
-          }
+        panel.classList.toggle(
+          "active",
+          selected
         );
 
+        panel.hidden = !selected;
 
-        tab.addEventListener(
-          "keydown",
-          (event) => {
-            let nextIndex = null;
+        panel.setAttribute(
+          "aria-hidden",
+          String(!selected)
+        );
+      });
 
-
-            if (
-              event.key ===
-                "ArrowRight" ||
-              event.key ===
-                "ArrowDown"
-            ) {
-              nextIndex =
-                (
-                  index + 1
-                ) %
-                tabs.length;
-            }
-
-
-            if (
-              event.key ===
-                "ArrowLeft" ||
-              event.key ===
-                "ArrowUp"
-            ) {
-              nextIndex =
-                (
-                  index -
-                  1 +
-                  tabs.length
-                ) %
-                tabs.length;
-            }
-
-
-            if (
-              event.key ===
-              "Home"
-            ) {
-              nextIndex = 0;
-            }
-
-
-            if (
-              event.key ===
-              "End"
-            ) {
-              nextIndex =
-                tabs.length - 1;
-            }
-
-
-            if (
-              nextIndex ===
-              null
-            ) {
-              return;
-            }
-
-
-            event.preventDefault();
-
-
-            const nextTab =
-              tabs[nextIndex];
-
-
-            activateGame(
-              nextTab.dataset.game
-            );
-
-
-            nextTab.focus();
+      document.dispatchEvent(
+        new CustomEvent(
+          "portfolio:gamechange",
+          {
+            detail: { game: name }
           }
+        )
+      );
+    }
+
+    tabs.forEach((tab, index) => {
+      const panel = $(
+        `#game-${tab.dataset.game}`
+      );
+
+      if (!tab.id) {
+        tab.id = `tab-${tab.dataset.game}`;
+      }
+
+      if (panel) {
+        panel.setAttribute(
+          "aria-labelledby",
+          tab.id
         );
       }
-    );
 
+      tab.addEventListener("click", () => {
+        activate(tab.dataset.game);
+      });
+
+      tab.addEventListener(
+        "keydown",
+        event => {
+          let next = null;
+
+          if (
+            event.key === "ArrowRight" ||
+            event.key === "ArrowDown"
+          ) {
+            next = (index + 1) % tabs.length;
+          }
+
+          if (
+            event.key === "ArrowLeft" ||
+            event.key === "ArrowUp"
+          ) {
+            next =
+              (index - 1 + tabs.length) %
+              tabs.length;
+          }
+
+          if (event.key === "Home") {
+            next = 0;
+          }
+
+          if (event.key === "End") {
+            next = tabs.length - 1;
+          }
+
+          if (next === null) {
+            return;
+          }
+
+          event.preventDefault();
+
+          activate(tabs[next].dataset.game);
+          tabs[next].focus();
+        }
+      );
+    });
 
     const initialGame =
-      tabs.find(
-        (tab) =>
-          tab.classList.contains(
-            "active"
-          )
+      tabs.find(tab =>
+        tab.classList.contains("active")
       )?.dataset.game ||
       tabs[0].dataset.game;
 
-
-    activateGame(
-      initialGame
-    );
+    activate(initialGame);
   }
-
 
   /* =========================================================
      10. REACTION GAME
      ========================================================= */
 
   function initReactionGame() {
-    const box =
-      $("#reactionBox");
-
-    const start =
-      $("#reactionStart");
-
-    const text =
-      $("#reactionText");
-
-    const subtitle =
-      $("#reactionSub");
-
-    const bestElement =
-      $("#reactionBest");
-
+    const box = $("#reactionBox");
+    const start = $("#reactionStart");
+    const text = $("#reactionText");
+    const subtitle = $("#reactionSub");
+    const bestElement = $("#reactionBest");
 
     if (
       !box ||
@@ -1714,211 +1298,129 @@
       return;
     }
 
+    const key = "vg2026_reaction_best";
 
-    const storageKey =
-      "vg2026_reaction_best";
-
-
-    let timer = null;
+    let best = Math.round(readNumber(key));
+    let state = "idle";
+    let timeout = 0;
     let readyAt = 0;
-    let active = false;
-
-
-    let best =
-      getStoredNumber(
-        storageKey,
-        0
-      );
-
 
     bestElement.textContent =
-      best > 0
-        ? `${best} ms`
-        : "--- ms";
+      best ? `${best} ms` : "--- ms";
 
+    box.setAttribute(
+      "aria-live",
+      "polite"
+    );
 
-    const resetRound =
-      () => {
-        if (timer) {
-          clearTimeout(
-            timer
-          );
-        }
+    function reset() {
+      clearTimeout(timeout);
 
+      timeout = 0;
+      state = "idle";
+      readyAt = 0;
 
-        timer = null;
-        active = false;
-        readyAt = 0;
+      box.classList.remove(
+        "waiting",
+        "ready"
+      );
 
+      text.textContent = "PRESS START";
 
-        box.classList.remove(
-          "waiting",
-          "ready"
-        );
-
-
-        text.textContent =
-          "PRESS START";
-
-
-        subtitle.textContent =
-          "Wait for the signal, then click.";
-      };
-
+      subtitle.textContent =
+        "Wait for the signal, then click.";
+    }
 
     start.addEventListener(
       "click",
       () => {
-        if (timer) {
-          clearTimeout(
-            timer
-          );
-        }
+        clearTimeout(timeout);
 
-
-        active = true;
+        state = "waiting";
         readyAt = 0;
 
+        box.classList.remove("ready");
+        box.classList.add("waiting");
 
-        box.classList.remove(
-          "ready"
-        );
-
-
-        box.classList.add(
-          "waiting"
-        );
-
-
-        text.textContent =
-          "WAIT...";
-
+        text.textContent = "WAIT...";
 
         subtitle.textContent =
           "Don't click yet.";
 
+        timeout = setTimeout(
+          () => {
+            timeout = 0;
 
-        timer =
-          setTimeout(
-            () => {
-              timer = null;
+            if (state !== "waiting") {
+              return;
+            }
 
+            readyAt = performance.now();
+            state = "ready";
 
-              readyAt =
-                performance.now();
+            box.classList.remove("waiting");
+            box.classList.add("ready");
 
-
-              box.classList.remove(
-                "waiting"
-              );
-
-
-              box.classList.add(
-                "ready"
-              );
-
-
-              text.textContent =
-                "CLICK!";
-
-
-              subtitle.textContent =
-                "Now!";
-            },
-            900 +
-              Math.random() *
-                2200
-          );
+            text.textContent = "CLICK!";
+            subtitle.textContent = "Now!";
+          },
+          900 + Math.random() * 2200
+        );
       }
     );
-
 
     box.addEventListener(
       "click",
       () => {
-        if (!active) {
-          return;
-        }
+        if (state === "waiting") {
+          clearTimeout(timeout);
 
+          timeout = 0;
+          state = "finished";
 
-        if (!readyAt) {
-          if (timer) {
-            clearTimeout(
-              timer
-            );
-          }
+          box.classList.remove("waiting");
 
-
-          timer = null;
-          active = false;
-
-
-          box.classList.remove(
-            "waiting"
-          );
-
-
-          text.textContent =
-            "TOO EARLY";
-
+          text.textContent = "TOO EARLY";
 
           subtitle.textContent =
             "Start another round.";
 
-
           return;
         }
 
+        if (state !== "ready") {
+          return;
+        }
 
-        const milliseconds =
+        const milliseconds = Math.max(
+          1,
           Math.round(
-            performance.now() -
-              readyAt
-          );
-
-
-        active = false;
-        readyAt = 0;
-
-
-        box.classList.remove(
-          "ready"
+            performance.now() - readyAt
+          )
         );
 
+        state = "finished";
+        readyAt = 0;
+
+        box.classList.remove("ready");
 
         text.textContent =
           `${milliseconds} ms`;
 
-
-        if (
+        subtitle.textContent =
           milliseconds < 220
-        ) {
-          subtitle.textContent =
-            "Very quick.";
-        } else if (
-          milliseconds < 320
-        ) {
-          subtitle.textContent =
-            "Nice reaction.";
-        } else {
-          subtitle.textContent =
-            "Try another round.";
-        }
-
+            ? "Very quick."
+            : milliseconds < 320
+              ? "Nice reaction."
+              : "Try another round.";
 
         if (
           !best ||
           milliseconds < best
         ) {
-          best =
-            milliseconds;
+          best = milliseconds;
 
-
-          setStoredNumber(
-            storageKey,
-            best
-          );
-
+          saveNumber(key, best);
 
           bestElement.textContent =
             `${best} ms`;
@@ -1926,82 +1428,70 @@
       }
     );
 
-
     document.addEventListener(
       "portfolio:gamechange",
-      (event) => {
-        if (
-          event.detail?.game !==
-          "reaction"
-        ) {
-          resetRound();
+      event => {
+        if (event.detail?.game !== "reaction") {
+          reset();
         }
       }
     );
 
+    document.addEventListener(
+      "portfolio:modalchange",
+      event => {
+        if (event.detail?.open) {
+          reset();
+        }
+      }
+    );
 
     document.addEventListener(
       "visibilitychange",
       () => {
-        if (
-          document.hidden
-        ) {
-          resetRound();
+        if (document.hidden) {
+          reset();
         }
       }
     );
   }
 
-
   /* =========================================================
-     11. SNAKE
+     11. SNAKE GAME
      ========================================================= */
 
   function initSnakeGame() {
-    const canvas =
-      $("#snakeCanvas");
+    const canvas = $("#snakeCanvas");
+    const start = $("#snakeStart");
+    const scoreElement = $("#snakeScore");
+    const bestElement = $("#snakeBest");
+    const panel = $("#game-snake");
 
-    const startButton =
-      $("#snakeStart");
-
-    const scoreElement =
-      $("#snakeScore");
-
-    const bestElement =
-      $("#snakeBest");
-
-    const snakePanel =
-      $("#game-snake");
-
+    const ctx = canvas?.getContext("2d");
 
     if (
       !canvas ||
-      !startButton ||
+      !ctx ||
+      !start ||
       !scoreElement ||
-      !bestElement
+      !bestElement ||
+      !panel
     ) {
       return;
     }
 
+    const grid = 20;
+    const cell = canvas.width / grid;
+    const key = "vg2026_snake_best";
 
-    const context =
-      canvas.getContext(
-        "2d"
-      );
-
-
-    if (!context) {
-      return;
-    }
-
-
-    const cells = 20;
-
-    const storageKey =
-      "vg2026_snake_best";
-
-
+    let best = Math.round(readNumber(key));
+    let score = 0;
     let snake = [];
+
+    let food = {
+      x: 10,
+      y: 10
+    };
 
     let direction = {
       x: 1,
@@ -2013,615 +1503,377 @@
       y: 0
     };
 
-    let food = {
-      x: 10,
-      y: 10
-    };
-
-    let loop = null;
+    let turnLocked = false;
     let running = false;
+    let interval = 0;
+    let modalOpen = false;
 
-    let score = 0;
+    bestElement.textContent = String(best);
 
+    function stopClock() {
+      clearInterval(interval);
+      interval = 0;
+    }
 
-    let best =
-      getStoredNumber(
-        storageKey,
-        0
+    function spawnFood() {
+      const free = [];
+
+      for (let y = 0; y < grid; y++) {
+        for (let x = 0; x < grid; x++) {
+          if (
+            !snake.some(segment =>
+              segment.x === x &&
+              segment.y === y
+            )
+          ) {
+            free.push({ x, y });
+          }
+        }
+      }
+
+      if (!free.length) {
+        return false;
+      }
+
+      food = free[
+        Math.floor(Math.random() * free.length)
+      ];
+
+      return true;
+    }
+
+    function draw() {
+      ctx.fillStyle = "#06101d";
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
       );
 
+      ctx.strokeStyle =
+        "rgba(100,145,205,.065)";
 
-    bestElement.textContent =
-      best;
+      ctx.lineWidth = 1;
 
+      for (let i = 0; i <= grid; i++) {
+        ctx.beginPath();
 
-    const stopLoop =
-      () => {
-        if (loop) {
-          clearInterval(
-            loop
-          );
+        ctx.moveTo(i * cell, 0);
+        ctx.lineTo(i * cell, canvas.height);
 
-          loop = null;
-        }
-      };
+        ctx.moveTo(0, i * cell);
+        ctx.lineTo(canvas.width, i * cell);
 
+        ctx.stroke();
+      }
 
-    const pauseGame =
-      () => {
-        stopLoop();
-      };
+      snake.forEach((segment, index) => {
+        ctx.fillStyle =
+          index ? "#69d7ff" : "#8ccaff";
 
-
-    const resumeGame =
-      () => {
-        if (
-          !running ||
-          loop
-        ) {
-          return;
-        }
-
-
-        loop =
-          setInterval(
-            step,
-            110
-          );
-      };
-
-
-    const spawnFood =
-      () => {
-        do {
-          food = {
-            x:
-              Math.floor(
-                Math.random() *
-                  cells
-              ),
-
-            y:
-              Math.floor(
-                Math.random() *
-                  cells
-              )
-          };
-        } while (
-          snake.some(
-            (segment) =>
-              segment.x ===
-                food.x &&
-              segment.y ===
-                food.y
-          )
+        ctx.fillRect(
+          segment.x * cell + 2,
+          segment.y * cell + 2,
+          cell - 4,
+          cell - 4
         );
-      };
+      });
 
+      if (food) {
+        ctx.fillStyle = "#67e8a5";
 
-    const drawSnake =
-      () => {
-        const cellSize =
-          canvas.width /
-          cells;
+        ctx.beginPath();
 
-
-        context.fillStyle =
-          "#06101d";
-
-
-        context.fillRect(
+        ctx.arc(
+          food.x * cell + cell / 2,
+          food.y * cell + cell / 2,
+          cell * 0.3,
           0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-
-
-        context.strokeStyle =
-          "rgba(100,145,205,.06)";
-
-
-        context.lineWidth =
-          1;
-
-
-        for (
-          let index = 0;
-          index <= cells;
-          index++
-        ) {
-          context.beginPath();
-
-
-          context.moveTo(
-            index * cellSize,
-            0
-          );
-
-
-          context.lineTo(
-            index * cellSize,
-            canvas.height
-          );
-
-
-          context.stroke();
-
-
-          context.beginPath();
-
-
-          context.moveTo(
-            0,
-            index * cellSize
-          );
-
-
-          context.lineTo(
-            canvas.width,
-            index * cellSize
-          );
-
-
-          context.stroke();
-        }
-
-
-        snake.forEach(
-          (
-            segment,
-            index
-          ) => {
-            context.fillStyle =
-              index === 0
-                ? "#8ccaff"
-                : "#69d7ff";
-
-
-            context.fillRect(
-              segment.x *
-                cellSize +
-                2,
-
-              segment.y *
-                cellSize +
-                2,
-
-              cellSize - 4,
-
-              cellSize - 4
-            );
-          }
-        );
-
-
-        context.fillStyle =
-          "#67e8a5";
-
-
-        context.beginPath();
-
-
-        context.arc(
-          food.x *
-            cellSize +
-            cellSize / 2,
-
-          food.y *
-            cellSize +
-            cellSize / 2,
-
-          cellSize * 0.3,
-
-          0,
-
           Math.PI * 2
         );
 
+        ctx.fill();
+      }
+    }
 
-        context.fill();
-      };
+    function finish(won = false) {
+      stopClock();
+      running = false;
 
+      start.textContent = won
+        ? "You won! Play again"
+        : "Game over. Play again";
 
-    const endGame =
-      () => {
-        stopLoop();
+      if (score > best) {
+        best = score;
 
-        running = false;
+        bestElement.textContent =
+          String(best);
 
+        saveNumber(key, best);
+      }
+    }
 
-        if (
-          score > best
-        ) {
-          best =
-            score;
-
-
-          setStoredNumber(
-            storageKey,
-            best
-          );
-
-
-          bestElement.textContent =
-            best;
-        }
-      };
-
-
-    function step() {
-      direction =
-        nextDirection;
-
+    function tick() {
+      direction = nextDirection;
+      turnLocked = false;
 
       const head = {
-        x:
-          snake[0].x +
-          direction.x,
-
-        y:
-          snake[0].y +
-          direction.y
+        x: snake[0].x + direction.x,
+        y: snake[0].y + direction.y
       };
-
 
       const hitWall =
         head.x < 0 ||
         head.y < 0 ||
-        head.x >= cells ||
-        head.y >= cells;
+        head.x >= grid ||
+        head.y >= grid;
 
-
-      const ateFood =
+      const eating =
         head.x === food.x &&
         head.y === food.y;
 
-
       /*
-        If food is not eaten, the tail moves away during
-        this step. Excluding it prevents false collisions.
+        The tail moves away unless food is eaten.
+        Excluding the tail prevents false collisions.
       */
 
-      const bodyToCheck =
-        ateFood
-          ? snake
-          : snake.slice(
-              0,
-              -1
-            );
+      const body = eating
+        ? snake
+        : snake.slice(0, -1);
 
+      const hitBody = body.some(
+        segment =>
+          segment.x === head.x &&
+          segment.y === head.y
+      );
 
-      const hitSelf =
-        bodyToCheck.some(
-          (segment) =>
-            segment.x ===
-              head.x &&
-            segment.y ===
-              head.y
-        );
-
-
-      if (
-        hitWall ||
-        hitSelf
-      ) {
-        endGame();
-
+      if (hitWall || hitBody) {
+        finish();
         return;
       }
 
+      snake.unshift(head);
 
-      snake.unshift(
-        head
-      );
-
-
-      if (ateFood) {
+      if (eating) {
         score += 1;
 
-
         scoreElement.textContent =
-          score;
+          String(score);
 
-
-        spawnFood();
+        if (!spawnFood()) {
+          food = null;
+          draw();
+          finish(true);
+          return;
+        }
       } else {
         snake.pop();
       }
 
-
-      drawSnake();
+      draw();
     }
 
+    function resume() {
+      if (
+        !running ||
+        interval ||
+        document.hidden ||
+        modalOpen ||
+        !panel.classList.contains("active")
+      ) {
+        return;
+      }
 
-    const startGame =
-      () => {
-        stopLoop();
+      interval = setInterval(tick, 110);
+    }
 
+    function begin() {
+      stopClock();
 
-        snake = [
-          {
-            x: 6,
-            y: 10
-          },
-          {
-            x: 5,
-            y: 10
-          },
-          {
-            x: 4,
-            y: 10
-          }
-        ];
+      snake = [
+        { x: 6, y: 10 },
+        { x: 5, y: 10 },
+        { x: 4, y: 10 }
+      ];
 
-
-        direction = {
-          x: 1,
-          y: 0
-        };
-
-
-        nextDirection = {
-          x: 1,
-          y: 0
-        };
-
-
-        score = 0;
-
-
-        scoreElement.textContent =
-          "0";
-
-
-        spawnFood();
-
-        drawSnake();
-
-
-        running = true;
-
-
-        loop =
-          setInterval(
-            step,
-            110
-          );
+      direction = {
+        x: 1,
+        y: 0
       };
 
-
-    const changeDirection =
-      (name) => {
-        const directions = {
-          up: {
-            x: 0,
-            y: -1
-          },
-
-          down: {
-            x: 0,
-            y: 1
-          },
-
-          left: {
-            x: -1,
-            y: 0
-          },
-
-          right: {
-            x: 1,
-            y: 0
-          }
-        };
-
-
-        const newDirection =
-          directions[name];
-
-
-        if (!newDirection) {
-          return;
-        }
-
-
-        const reversing =
-          newDirection.x ===
-            -direction.x &&
-          newDirection.y ===
-            -direction.y;
-
-
-        if (!reversing) {
-          nextDirection =
-            newDirection;
-        }
+      nextDirection = {
+        x: 1,
+        y: 0
       };
 
+      turnLocked = false;
+      score = 0;
+
+      scoreElement.textContent = "0";
+      start.textContent = "Start / restart";
+
+      spawnFood();
+      draw();
+
+      running = true;
+      resume();
+    }
+
+    const directions = {
+      up: { x: 0, y: -1 },
+      down: { x: 0, y: 1 },
+      left: { x: -1, y: 0 },
+      right: { x: 1, y: 0 }
+    };
+
+    function changeDirection(name) {
+      if (!running || turnLocked) {
+        return;
+      }
+
+      const next = directions[name];
+
+      if (!next) {
+        return;
+      }
+
+      const reversing =
+        next.x === -direction.x &&
+        next.y === -direction.y;
+
+      const same =
+        next.x === direction.x &&
+        next.y === direction.y;
+
+      if (reversing || same) {
+        return;
+      }
+
+      nextDirection = next;
+      turnLocked = true;
+    }
 
     document.addEventListener(
       "keydown",
-      (event) => {
+      event => {
         if (
-          snakePanel &&
-          !snakePanel.classList.contains(
-            "active"
+          !panel.classList.contains("active") ||
+          !running ||
+          modalOpen
+        ) {
+          return;
+        }
+
+        const focused = document.activeElement;
+
+        if (
+          focused?.matches(
+            "input, textarea, select, [contenteditable='true'], [role='tab']"
           )
         ) {
           return;
         }
 
-
-        const activeElement =
-          document.activeElement;
-
-
-        if (
-          activeElement instanceof
-            HTMLInputElement ||
-          activeElement instanceof
-            HTMLTextAreaElement ||
-          activeElement instanceof
-            HTMLSelectElement
-        ) {
-          return;
-        }
-
-
         const keyMap = {
-          ArrowUp:
-            "up",
+          ArrowUp: "up",
+          ArrowDown: "down",
+          ArrowLeft: "left",
+          ArrowRight: "right",
 
-          w:
-            "up",
+          w: "up",
+          W: "up",
+          s: "down",
+          S: "down",
 
-          W:
-            "up",
-
-          ArrowDown:
-            "down",
-
-          s:
-            "down",
-
-          S:
-            "down",
-
-          ArrowLeft:
-            "left",
-
-          a:
-            "left",
-
-          A:
-            "left",
-
-          ArrowRight:
-            "right",
-
-          d:
-            "right",
-
-          D:
-            "right"
+          a: "left",
+          A: "left",
+          d: "right",
+          D: "right"
         };
 
+        const name = keyMap[event.key];
 
-        const directionName =
-          keyMap[
-            event.key
-          ];
-
-
-        if (!directionName) {
+        if (!name) {
           return;
         }
-
 
         event.preventDefault();
 
-
-        changeDirection(
-          directionName
-        );
+        changeDirection(name);
       }
     );
 
+    $$("[data-dir]", panel).forEach(button => {
+      button.addEventListener(
+        "click",
+        () => {
+          changeDirection(
+            button.dataset.dir
+          );
+        }
+      );
+    });
 
-    $$(
-      "[data-dir]"
-    ).forEach(
-      (button) => {
-        button.addEventListener(
-          "click",
-          () => {
-            changeDirection(
-              button.dataset.dir
-            );
-          }
-        );
-      }
-    );
-
-
-    startButton.addEventListener(
-      "click",
-      startGame
-    );
-
+    start.addEventListener("click", begin);
 
     document.addEventListener(
       "portfolio:gamechange",
-      (event) => {
-        if (
-          event.detail?.game ===
-          "snake"
-        ) {
-          resumeGame();
+      event => {
+        if (event.detail?.game === "snake") {
+          resume();
         } else {
-          pauseGame();
+          stopClock();
         }
       }
     );
 
+    document.addEventListener(
+      "portfolio:modalchange",
+      event => {
+        modalOpen =
+          Boolean(event.detail?.open);
+
+        if (modalOpen) {
+          stopClock();
+        } else {
+          resume();
+        }
+      }
+    );
 
     document.addEventListener(
       "visibilitychange",
       () => {
-        if (
-          document.hidden
-        ) {
-          pauseGame();
-        } else if (
-          snakePanel?.classList.contains(
-            "active"
-          )
-        ) {
-          resumeGame();
+        if (document.hidden) {
+          stopClock();
+        } else {
+          resume();
         }
       }
     );
 
-
     snake = [
-      {
-        x: 6,
-        y: 10
-      },
-      {
-        x: 5,
-        y: 10
-      },
-      {
-        x: 4,
-        y: 10
-      }
+      { x: 6, y: 10 },
+      { x: 5, y: 10 },
+      { x: 4, y: 10 }
     ];
 
-
     spawnFood();
-
-    drawSnake();
+    draw();
   }
-
 
   /* =========================================================
      12. SQL QUIZ
      ========================================================= */
 
   function initSqlQuiz() {
-    const quiz =
-      $("#sqlQuiz");
-
-    const progress =
-      $("#sqlProgress");
-
-    const bestElement =
-      $("#sqlBest");
-
-    const restart =
-      $("#sqlRestart");
-
+    const quiz = $("#sqlQuiz");
+    const progress = $("#sqlProgress");
+    const bestElement = $("#sqlBest");
+    const restart = $("#sqlRestart");
 
     if (
       !quiz ||
@@ -2631,11 +1883,6 @@
     ) {
       return;
     }
-
-
-    const storageKey =
-      "vg2026_sql_best";
-
 
     const questions = [
       {
@@ -2652,10 +1899,8 @@
           "ORDER BY"
         ],
 
-        correct:
-          1
+        correct: 1
       },
-
       {
         code:
           "SELECT Country, COUNT(*) FROM customers GROUP BY Country;",
@@ -2670,10 +1915,8 @@
           "Changes the original table"
         ],
 
-        correct:
-          1
+        correct: 1
       },
-
       {
         code:
           "SELECT * FROM invoices WHERE BillingState IS NULL;",
@@ -2688,10 +1931,8 @@
           "False values"
         ],
 
-        correct:
-          2
+        correct: 2
       },
-
       {
         code:
           "SELECT c.Name, i.Total FROM customers c JOIN invoices i ON c.CustomerId = i.CustomerId;",
@@ -2706,10 +1947,8 @@
           "To create a new database"
         ],
 
-        correct:
-          0
+        correct: 0
       },
-
       {
         code:
           "HAVING COUNT(*) > 3",
@@ -2724,303 +1963,190 @@
           "Changing a primary key"
         ],
 
-        correct:
-          0
+        correct: 0
       }
     ];
 
+    const key = "vg2026_sql_best";
 
-    let currentQuestion = 0;
+    let best = Math.min(
+      5,
+      Math.round(readNumber(key))
+    );
+
+    let index = 0;
     let score = 0;
+    let pending = 0;
+    let answered = false;
 
+    bestElement.textContent = `${best}/5`;
 
-    let best =
-      Math.min(
-        5,
-        Math.max(
-          0,
-          getStoredNumber(
-            storageKey,
-            0
-          )
-        )
-      );
+    quiz.setAttribute(
+      "aria-live",
+      "polite"
+    );
 
+    function render() {
+      answered = false;
+      quiz.replaceChildren();
 
-    bestElement.textContent =
-      `${best}/5`;
+      const item = questions[index];
 
+      progress.textContent =
+        `Question ${index + 1} of ${questions.length}`;
 
-    const renderQuestion =
-      () => {
-        const current =
-          questions[
-            currentQuestion
-          ];
+      const box =
+        document.createElement("div");
 
+      box.className = "sql-question";
 
-        progress.textContent =
-          `Question ${
-            currentQuestion + 1
-          } of ${
-            questions.length
-          }`;
+      const code =
+        document.createElement("code");
 
+      code.textContent = item.code;
 
-        quiz.replaceChildren();
+      const heading =
+        document.createElement("h4");
 
+      heading.textContent = item.question;
 
-        const questionBox =
-          document.createElement(
-            "div"
-          );
+      const answers =
+        document.createElement("div");
 
+      answers.className = "sql-answers";
 
-        questionBox.className =
-          "sql-question";
+      item.answers.forEach(
+        (answer, answerIndex) => {
+          const button =
+            document.createElement("button");
 
+          button.type = "button";
+          button.className = "sql-answer";
+          button.textContent = answer;
 
-        const code =
-          document.createElement(
-            "code"
-          );
-
-
-        code.textContent =
-          current.code;
-
-
-        const heading =
-          document.createElement(
-            "h4"
-          );
-
-
-        heading.textContent =
-          current.question;
-
-
-        const answers =
-          document.createElement(
-            "div"
-          );
-
-
-        answers.className =
-          "sql-answers";
-
-
-        current.answers.forEach(
-          (
-            answer,
-            index
-          ) => {
-            const button =
-              document.createElement(
-                "button"
+          button.addEventListener(
+            "click",
+            () => {
+              selectAnswer(
+                answerIndex,
+                button
               );
-
-
-            button.className =
-              "sql-answer";
-
-
-            button.type =
-              "button";
-
-
-            button.dataset.answer =
-              String(index);
-
-
-            button.textContent =
-              answer;
-
-
-            button.addEventListener(
-              "click",
-              () => {
-                chooseAnswer(
-                  index,
-                  button
-                );
-              }
-            );
-
-
-            answers.append(
-              button
-            );
-          }
-        );
-
-
-        questionBox.append(
-          code,
-          heading,
-          answers
-        );
-
-
-        quiz.append(
-          questionBox
-        );
-      };
-
-
-    const finishQuiz =
-      () => {
-        if (
-          score > best
-        ) {
-          best =
-            score;
-
-
-          setStoredNumber(
-            storageKey,
-            best
+            }
           );
 
-
-          bestElement.textContent =
-            `${best}/5`;
-        }
-
-
-        quiz.replaceChildren();
-
-
-        const result =
-          document.createElement(
-            "div"
-          );
-
-
-        result.className =
-          "sql-question";
-
-
-        const heading =
-          document.createElement(
-            "h4"
-          );
-
-
-        heading.textContent =
-          `You scored ${score}/5`;
-
-
-        const message =
-          document.createElement(
-            "p"
-          );
-
-
-        message.textContent =
-          "Small quiz, real database fundamentals.";
-
-
-        result.append(
-          heading,
-          message
-        );
-
-
-        quiz.append(
-          result
-        );
-
-
-        progress.textContent =
-          "Complete";
-      };
-
-
-    function chooseAnswer(
-      selected,
-      selectedButton
-    ) {
-      const buttons =
-        $$(
-          ".sql-answer",
-          quiz
-        );
-
-
-      buttons.forEach(
-        (button) => {
-          button.disabled =
-            true;
+          answers.append(button);
         }
       );
 
+      box.append(
+        code,
+        heading,
+        answers
+      );
+
+      quiz.append(box);
+    }
+
+    function finish() {
+      if (score > best) {
+        best = score;
+
+        saveNumber(key, best);
+
+        bestElement.textContent =
+          `${best}/5`;
+      }
+
+      quiz.replaceChildren();
+
+      const box =
+        document.createElement("div");
+
+      box.className = "sql-question";
+
+      const heading =
+        document.createElement("h4");
+
+      heading.textContent =
+        `You scored ${score}/5`;
+
+      const message =
+        document.createElement("p");
+
+      message.textContent =
+        "Small quiz, real database fundamentals. Give it another go if you want.";
+
+      box.append(
+        heading,
+        message
+      );
+
+      quiz.append(box);
+
+      progress.textContent = "Complete";
+    }
+
+    function selectAnswer(selected, button) {
+      if (answered) {
+        return;
+      }
+
+      answered = true;
+
+      const buttons = $$(
+        ".sql-answer",
+        quiz
+      );
+
+      buttons.forEach(item => {
+        item.disabled = true;
+      });
 
       const correct =
-        questions[
-          currentQuestion
-        ].correct;
+        questions[index].correct;
 
-
-      if (
-        selected === correct
-      ) {
+      if (selected === correct) {
         score += 1;
 
-
-        selectedButton.classList.add(
-          "correct"
-        );
+        button.classList.add("correct");
       } else {
-        selectedButton.classList.add(
-          "wrong"
-        );
+        button.classList.add("wrong");
 
-
-        buttons[
-          correct
-        ]?.classList.add(
+        buttons[correct]?.classList.add(
           "correct"
         );
       }
 
-
-      window.setTimeout(
+      pending = setTimeout(
         () => {
-          currentQuestion += 1;
+          pending = 0;
+          index += 1;
 
-
-          if (
-            currentQuestion >=
-            questions.length
-          ) {
-            finishQuiz();
-
-            return;
+          if (index >= questions.length) {
+            finish();
+          } else {
+            render();
           }
-
-
-          renderQuestion();
         },
         650
       );
     }
 
-
     restart.addEventListener(
       "click",
       () => {
-        currentQuestion = 0;
+        clearTimeout(pending);
+
+        pending = 0;
+        index = 0;
         score = 0;
 
-        renderQuestion();
+        render();
       }
     );
 
-
-    renderQuestion();
+    render();
   }
-
 
   /* =========================================================
      13. INITIALISE WEBSITE
@@ -3028,40 +2154,24 @@
 
   function init() {
     initFooterYear();
-
     initMobileNavigation();
-
     initCursorHalo();
-
     initDotHero();
-
     initRevealAnimations();
-
     initProjectModal();
-
     initGameTabs();
-
     initReactionGame();
-
     initSnakeGame();
-
     initSqlQuiz();
   }
 
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
+  if (document.readyState === "loading") {
     document.addEventListener(
       "DOMContentLoaded",
       init,
-      {
-        once: true
-      }
+      { once: true }
     );
   } else {
     init();
   }
-
 })();
