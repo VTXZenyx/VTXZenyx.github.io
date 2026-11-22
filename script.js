@@ -2,136 +2,225 @@
 (() => {
   "use strict";
 
-  /* =========================================================
-     01. SHARED HELPERS
-     ========================================================= */
+  // ==========================================
+  // 01. HELPERS
+  // ==========================================
 
   const $ = (selector, parent = document) =>
     parent.querySelector(selector);
 
   const $$ = (selector, parent = document) =>
-    Array.from(parent.querySelectorAll(selector));
+    [...parent.querySelectorAll(selector)];
 
-  const reducedMotion = window.matchMedia(
+  const reduceMotion = matchMedia(
     "(prefers-reduced-motion: reduce)"
   );
 
-  const finePointer = window.matchMedia(
+  const finePointer = matchMedia(
     "(hover: hover) and (pointer: fine)"
   );
 
-  function readNumber(key, fallback = 0) {
+  const readBest = key => {
     try {
-      const raw = localStorage.getItem(key);
-
-      if (raw === null) {
-        return fallback;
-      }
-
-      const value = Number(raw);
-
-      return Number.isFinite(value) && value >= 0
+      const value = Number(localStorage.getItem(key));
+      return Number.isFinite(value) && value > 0
         ? value
-        : fallback;
+        : 0;
     } catch {
-      return fallback;
+      return 0;
     }
-  }
+  };
 
-  function saveNumber(key, value) {
+  const saveBest = (key, value) => {
     try {
       localStorage.setItem(key, String(value));
     } catch {
-      // Games continue working if storage is unavailable.
+      // Games still work when storage is unavailable.
     }
-  }
+  };
 
-  /* =========================================================
-     02. PROJECT INFORMATION
-     ========================================================= */
+  // ==========================================
+  // 02. PROJECT INFORMATION
+  // ==========================================
+
+  // These match the project buttons in index.html.
+  // Research and prototypes are not presented
+  // as paid commercial products.
 
   const PROJECTS = {
-    sql: {
-      kicker: "SQL · SQLITE · DATABASE DESIGN",
-
-      title: "SQL & Relational Database Portfolio",
+    quotedesk: {
+      kicker: "VEE AI SOFTWARE · PYTHON · FLASK · SQLITE",
+      title: "VEE QuoteDesk",
 
       desc:
-        "This is a collection of the SQL and database work I've done while learning how to organise, query and understand relational data. I particularly like how a query can turn several connected tables into an answer that's actually useful.",
+        "A working local prototype for organising technical enquiries and preparing quotations for industrial parts distributors. It combines catalogue candidates, technical checks, employee-approved clarification drafts, simulated stock and prices, and quotation review. I'm using it to learn how reliable software could support a real business workflow.",
 
       evidence: [
         [
-          "QUERYING",
-          "Filtering, multi-table joins, self joins, grouping, HAVING and aggregate functions."
+          "ENQUIRIES",
+          "Organises simulated incoming requests and their attachments in a local workspace."
         ],
         [
-          "SUBQUERIES",
-          "Building nested queries and working with calculated or grouped results."
+          "PRODUCT MATCHING",
+          "Uses text-based catalogue evidence and seeded product information. Photos can be reviewed manually; automatic image recognition is not built in."
         ],
         [
-          "DATABASE DESIGN",
-          "Relationships, primary and foreign keys, composite keys and normalisation."
+          "TECHNICAL CHECKS",
+          "Flags missing or conflicting specifications and prepares clarification questions for human approval."
         ],
         [
-          "DATABASE OPERATIONS",
-          "Using CREATE, INSERT, UPDATE and DELETE in database exercises."
+          "QUOTES",
+          "Uses fictional inventory and prices with editable quotations, revisions and 15% New Zealand GST."
         ],
         [
-          "R + SQLITE",
-          "Connecting R to SQLite with DBI and RSQLite to work with database tables."
+          "REVIEW & HISTORY",
+          "Keeps employee approvals, quotation versions and audit records."
+        ],
+        [
+          "STATUS",
+          "Local prototype with synthetic data, not a live customer, email or ERP integration."
         ]
       ],
 
       tags: [
-        "SQL",
+        "PYTHON",
+        "FLASK",
         "SQLITE",
-        "JOINS",
-        "SUBQUERIES",
-        "DATABASE DESIGN",
-        "RSQLITE"
+        "QUOTATIONS",
+        "TESTING"
       ],
 
       actions: [
-        {
-          label: "View SQL portfolio ↗",
-          url: "https://github.com/VTXZenyx/sql-database-portfolio",
-          primary: true
-        }
+        [
+          "View VEE QuoteDesk ↗",
+          "https://github.com/VTXZenyx/vee-parts-quote-intelligence"
+        ]
+      ]
+    },
+
+    quant: {
+      kicker: "PYTHON · QUANTITATIVE RESEARCH · RISK",
+      title: "VEE Quant Research",
+
+      desc:
+        "My independent quantitative trading research and software engineering project. The public Python toolkit explores repeatable screening, fee-aware risk checks, simulated execution, record reconciliation and automated tests. I want to understand what survives careful evaluation, not claim that a backtest proves profitability.",
+
+      evidence: [
+        [
+          "RESEARCH",
+          "Repeatable offline market screening and structured trading scenarios."
+        ],
+        [
+          "RISK & COSTS",
+          "Checks risk/reward assumptions, fees and stop-loss or take-profit coverage."
+        ],
+        [
+          "SIMULATION",
+          "Experiments with synthetic execution and forward-shadow workflows without live trading."
+        ],
+        [
+          "AUDITING",
+          "Reconciles local records and normalised demonstration exchange exports."
+        ],
+        [
+          "TESTING",
+          "Automated tests examine behaviour and edge cases."
+        ],
+        [
+          "STATUS",
+          "Experimental research; no verified profitable record or live-trading service."
+        ]
+      ],
+
+      tags: [
+        "PYTHON",
+        "QUANT RESEARCH",
+        "RISK",
+        "SIMULATION",
+        "TESTING"
+      ],
+
+      actions: [
+        [
+          "View VEE Quant Research ↗",
+          "https://github.com/VTXZenyx/vee-quant-research"
+        ]
+      ]
+    },
+
+    cricket: {
+      kicker: "PERSONAL PROJECT · AI · VOICE",
+      title: "AI Cricket Mentor",
+
+      desc:
+        "A fan-made AI application combining a Next.js interface, a FastAPI backend, local language-model responses, document-backed information and optional voice features. Building it helped me understand how the components of an AI application connect.",
+
+      evidence: [
+        [
+          "LOCAL AI",
+          "Experiments with Ollama and Qwen for local inference."
+        ],
+        [
+          "CONVERSATION",
+          "Streams generated responses from backend to frontend."
+        ],
+        [
+          "KNOWLEDGE",
+          "Uses document-backed keyword matching, not vector search."
+        ],
+        [
+          "VOICE",
+          "Optional speech recognition and voice output need their own setup."
+        ],
+        [
+          "STATUS",
+          "Experimental personal project, not an official or deployed production service."
+        ]
+      ],
+
+      tags: [
+        "PYTHON",
+        "FASTAPI",
+        "REACT",
+        "OLLAMA",
+        "VOICE"
+      ],
+
+      actions: [
+        [
+          "View AI Cricket Mentor ↗",
+          "https://github.com/VTXZenyx/ai-cricket-virat-kohli-app"
+        ]
       ]
     },
 
     r: {
-      kicker: "R · SQL · DATA202",
-
+      kicker: "DATA SCIENCE · R · SQL",
       title: "Data Analysis & Programming",
 
       desc:
-        "This is where I've put together work from DATA202 and an additional AI-assisted clustering exploration. It's a mix of R, SQL, data cleaning, visualisations and simulations. I wanted one place where I could look back at what I've learned and share the code behind it.",
+        "My R and SQL analysis portfolio brings together university work and an AI-assisted clustering exploration. It includes fossil maps, isotope data, Formula 1 records, simulations and unsupervised learning experiments.",
 
       evidence: [
         [
-          "DINOSAUR FOSSILS",
-          "Working with fossil data and exploring geographic patterns through visualisation."
+          "FOSSILS",
+          "Exploring geographic patterns in dinosaur fossil data."
         ],
         [
           "ANCIENT EGYPT",
-          "Importing, cleaning and analysing isotope data, then interpreting the results in R."
+          "Cleaning and interpreting isotope measurements with R."
         ],
         [
-          "FORMULA 1 SQL",
-          "Working with related tables and SQL queries to answer questions about racing data."
+          "FORMULA 1",
+          "Querying connected racing data with SQL."
         ],
         [
-          "PROBABILITY",
-          "Using R sampling and simulations to explore probability and repeated experiments."
+          "SIMULATIONS",
+          "Exploring probability through sampling and repeated experiments."
         ],
         [
           "CLUSTERING",
-          "An AI-assisted extension exploring unsupervised learning and comparing clustering methods."
-        ],
-        [
-          "DOCUMENTATION",
-          "R Markdown, source code and supporting project notes published on GitHub."
+          "Comparing unsupervised approaches on synthetic data in an AI-assisted extension."
         ]
       ],
 
@@ -140,89 +229,40 @@
         "DPLYR",
         "GGPLOT2",
         "SQL",
-        "SIMULATION",
-        "R MARKDOWN"
+        "STATISTICS"
       ],
 
       actions: [
-        {
-          label: "Explore DATA202 projects ↗",
-          url: "https://github.com/VTXZenyx/data-analysis-and-programming",
-          primary: true
-        }
+        [
+          "View data projects ↗",
+          "https://github.com/VTXZenyx/data-analysis-and-programming"
+        ]
       ]
     },
 
-    systems: {
-      kicker: "INFORMATION SYSTEMS · USER RESEARCH",
-
-      title: "Business & Systems Analysis",
-
-      desc:
-        "In INFO203, I worked on a question that came up in student life: how do you keep a good first interaction going? My group's idea became 'See you next tutorial', a small prototype for following up with someone after class. The project taught me that understanding people comes before designing a solution.",
-
-      evidence: [
-        [
-          "RESEARCH",
-          "Explored students' experiences through interviews and looked for recurring needs."
-        ],
-        [
-          "PROBLEM",
-          "Focused on hesitation around following up after meeting someone and practical barriers to making plans."
-        ],
-        [
-          "IDEAS",
-          "Compared alternative concepts before choosing 'See you next tutorial'."
-        ],
-        [
-          "PROTOTYPING",
-          "Designed an invite flow with editable wording, tutorial choices and meeting details."
-        ],
-        [
-          "USER TESTING",
-          "Tested prototype versions, reviewed feedback and refined the flow and statuses."
-        ]
-      ],
-
-      tags: [
-        "USER RESEARCH",
-        "STAKEHOLDERS",
-        "REQUIREMENTS",
-        "PROTOTYPING",
-        "TESTING"
-      ],
-
-      actions: []
-    },
-
     waid: {
-      kicker: "WEB APP · BUSINESS RULES",
-
+      kicker: "WEB APPLICATION · VUE · BUSINESS RULES",
       title: "Course Enrolment Web Application",
 
       desc:
-        "I built a course enrolment application where students can sign in, browse courses, enrol and withdraw. The interesting part for me was translating real enrolment rules into checks that the application can make, instead of just building the screens.",
+        "A browser-based demonstration for browsing courses, enrolling and withdrawing. I turned prerequisites, course-load and GPA requirements, and timetable clashes into application checks. The demo uses sample accounts and course data rather than real university authentication.",
 
       evidence: [
         [
           "USER FLOW",
-          "Login, course browsing, enrolment and withdrawal."
+          "Demonstration login, course browsing, enrolment and withdrawals."
         ],
         [
           "VALIDATION",
-          "Prerequisites, course-load limits, GPA requirements and timetable-clash checks."
+          "Prerequisite, course-load, GPA-related and timetable checks."
         ],
         [
-          "STRUCTURED DATA",
-          "Student and course information used to drive what the app shows and allows."
+          "TECHNOLOGY",
+          "HTML, CSS, Vue.js, Brython/Python and JSON."
         ],
         [
-          "TOOLS",
-          "HTML, CSS, Vue.js, Python through Brython and JSON."
-        ],
-        [
-          "SYSTEMS THINKING",
-          "Turning requirements and business rules into application behaviour."
+          "STATUS",
+          "Working demonstration, not a connected student administration system."
         ]
       ],
 
@@ -231,260 +271,214 @@
         "CSS",
         "VUE.JS",
         "BRYTHON",
-        "JSON",
-        "BUSINESS RULES"
+        "JSON"
       ],
 
       actions: [
-        {
-          label: "Open live application ↗",
-          url: "https://vtxzenyx.github.io/course-enrolment-web-app/",
-          primary: true
-        },
-        {
-          label: "View source on GitHub ↗",
-          url: "https://github.com/VTXZenyx/course-enrolment-web-app",
-          primary: false
-        }
+        [
+          "Try the live demo ↗",
+          "https://vtxzenyx.github.io/course-enrolment-web-app/"
+        ],
+        [
+          "View source ↗",
+          "https://github.com/VTXZenyx/course-enrolment-web-app"
+        ]
       ]
     },
 
-    cricket: {
-      kicker: "PERSONAL PROJECT · AI · VOICE",
-
-      title: "AI Cricket Mentor",
+    sql: {
+      kicker: "SQL · SQLITE · DATABASE DESIGN",
+      title: "SQL & Relational Database Portfolio",
 
       desc:
-        "I wanted to see how far I could take a cricket-themed AI idea beyond a normal chatbot. The project explores a local language model, conversation, knowledge retrieval and voice input and output. It's a practical way for me to understand what the pieces of an AI application actually do.",
+        "Exercises and projects exploring SQL queries, relational structure and database design. I enjoy turning connected tables into clear answers and learning how reliable data models support applications.",
 
       evidence: [
         [
-          "LOCAL AI",
-          "Exploring language-model inference through a local setup."
+          "QUERYING",
+          "Filters, joins, self-joins, grouping, HAVING and aggregates."
         ],
         [
-          "CONVERSATION",
-          "Handling prompts and generating streaming responses."
+          "SUBQUERIES",
+          "Nested queries and calculations using multiple tables."
         ],
         [
-          "VOICE",
-          "Connecting speech recognition and voice output to an assistant interface."
+          "DESIGN",
+          "Primary and foreign keys, relationships and normalisation."
         ],
         [
-          "LEARNING",
-          "Understanding how application components connect, including their limitations."
+          "OPERATIONS",
+          "CREATE, INSERT, UPDATE and DELETE exercises."
         ],
         [
-          "STATUS",
-          "Personal project documented in the GitHub repository; not presented as a production service."
+          "R INTEGRATION",
+          "Working with SQLite from R using DBI and RSQLite."
         ]
       ],
 
       tags: [
-        "AI",
-        "PYTHON",
-        "LOCAL LLM",
-        "VOICE",
-        "PERSONAL PROJECT"
+        "SQL",
+        "SQLITE",
+        "JOINS",
+        "DATABASE DESIGN",
+        "RSQLITE"
       ],
 
       actions: [
-        {
-          label: "View AI Cricket Mentor ↗",
-          url: "https://github.com/VTXZenyx/ai-cricket-virat-kohli-app",
-          primary: true
-        }
+        [
+          "View SQL portfolio ↗",
+          "https://github.com/VTXZenyx/sql-database-portfolio"
+        ]
       ]
     },
 
-    trading: {
-      kicker: "PLANNED PROJECT · AI · MARKET ANALYSIS",
-
-      title: "AI Trading Analyser",
+    systems: {
+      kicker: "INFORMATION SYSTEMS · USER RESEARCH",
+      title: "Business & Systems Analysis",
 
       desc:
-        "This is an idea I'm still researching. I used to follow markets and trade quite a bit when I was younger, and both winning and losing trades taught me a lot. Now I want to explore whether an AI tool can help me work through market data more carefully, rather than just making a decision from a chart alone.",
+        "In a university group project, we explored why students can find it difficult to reconnect after meeting in class. Our 'See You Next Tutorial' concept brought together research, prototyping, testing and feedback. It reminded me that understanding users matters before choosing technology.",
 
       evidence: [
-        [
-          "CHARTS",
-          "Plan to analyse hourly candles, trends, price levels, volume and technical indicators."
-        ],
         [
           "RESEARCH",
-          "Plan to check relevant news, posts on X and potentially prediction-market information with timestamps and source checks."
+          "Exploring student experiences and recurring problems."
         ],
         [
-          "DECISIONS",
-          "Explore long, short and no-trade assessments with reasons for each decision."
+          "PROBLEM",
+          "Focusing on the barriers to following up after an initial interaction."
         ],
         [
-          "RISK",
-          "Plan to evaluate entries, stop-losses, take-profit levels and position sizing with clear risk limits."
+          "PROTOTYPE",
+          "Designing a simple invitation and meeting flow."
         ],
         [
-          "TESTING FIRST",
-          "Start with historical tests and paper trading, including fees and losing trades, before considering real money."
+          "TESTING",
+          "Revising designs after feedback."
         ],
         [
           "STATUS",
-          "Concept and research stage. There is no completed trading bot or verified profit record yet."
+          "University coursework, not a commercial application."
         ]
       ],
 
       tags: [
-        "PLANNING",
-        "AI",
-        "CANDLESTICKS",
-        "NEWS",
-        "RISK",
-        "PAPER TRADING"
+        "USER RESEARCH",
+        "REQUIREMENTS",
+        "PROTOTYPING",
+        "TESTING"
       ],
 
       actions: []
     }
   };
 
-  /* =========================================================
-     03. FOOTER YEAR
-     ========================================================= */
+  // ==========================================
+  // 03. FOOTER YEAR & MOBILE MENU
+  // ==========================================
 
-  function initFooterYear() {
-    const year = $("#year");
+  const year = $("#year");
 
-    if (year) {
-      year.textContent = String(new Date().getFullYear());
-    }
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
   }
 
-  /* =========================================================
-     04. MOBILE NAVIGATION
-     ========================================================= */
+  const nav = $("#primaryNav");
+  const navButton = $("#navToggle");
 
-  function initMobileNavigation() {
-    const toggle = $("#navToggle");
-    const nav = $("#primaryNav");
-
-    if (!toggle || !nav) {
-      return;
-    }
-
-    const isOpen = () =>
-      nav.classList.contains("open");
-
-    function setOpen(open) {
+  if (nav && navButton) {
+    const setMenu = open => {
       nav.classList.toggle("open", open);
-      nav.classList.remove("is-open");
 
-      toggle.setAttribute(
+      navButton.setAttribute(
         "aria-expanded",
         String(open)
       );
 
-      toggle.setAttribute(
+      navButton.setAttribute(
         "aria-label",
         open ? "Close navigation" : "Open navigation"
       );
-    }
+    };
 
-    toggle.addEventListener("click", () => {
-      setOpen(!isOpen());
+    navButton.addEventListener("click", () => {
+      setMenu(!nav.classList.contains("open"));
     });
 
     $$("a", nav).forEach(link => {
-      link.addEventListener("click", () => {
-        setOpen(false);
-      });
+      link.addEventListener("click", () => setMenu(false));
     });
 
     document.addEventListener("click", event => {
       if (
-        isOpen() &&
         !nav.contains(event.target) &&
-        !toggle.contains(event.target)
+        !navButton.contains(event.target)
       ) {
-        setOpen(false);
+        setMenu(false);
       }
     });
 
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape" && isOpen()) {
-        setOpen(false);
-        toggle.focus();
+      if (
+        event.key === "Escape" &&
+        nav.classList.contains("open")
+      ) {
+        setMenu(false);
+        navButton.focus();
       }
     });
 
-    const desktop = window.matchMedia(
-      "(min-width: 821px)"
-    );
-
-    const desktopChanged = event => {
-      if (event.matches) {
-        setOpen(false);
-      }
-    };
-
-    if (desktop.addEventListener) {
-      desktop.addEventListener(
-        "change",
-        desktopChanged
-      );
-    } else {
-      desktop.addListener(desktopChanged);
-    }
+    matchMedia("(min-width: 821px)")
+      .addEventListener("change", event => {
+        if (event.matches) {
+          setMenu(false);
+        }
+      });
   }
 
-  /* =========================================================
-     05. CURSOR HALO
-     ========================================================= */
+  // ==========================================
+  // 04. CURSOR HALO
+  // ==========================================
 
-  function initCursorHalo() {
-    const halo = $(".cursor-halo");
+  const halo = $(".cursor-halo");
 
-    if (!halo) {
-      return;
-    }
-
-    let frame = 0;
-    let x = 0;
-    let y = 0;
-
-    function syncVisibility() {
+  if (halo) {
+    const updateHalo = () => {
       halo.style.display =
-        finePointer.matches && !reducedMotion.matches
+        finePointer.matches && !reduceMotion.matches
           ? ""
           : "none";
-    }
+    };
 
-    syncVisibility();
+    updateHalo();
 
-    finePointer.addEventListener?.(
+    finePointer.addEventListener(
       "change",
-      syncVisibility
+      updateHalo
     );
 
-    reducedMotion.addEventListener?.(
+    reduceMotion.addEventListener(
       "change",
-      syncVisibility
+      updateHalo
     );
+
+    let frame = 0;
 
     window.addEventListener(
       "pointermove",
       event => {
-        if (halo.style.display === "none") {
+        if (
+          halo.style.display === "none" ||
+          frame
+        ) {
           return;
         }
 
-        x = event.clientX;
-        y = event.clientY;
-
-        if (frame) {
-          return;
-        }
+        const { clientX, clientY } = event;
 
         frame = requestAnimationFrame(() => {
-          halo.style.left = `${x}px`;
-          halo.style.top = `${y}px`;
+          halo.style.left = `${clientX}px`;
+          halo.style.top = `${clientY}px`;
           frame = 0;
         });
       },
@@ -492,44 +486,40 @@
     );
   }
 
-  /* =========================================================
-     06. ANIMATED DOT-MATRIX NAME
-     ========================================================= */
+  // ==========================================
+  // 05. ANIMATED VIRAJ GANDHI NAME
+  // ==========================================
 
-  function initDotHero() {
+  function initDotName() {
     const canvas = $("#dotCanvas");
     const ctx = canvas?.getContext("2d");
 
-    if (!canvas || !ctx) {
+    if (!ctx) {
       return;
     }
 
     let width = 0;
     let height = 0;
     let points = [];
+    let frame = 0;
 
     let pointerX = -9999;
     let pointerY = -9999;
-
-    let drawFrame = 0;
-    let resizeTimer = 0;
+    let resizeTimer;
 
     function draw() {
+      frame = 0;
+
       ctx.clearRect(0, 0, width, height);
-
-      ctx.fillStyle =
-        "rgba(128, 197, 255, 0.96)";
-
+      ctx.fillStyle = "rgba(128, 197, 255, 0.96)";
       ctx.beginPath();
 
       for (const point of points) {
-        let x = point.x;
-        let y = point.y;
-        let radius = point.radius;
+        let { x, y, radius } = point;
 
         if (
           finePointer.matches &&
-          !reducedMotion.matches
+          !reduceMotion.matches
         ) {
           const dx = x - pointerX;
           const dy = y - pointerY;
@@ -539,10 +529,13 @@
             const strength =
               (105 - distance) / 105;
 
-            const push = strength * 21;
+            x +=
+              (dx / (distance || 1)) *
+              strength * 21;
 
-            x += (dx / (distance || 1)) * push;
-            y += (dy / (distance || 1)) * push;
+            y +=
+              (dy / (distance || 1)) *
+              strength * 21;
 
             radius += strength * 0.8;
           }
@@ -560,44 +553,40 @@
       }
 
       ctx.fill();
-      drawFrame = 0;
     }
 
-    function scheduleDraw() {
-      if (!drawFrame) {
-        drawFrame = requestAnimationFrame(draw);
+    const requestDraw = () => {
+      if (!frame) {
+        frame = requestAnimationFrame(draw);
       }
-    }
+    };
 
     function build() {
-      const rect = canvas.getBoundingClientRect();
+      width = Math.round(
+        canvas.getBoundingClientRect().width
+      );
 
-      width = Math.round(rect.width);
-      height = Math.round(rect.height);
+      height = Math.round(
+        canvas.getBoundingClientRect().height
+      );
 
       if (width < 10 || height < 10) {
         return;
       }
 
-      const dpr = Math.min(
-        window.devicePixelRatio || 1,
+      const ratio = Math.min(
+        devicePixelRatio || 1,
         2
       );
 
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
 
       ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
+        ratio, 0, 0, ratio, 0, 0
       );
 
-      const offscreen =
-        document.createElement("canvas");
+      const offscreen = document.createElement("canvas");
 
       offscreen.width = width;
       offscreen.height = height;
@@ -611,26 +600,25 @@
         return;
       }
 
+      off.textAlign = "center";
+      off.textBaseline = "middle";
+      off.fillStyle = "white";
+
       let fontSize = Math.min(
         width * 0.205,
         height * 0.35
       );
 
-      off.textAlign = "center";
-      off.textBaseline = "middle";
-      off.fillStyle = "#fff";
-
-      // Make both names fit on smaller screens.
-      for (let attempt = 0; attempt < 20; attempt++) {
+      for (let i = 0; i < 20; i++) {
         off.font =
           `800 ${fontSize}px Manrope, sans-serif`;
 
-        const nameWidth = Math.max(
-          off.measureText("VIRAJ").width,
-          off.measureText("GANDHI").width
-        );
-
-        if (nameWidth <= width * 0.94) {
+        if (
+          Math.max(
+            off.measureText("VIRAJ").width,
+            off.measureText("GANDHI").width
+          ) <= width * 0.94
+        ) {
           break;
         }
 
@@ -650,28 +638,21 @@
       );
 
       const pixels = off.getImageData(
-        0,
-        0,
-        width,
-        height
+        0, 0, width, height
       ).data;
 
       const step =
-        width < 480
-          ? 6
-          : width < 800
-            ? 7
-            : 8;
+        width < 480 ? 6 :
+        width < 800 ? 7 : 8;
 
-      const nextPoints = [];
+      const next = [];
 
       for (let y = 0; y < height; y += step) {
         for (let x = 0; x < width; x += step) {
-          const alpha =
-            pixels[(y * width + x) * 4 + 3];
-
-          if (alpha > 100) {
-            nextPoints.push({
+          if (
+            pixels[(y * width + x) * 4 + 3] > 100
+          ) {
+            next.push({
               x,
               y,
               radius: width < 480 ? 1.45 : 1.7
@@ -680,14 +661,8 @@
         }
       }
 
-      points = nextPoints;
-      scheduleDraw();
-    }
-
-    function scheduleBuild() {
-      clearTimeout(resizeTimer);
-
-      resizeTimer = setTimeout(build, 90);
+      points = next;
+      requestDraw();
     }
 
     canvas.addEventListener(
@@ -695,21 +670,17 @@
       event => {
         if (
           !finePointer.matches ||
-          reducedMotion.matches
+          reduceMotion.matches
         ) {
           return;
         }
 
-        const rect =
-          canvas.getBoundingClientRect();
+        const bounds = canvas.getBoundingClientRect();
 
-        pointerX =
-          event.clientX - rect.left;
+        pointerX = event.clientX - bounds.left;
+        pointerY = event.clientY - bounds.top;
 
-        pointerY =
-          event.clientY - rect.top;
-
-        scheduleDraw();
+        requestDraw();
       },
       { passive: true }
     );
@@ -717,75 +688,68 @@
     canvas.addEventListener(
       "pointerleave",
       () => {
-        pointerX = -9999;
-        pointerY = -9999;
-        scheduleDraw();
+        pointerX = pointerY = -9999;
+        requestDraw();
       }
     );
 
-    reducedMotion.addEventListener?.(
-      "change",
-      scheduleDraw
-    );
+    const delayedBuild = () => {
+      clearTimeout(resizeTimer);
 
-    finePointer.addEventListener?.(
-      "change",
-      scheduleDraw
-    );
+      resizeTimer = setTimeout(build, 90);
+    };
 
     if ("ResizeObserver" in window) {
-      new ResizeObserver(
-        scheduleBuild
-      ).observe(canvas);
+      new ResizeObserver(delayedBuild).observe(canvas);
     } else {
-      window.addEventListener(
+      addEventListener(
         "resize",
-        scheduleBuild,
+        delayedBuild,
         { passive: true }
       );
     }
 
+    reduceMotion.addEventListener(
+      "change",
+      requestDraw
+    );
+
+    finePointer.addEventListener(
+      "change",
+      requestDraw
+    );
+
     build();
 
-    if (document.fonts?.ready) {
-      document.fonts.ready
-        .then(build)
-        .catch(() => {});
-    }
+    document.fonts?.ready
+      .then(build)
+      .catch(() => {});
   }
 
-  /* =========================================================
-     07. SCROLL REVEAL
-     ========================================================= */
+  initDotName();
 
-  function initRevealAnimations() {
-    const elements = $$(".reveal");
+  // ==========================================
+  // 06. SCROLL REVEAL
+  // ==========================================
 
-    if (!elements.length) {
-      return;
-    }
+  const reveals = $$(".reveal");
 
-    if (
-      reducedMotion.matches ||
-      !("IntersectionObserver" in window)
-    ) {
-      elements.forEach(element => {
-        element.classList.add("visible");
-      });
-
-      return;
-    }
-
+  if (
+    reduceMotion.matches ||
+    !("IntersectionObserver" in window)
+  ) {
+    reveals.forEach(element => {
+      element.classList.add("visible");
+    });
+  } else {
     const observer = new IntersectionObserver(
       entries => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) {
-            continue;
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
           }
-
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
+        });
       },
       {
         threshold: 0.06,
@@ -793,15 +757,15 @@
       }
     );
 
-    elements.forEach(element => {
+    reveals.forEach(element => {
       observer.observe(element);
     });
 
-    reducedMotion.addEventListener?.(
+    reduceMotion.addEventListener(
       "change",
       event => {
         if (event.matches) {
-          elements.forEach(element => {
+          reveals.forEach(element => {
             element.classList.add("visible");
           });
 
@@ -811,11 +775,11 @@
     );
   }
 
-  /* =========================================================
-     08. PROJECT DETAILS MODAL
-     ========================================================= */
+  // ==========================================
+  // 07. PROJECT DETAILS POPUP
+  // ==========================================
 
-  function initProjectModal() {
+  function initProjectDetails() {
     const modal = $("#projectModal");
 
     if (!modal) {
@@ -823,114 +787,18 @@
     }
 
     const card = $(".project-modal-card", modal);
-    const kicker = $("#modalKicker");
-    const title = $("#modalTitle");
-    const description = $("#modalDesc");
-    const evidence = $("#modalEvidence");
-    const tags = $("#modalTags");
-    const actions = $("#modalActions");
+    const closeButton = $(".project-modal-close", modal);
 
-    const closeButton = $(
-      ".project-modal-close",
-      modal
-    );
+    let previousFocus;
+    let previousOverflow;
 
-    const secondaryClose = $(
-      "#modalCloseSecondary"
-    );
+    const background = [
+      $("main"),
+      $(".topbar"),
+      $(".site-footer")
+    ];
 
-    const main = $("main");
-    const topbar = $(".topbar");
-    const footer = $(".site-footer");
-
-    if (
-      !card ||
-      !title ||
-      !kicker ||
-      !description ||
-      !evidence ||
-      !tags ||
-      !actions ||
-      !closeButton
-    ) {
-      return;
-    }
-
-    let previousFocus = null;
-    let previousOverflow = "";
-
-    /*
-      The updated HTML already has buttons for SQL,
-      Business & Systems Analysis and Course Enrolment.
-
-      Add matching detail buttons for the other three
-      projects without changing their GitHub links.
-    */
-
-    const newProjectKeys = new Map([
-      ["Data Analysis & Programming", "r"],
-      ["AI Cricket Mentor", "cricket"],
-      ["AI Trading Analyser", "trading"]
-    ]);
-
-    $$(".project-grid .project-card").forEach(
-      projectCard => {
-        const projectName = $(
-          ".project-title-row h3",
-          projectCard
-        )?.textContent.trim();
-
-        const projectKey =
-          newProjectKeys.get(projectName);
-
-        const actionArea = $(
-          ".project-actions",
-          projectCard
-        );
-
-        if (
-          !projectKey ||
-          !actionArea ||
-          $("[data-open-project]", actionArea)
-        ) {
-          return;
-        }
-
-        const button =
-          document.createElement("button");
-
-        button.type = "button";
-        button.className = "text-button";
-        button.dataset.openProject = projectKey;
-        button.textContent = "Project details →";
-
-        actionArea.prepend(button);
-      }
-    );
-
-    function setInert(value) {
-      for (const element of [
-        main,
-        topbar,
-        footer
-      ]) {
-        if (element) {
-          element.inert = value;
-        }
-      }
-    }
-
-    function focusables() {
-      return $$(
-        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])",
-        modal
-      ).filter(element =>
-        element.getClientRects().length &&
-        !element.closest("[hidden]")
-      );
-    }
-
-    function closeModal() {
+    function close() {
       if (!modal.classList.contains("open")) {
         return;
       }
@@ -943,99 +811,83 @@
       );
 
       document.body.style.overflow =
-        previousOverflow;
+        previousOverflow || "";
 
-      setInert(false);
+      background.forEach(item => {
+        if (item) {
+          item.inert = false;
+        }
+      });
 
       document.dispatchEvent(
         new CustomEvent(
           "portfolio:modalchange",
-          {
-            detail: { open: false }
-          }
+          { detail: { open: false } }
         )
       );
 
       if (previousFocus?.isConnected) {
         previousFocus.focus();
       }
-
-      previousFocus = null;
     }
 
-    function openModal(key, trigger) {
-      const project =
-        Object.prototype.hasOwnProperty.call(
-          PROJECTS,
-          key
-        )
-          ? PROJECTS[key]
-          : null;
+    function open(key, trigger) {
+      const project = PROJECTS[key];
 
       if (!project) {
         return;
       }
 
       previousFocus = trigger;
+      previousOverflow = document.body.style.overflow;
 
-      previousOverflow =
-        document.body.style.overflow;
+      $("#modalKicker").textContent = project.kicker;
+      $("#modalTitle").textContent = project.title;
+      $("#modalDesc").textContent = project.desc;
 
-      kicker.textContent = project.kicker;
-      title.textContent = project.title;
-      description.textContent = project.desc;
+      const evidence = $("#modalEvidence");
+      const tags = $("#modalTags");
+      const actions = $("#modalActions");
 
       evidence.replaceChildren();
       tags.replaceChildren();
       actions.replaceChildren();
 
-      for (const [label, value] of project.evidence) {
-        const row =
-          document.createElement("div");
+      project.evidence.forEach(([name, detail]) => {
+        const row = document.createElement("div");
+        const label = document.createElement("span");
+        const value = document.createElement("strong");
 
-        const labelElement =
-          document.createElement("span");
+        label.textContent = name;
+        value.textContent = detail;
 
-        const valueElement =
-          document.createElement("strong");
-
-        labelElement.textContent = label;
-        valueElement.textContent = value;
-
-        row.append(
-          labelElement,
-          valueElement
-        );
-
+        row.append(label, value);
         evidence.append(row);
-      }
+      });
 
-      for (const tag of project.tags) {
-        const chip =
-          document.createElement("span");
-
+      project.tags.forEach(tag => {
+        const chip = document.createElement("span");
         chip.textContent = tag;
         tags.append(chip);
-      }
+      });
 
-      for (const action of project.actions) {
-        const link =
-          document.createElement("a");
+      project.actions.forEach(([label, url], index) => {
+        const link = document.createElement("a");
 
         link.className =
           `button ${
-            action.primary
+            index === 0
               ? "button-primary"
               : "button-ghost"
           } compact`;
 
-        link.href = action.url;
+        link.href = url;
         link.target = "_blank";
         link.rel = "noopener noreferrer";
-        link.textContent = action.label;
+        link.textContent = label;
 
         actions.append(link);
-      }
+      });
 
       modal.classList.add("open");
 
@@ -1044,133 +896,114 @@
         "false"
       );
 
-      document.body.style.overflow =
-        "hidden";
+      document.body.style.overflow = "hidden";
 
-      setInert(true);
+      background.forEach(item => {
+        if (item) {
+          item.inert = true;
+        }
+      });
+
       card.scrollTop = 0;
 
       document.dispatchEvent(
         new CustomEvent(
           "portfolio:modalchange",
-          {
-            detail: { open: true }
-          }
+          { detail: { open: true } }
         )
       );
 
       closeButton.focus();
     }
 
-    document.addEventListener(
-      "click",
-      event => {
-        const trigger =
-          event.target.closest?.(
-            "[data-open-project]"
-          );
+    document.addEventListener("click", event => {
+      const trigger = event.target.closest?.(
+        "[data-open-project]"
+      );
 
-        if (trigger) {
-          openModal(
-            trigger.dataset.openProject,
-            trigger
-          );
-        }
+      if (trigger) {
+        open(trigger.dataset.openProject, trigger);
       }
+    });
+
+    closeButton.addEventListener("click", close);
+
+    $("#modalCloseSecondary")?.addEventListener(
+      "click",
+      close
     );
 
-    closeButton.addEventListener(
-      "click",
-      closeModal
-    );
-
-    secondaryClose?.addEventListener(
-      "click",
-      closeModal
-    );
-
-    modal.addEventListener(
-      "click",
-      event => {
-        if (event.target === modal) {
-          closeModal();
-        }
+    modal.addEventListener("click", event => {
+      if (event.target === modal) {
+        close();
       }
-    );
+    });
 
-    document.addEventListener(
-      "keydown",
-      event => {
-        if (!modal.classList.contains("open")) {
-          return;
-        }
-
-        if (event.key === "Escape") {
-          event.preventDefault();
-          closeModal();
-          return;
-        }
-
-        if (event.key !== "Tab") {
-          return;
-        }
-
-        const items = focusables();
-
-        if (!items.length) {
-          event.preventDefault();
-          card.focus();
-          return;
-        }
-
-        const first = items[0];
-        const last = items[items.length - 1];
-        const current = document.activeElement;
-
-        if (
-          event.shiftKey &&
-          (
-            current === first ||
-            !modal.contains(current)
-          )
-        ) {
-          event.preventDefault();
-          last.focus();
-        } else if (
-          !event.shiftKey &&
-          (
-            current === last ||
-            !modal.contains(current)
-          )
-        ) {
-          event.preventDefault();
-          first.focus();
-        }
+    document.addEventListener("keydown", event => {
+      if (!modal.classList.contains("open")) {
+        return;
       }
-    );
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const items = $$(
+        "a[href], button:not([disabled])",
+        modal
+      ).filter(element =>
+        element.getClientRects().length
+      );
+
+      if (!items.length) {
+        event.preventDefault();
+        card.focus();
+        return;
+      }
+
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (
+        event.shiftKey &&
+        document.activeElement === first
+      ) {
+        event.preventDefault();
+        last.focus();
+      } else if (
+        !event.shiftKey &&
+        document.activeElement === last
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
   }
 
-  /* =========================================================
-     09. PLAYGROUND GAME TABS
-     ========================================================= */
+  initProjectDetails();
 
-  function initGameTabs() {
+  // ==========================================
+  // 08. PLAYGROUND TABS
+  // ==========================================
+
+  function initTabs() {
     const tabs = $$(".game-tab");
-    const panels = $$(".game-panel");
 
-    if (!tabs.length || !panels.length) {
+    if (!tabs.length) {
       return;
     }
 
     function activate(name) {
       tabs.forEach(tab => {
-        const selected =
-          tab.dataset.game === name;
+        const selected = tab.dataset.game === name;
 
-        tab.classList.toggle(
-          "active",
-          selected
-        );
+        tab.classList.toggle("active", selected);
 
         tab.setAttribute(
           "aria-selected",
@@ -1180,15 +1013,10 @@
         tab.tabIndex = selected ? 0 : -1;
       });
 
-      panels.forEach(panel => {
-        const selected =
-          panel.id === `game-${name}`;
+      $$(".game-panel").forEach(panel => {
+        const selected = panel.id === `game-${name}`;
 
-        panel.classList.toggle(
-          "active",
-          selected
-        );
-
+        panel.classList.toggle("active", selected);
         panel.hidden = !selected;
 
         panel.setAttribute(
@@ -1200,125 +1028,91 @@
       document.dispatchEvent(
         new CustomEvent(
           "portfolio:gamechange",
-          {
-            detail: { game: name }
-          }
+          { detail: { game: name } }
         )
       );
     }
 
     tabs.forEach((tab, index) => {
-      const panel = $(
-        `#game-${tab.dataset.game}`
-      );
-
-      if (!tab.id) {
-        tab.id = `tab-${tab.dataset.game}`;
-      }
-
-      if (panel) {
-        panel.setAttribute(
-          "aria-labelledby",
-          tab.id
-        );
-      }
-
       tab.addEventListener("click", () => {
         activate(tab.dataset.game);
       });
 
-      tab.addEventListener(
-        "keydown",
-        event => {
-          let next = null;
+      tab.addEventListener("keydown", event => {
+        let next = null;
 
-          if (
-            event.key === "ArrowRight" ||
-            event.key === "ArrowDown"
-          ) {
-            next = (index + 1) % tabs.length;
-          }
-
-          if (
-            event.key === "ArrowLeft" ||
-            event.key === "ArrowUp"
-          ) {
-            next =
-              (index - 1 + tabs.length) %
-              tabs.length;
-          }
-
-          if (event.key === "Home") {
-            next = 0;
-          }
-
-          if (event.key === "End") {
-            next = tabs.length - 1;
-          }
-
-          if (next === null) {
-            return;
-          }
-
-          event.preventDefault();
-
-          activate(tabs[next].dataset.game);
-          tabs[next].focus();
+        if (
+          ["ArrowRight", "ArrowDown"].includes(event.key)
+        ) {
+          next = (index + 1) % tabs.length;
         }
-      );
+
+        if (
+          ["ArrowLeft", "ArrowUp"].includes(event.key)
+        ) {
+          next =
+            (index - 1 + tabs.length) % tabs.length;
+        }
+
+        if (event.key === "Home") {
+          next = 0;
+        }
+
+        if (event.key === "End") {
+          next = tabs.length - 1;
+        }
+
+        if (next === null) {
+          return;
+        }
+
+        event.preventDefault();
+
+        activate(tabs[next].dataset.game);
+        tabs[next].focus();
+      });
     });
 
-    const initialGame =
+    activate(
       tabs.find(tab =>
         tab.classList.contains("active")
-      )?.dataset.game ||
-      tabs[0].dataset.game;
-
-    activate(initialGame);
+      )?.dataset.game || tabs[0].dataset.game
+    );
   }
 
-  /* =========================================================
-     10. REACTION GAME
-     ========================================================= */
+  initTabs();
 
-  function initReactionGame() {
+  // ==========================================
+  // 09. REACTION GAME
+  // ==========================================
+
+  function initReaction() {
     const box = $("#reactionBox");
     const start = $("#reactionStart");
-    const text = $("#reactionText");
-    const subtitle = $("#reactionSub");
-    const bestElement = $("#reactionBest");
 
-    if (
-      !box ||
-      !start ||
-      !text ||
-      !subtitle ||
-      !bestElement
-    ) {
+    if (!box || !start) {
       return;
     }
 
+    const text = $("#reactionText");
+    const sub = $("#reactionSub");
+    const bestLabel = $("#reactionBest");
+
     const key = "vg2026_reaction_best";
 
-    let best = Math.round(readNumber(key));
+    let best = readBest(key);
     let state = "idle";
-    let timeout = 0;
+    let timer = 0;
     let readyAt = 0;
 
-    bestElement.textContent =
+    bestLabel.textContent =
       best ? `${best} ms` : "--- ms";
 
-    box.setAttribute(
-      "aria-live",
-      "polite"
-    );
+    box.setAttribute("aria-live", "polite");
 
     function reset() {
-      clearTimeout(timeout);
-
-      timeout = 0;
+      clearTimeout(timer);
       state = "idle";
-      readyAt = 0;
 
       box.classList.remove(
         "waiting",
@@ -1327,111 +1121,83 @@
 
       text.textContent = "PRESS START";
 
-      subtitle.textContent =
+      sub.textContent =
         "Wait for the signal, then click.";
     }
 
-    start.addEventListener(
-      "click",
-      () => {
-        clearTimeout(timeout);
+    start.addEventListener("click", () => {
+      clearTimeout(timer);
 
-        state = "waiting";
-        readyAt = 0;
+      state = "waiting";
 
-        box.classList.remove("ready");
-        box.classList.add("waiting");
+      box.classList.remove("ready");
+      box.classList.add("waiting");
 
-        text.textContent = "WAIT...";
+      text.textContent = "WAIT...";
+      sub.textContent = "Don't click yet.";
 
-        subtitle.textContent =
-          "Don't click yet.";
-
-        timeout = setTimeout(
-          () => {
-            timeout = 0;
-
-            if (state !== "waiting") {
-              return;
-            }
-
-            readyAt = performance.now();
-            state = "ready";
-
-            box.classList.remove("waiting");
-            box.classList.add("ready");
-
-            text.textContent = "CLICK!";
-            subtitle.textContent = "Now!";
-          },
-          900 + Math.random() * 2200
-        );
-      }
-    );
-
-    box.addEventListener(
-      "click",
-      () => {
-        if (state === "waiting") {
-          clearTimeout(timeout);
-
-          timeout = 0;
-          state = "finished";
-
-          box.classList.remove("waiting");
-
-          text.textContent = "TOO EARLY";
-
-          subtitle.textContent =
-            "Start another round.";
-
+      timer = setTimeout(() => {
+        if (state !== "waiting") {
           return;
         }
 
-        if (state !== "ready") {
-          return;
-        }
+        readyAt = performance.now();
+        state = "ready";
 
-        const milliseconds = Math.max(
-          1,
-          Math.round(
-            performance.now() - readyAt
-          )
-        );
+        box.classList.remove("waiting");
+        box.classList.add("ready");
+
+        text.textContent = "CLICK!";
+        sub.textContent = "Now!";
+      }, 900 + Math.random() * 2200);
+    });
+
+    box.addEventListener("click", () => {
+      if (state === "waiting") {
+        clearTimeout(timer);
 
         state = "finished";
-        readyAt = 0;
+        box.classList.remove("waiting");
 
-        box.classList.remove("ready");
+        text.textContent = "TOO EARLY";
+        sub.textContent = "Start another round.";
 
-        text.textContent =
-          `${milliseconds} ms`;
-
-        subtitle.textContent =
-          milliseconds < 220
-            ? "Very quick."
-            : milliseconds < 320
-              ? "Nice reaction."
-              : "Try another round.";
-
-        if (
-          !best ||
-          milliseconds < best
-        ) {
-          best = milliseconds;
-
-          saveNumber(key, best);
-
-          bestElement.textContent =
-            `${best} ms`;
-        }
+        return;
       }
-    );
+
+      if (state !== "ready") {
+        return;
+      }
+
+      const ms = Math.max(
+        1,
+        Math.round(performance.now() - readyAt)
+      );
+
+      state = "finished";
+      box.classList.remove("ready");
+
+      text.textContent = `${ms} ms`;
+
+      sub.textContent =
+        ms < 220
+          ? "Very quick."
+          : ms < 320
+            ? "Nice reaction."
+            : "Try another round.";
+
+      if (!best || ms < best) {
+        best = ms;
+
+        bestLabel.textContent = `${best} ms`;
+        saveBest(key, best);
+      }
+    });
 
     document.addEventListener(
       "portfolio:gamechange",
       event => {
-        if (event.detail?.game !== "reaction") {
+        if (event.detail.game !== "reaction") {
           reset();
         }
       }
@@ -1440,7 +1206,7 @@
     document.addEventListener(
       "portfolio:modalchange",
       event => {
-        if (event.detail?.open) {
+        if (event.detail.open) {
           reset();
         }
       }
@@ -1456,108 +1222,91 @@
     );
   }
 
-  /* =========================================================
-     11. SNAKE GAME
-     ========================================================= */
+  initReaction();
 
-  function initSnakeGame() {
+  // ==========================================
+  // 10. SNAKE GAME
+  // ==========================================
+
+  function initSnake() {
     const canvas = $("#snakeCanvas");
-    const start = $("#snakeStart");
-    const scoreElement = $("#snakeScore");
-    const bestElement = $("#snakeBest");
-    const panel = $("#game-snake");
-
     const ctx = canvas?.getContext("2d");
 
-    if (
-      !canvas ||
-      !ctx ||
-      !start ||
-      !scoreElement ||
-      !bestElement ||
-      !panel
-    ) {
+    const panel = $("#game-snake");
+    const start = $("#snakeStart");
+
+    if (!ctx || !panel || !start) {
       return;
     }
 
-    const grid = 20;
-    const cell = canvas.width / grid;
+    const scoreLabel = $("#snakeScore");
+    const bestLabel = $("#snakeBest");
+
     const key = "vg2026_snake_best";
+    const size = 20;
+    const cell = canvas.width / size;
 
-    let best = Math.round(readNumber(key));
+    const directions = {
+      up: { x: 0, y: -1 },
+      down: { x: 0, y: 1 },
+      left: { x: -1, y: 0 },
+      right: { x: 1, y: 0 }
+    };
+
+    let best = readBest(key);
     let score = 0;
+    let food = null;
+
     let snake = [];
+    let direction = directions.right;
+    let next = directions.right;
 
-    let food = {
-      x: 10,
-      y: 10
-    };
-
-    let direction = {
-      x: 1,
-      y: 0
-    };
-
-    let nextDirection = {
-      x: 1,
-      y: 0
-    };
-
-    let turnLocked = false;
-    let running = false;
-    let interval = 0;
+    let locked = false;
+    let playing = false;
+    let timer = 0;
     let modalOpen = false;
 
-    bestElement.textContent = String(best);
+    bestLabel.textContent = String(best);
 
-    function stopClock() {
-      clearInterval(interval);
-      interval = 0;
+    function stop() {
+      clearInterval(timer);
+      timer = 0;
     }
 
     function spawnFood() {
-      const free = [];
+      const empty = [];
 
-      for (let y = 0; y < grid; y++) {
-        for (let x = 0; x < grid; x++) {
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
           if (
-            !snake.some(segment =>
-              segment.x === x &&
-              segment.y === y
+            !snake.some(part =>
+              part.x === x && part.y === y
             )
           ) {
-            free.push({ x, y });
+            empty.push({ x, y });
           }
         }
       }
 
-      if (!free.length) {
-        return false;
-      }
+      food = empty.length
+        ? empty[Math.floor(Math.random() * empty.length)]
+        : null;
 
-      food = free[
-        Math.floor(Math.random() * free.length)
-      ];
-
-      return true;
+      return !!food;
     }
 
     function draw() {
       ctx.fillStyle = "#06101d";
 
       ctx.fillRect(
-        0,
-        0,
+        0, 0,
         canvas.width,
         canvas.height
       );
 
-      ctx.strokeStyle =
-        "rgba(100,145,205,.065)";
+      ctx.strokeStyle = "rgba(100,145,205,.065)";
 
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i <= grid; i++) {
+      for (let i = 0; i <= size; i++) {
         ctx.beginPath();
 
         ctx.moveTo(i * cell, 0);
@@ -1569,13 +1318,15 @@
         ctx.stroke();
       }
 
-      snake.forEach((segment, index) => {
+      snake.forEach((part, index) => {
         ctx.fillStyle =
-          index ? "#69d7ff" : "#8ccaff";
+          index === 0
+            ? "#8ccaff"
+            : "#69d7ff";
 
         ctx.fillRect(
-          segment.x * cell + 2,
-          segment.y * cell + 2,
+          part.x * cell + 2,
+          part.y * cell + 2,
           cell - 4,
           cell - 4
         );
@@ -1583,13 +1334,12 @@
 
       if (food) {
         ctx.fillStyle = "#67e8a5";
-
         ctx.beginPath();
 
         ctx.arc(
           food.x * cell + cell / 2,
           food.y * cell + cell / 2,
-          cell * 0.3,
+          cell * .3,
           0,
           Math.PI * 2
         );
@@ -1599,8 +1349,8 @@
     }
 
     function finish(won = false) {
-      stopClock();
-      running = false;
+      stop();
+      playing = false;
 
       start.textContent = won
         ? "You won! Play again"
@@ -1609,48 +1359,45 @@
       if (score > best) {
         best = score;
 
-        bestElement.textContent =
-          String(best);
-
-        saveNumber(key, best);
+        bestLabel.textContent = String(best);
+        saveBest(key, best);
       }
     }
 
     function tick() {
-      direction = nextDirection;
-      turnLocked = false;
+      direction = next;
+      locked = false;
 
       const head = {
         x: snake[0].x + direction.x,
         y: snake[0].y + direction.y
       };
 
-      const hitWall =
+      if (
         head.x < 0 ||
         head.y < 0 ||
-        head.x >= grid ||
-        head.y >= grid;
+        head.x >= size ||
+        head.y >= size
+      ) {
+        finish();
+        return;
+      }
 
       const eating =
+        !!food &&
         head.x === food.x &&
         head.y === food.y;
-
-      /*
-        The tail moves away unless food is eaten.
-        Excluding the tail prevents false collisions.
-      */
 
       const body = eating
         ? snake
         : snake.slice(0, -1);
 
-      const hitBody = body.some(
-        segment =>
-          segment.x === head.x &&
-          segment.y === head.y
-      );
-
-      if (hitWall || hitBody) {
+      if (
+        body.some(part =>
+          part.x === head.x &&
+          part.y === head.y
+        )
+      ) {
         finish();
         return;
       }
@@ -1658,13 +1405,11 @@
       snake.unshift(head);
 
       if (eating) {
-        score += 1;
+        score++;
 
-        scoreElement.textContent =
-          String(score);
+        scoreLabel.textContent = String(score);
 
         if (!spawnFood()) {
-          food = null;
           draw();
           finish(true);
           return;
@@ -1678,20 +1423,18 @@
 
     function resume() {
       if (
-        !running ||
-        interval ||
-        document.hidden ||
-        modalOpen ||
-        !panel.classList.contains("active")
+        playing &&
+        !timer &&
+        !document.hidden &&
+        !modalOpen &&
+        panel.classList.contains("active")
       ) {
-        return;
+        timer = setInterval(tick, 110);
       }
-
-      interval = setInterval(tick, 110);
     }
 
     function begin() {
-      stopClock();
+      stop();
 
       snake = [
         { x: 6, y: 10 },
@@ -1699,122 +1442,96 @@
         { x: 4, y: 10 }
       ];
 
-      direction = {
-        x: 1,
-        y: 0
-      };
+      direction = next = directions.right;
 
-      nextDirection = {
-        x: 1,
-        y: 0
-      };
-
-      turnLocked = false;
+      locked = false;
       score = 0;
+      playing = true;
 
-      scoreElement.textContent = "0";
+      scoreLabel.textContent = "0";
       start.textContent = "Start / restart";
 
       spawnFood();
       draw();
-
-      running = true;
       resume();
     }
 
-    const directions = {
-      up: { x: 0, y: -1 },
-      down: { x: 0, y: 1 },
-      left: { x: -1, y: 0 },
-      right: { x: 1, y: 0 }
-    };
-
-    function changeDirection(name) {
-      if (!running || turnLocked) {
+    function turn(name) {
+      if (
+        !playing ||
+        locked ||
+        modalOpen ||
+        !panel.classList.contains("active")
+      ) {
         return;
       }
 
-      const next = directions[name];
+      const candidate = directions[name];
 
-      if (!next) {
+      if (!candidate) {
         return;
       }
 
-      const reversing =
-        next.x === -direction.x &&
-        next.y === -direction.y;
-
-      const same =
-        next.x === direction.x &&
-        next.y === direction.y;
-
-      if (reversing || same) {
+      if (
+        candidate.x === -direction.x &&
+        candidate.y === -direction.y
+      ) {
         return;
       }
 
-      nextDirection = next;
-      turnLocked = true;
+      if (
+        candidate.x === direction.x &&
+        candidate.y === direction.y
+      ) {
+        return;
+      }
+
+      next = candidate;
+      locked = true;
     }
 
-    document.addEventListener(
-      "keydown",
-      event => {
-        if (
-          !panel.classList.contains("active") ||
-          !running ||
-          modalOpen
-        ) {
-          return;
-        }
-
-        const focused = document.activeElement;
-
-        if (
-          focused?.matches(
-            "input, textarea, select, [contenteditable='true'], [role='tab']"
-          )
-        ) {
-          return;
-        }
-
-        const keyMap = {
-          ArrowUp: "up",
-          ArrowDown: "down",
-          ArrowLeft: "left",
-          ArrowRight: "right",
-
-          w: "up",
-          W: "up",
-          s: "down",
-          S: "down",
-
-          a: "left",
-          A: "left",
-          d: "right",
-          D: "right"
-        };
-
-        const name = keyMap[event.key];
-
-        if (!name) {
-          return;
-        }
-
-        event.preventDefault();
-
-        changeDirection(name);
+    document.addEventListener("keydown", event => {
+      if (
+        !playing ||
+        modalOpen ||
+        !panel.classList.contains("active")
+      ) {
+        return;
       }
-    );
+
+      if (
+        document.activeElement?.matches(
+          "input, textarea, select, [contenteditable], [role='tab']"
+        )
+      ) {
+        return;
+      }
+
+      const keys = {
+        ArrowUp: "up",
+        ArrowDown: "down",
+        ArrowLeft: "left",
+        ArrowRight: "right",
+        w: "up",
+        s: "down",
+        a: "left",
+        d: "right"
+      };
+
+      const name =
+        keys[event.key] ||
+        keys[event.key.toLowerCase()];
+
+      if (name) {
+        event.preventDefault();
+        turn(name);
+      }
+    });
 
     $$("[data-dir]", panel).forEach(button => {
-      button.addEventListener(
-        "click",
-        () => {
-          changeDirection(
-            button.dataset.dir
-          );
-        }
-      );
+      button.addEventListener("click", () => {
+        turn(button.dataset.dir);
+      });
     });
 
     start.addEventListener("click", begin);
@@ -1822,10 +1539,10 @@
     document.addEventListener(
       "portfolio:gamechange",
       event => {
-        if (event.detail?.game === "snake") {
+        if (event.detail.game === "snake") {
           resume();
         } else {
-          stopClock();
+          stop();
         }
       }
     );
@@ -1833,11 +1550,10 @@
     document.addEventListener(
       "portfolio:modalchange",
       event => {
-        modalOpen =
-          Boolean(event.detail?.open);
+        modalOpen = event.detail.open;
 
         if (modalOpen) {
-          stopClock();
+          stop();
         } else {
           resume();
         }
@@ -1848,7 +1564,7 @@
       "visibilitychange",
       () => {
         if (document.hidden) {
-          stopClock();
+          stop();
         } else {
           resume();
         }
@@ -1865,24 +1581,24 @@
     draw();
   }
 
-  /* =========================================================
-     12. SQL QUIZ
-     ========================================================= */
+  initSnake();
+
+  // ==========================================
+  // 11. SQL QUIZ
+  // ==========================================
 
   function initSqlQuiz() {
-    const quiz = $("#sqlQuiz");
-    const progress = $("#sqlProgress");
-    const bestElement = $("#sqlBest");
+    const root = $("#sqlQuiz");
     const restart = $("#sqlRestart");
 
-    if (
-      !quiz ||
-      !progress ||
-      !bestElement ||
-      !restart
-    ) {
+    if (!root || !restart) {
       return;
     }
+
+    const progress = $("#sqlProgress");
+    const bestLabel = $("#sqlBest");
+
+    const key = "vg2026_sql_best";
 
     const questions = [
       {
@@ -1911,8 +1627,8 @@
         answers: [
           "Deletes duplicate rows",
           "Creates country groups for the aggregate",
-          "Sorts countries alphabetically",
-          "Changes the original table"
+          "Sorts countries",
+          "Changes the table"
         ],
 
         correct: 1
@@ -1927,7 +1643,7 @@
         answers: [
           "Zero values",
           "Empty strings only",
-          "Missing or NULL values",
+          "Missing / NULL values",
           "False values"
         ],
 
@@ -1938,13 +1654,13 @@
           "SELECT c.Name, i.Total FROM customers c JOIN invoices i ON c.CustomerId = i.CustomerId;",
 
         question:
-          "Why is the JOIN used?",
+          "Why is JOIN used?",
 
         answers: [
-          "To combine related rows from two tables",
+          "To combine related rows",
           "To rename a table",
           "To remove duplicate columns",
-          "To create a new database"
+          "To create a database"
         ],
 
         correct: 0
@@ -1954,12 +1670,12 @@
           "HAVING COUNT(*) > 3",
 
         question:
-          "When is HAVING especially useful?",
+          "When is HAVING useful?",
 
         answers: [
-          "Filtering grouped or aggregate results",
-          "Choosing which columns to display",
-          "Creating a new table",
+          "Filtering grouped results",
+          "Selecting columns",
+          "Creating a table",
           "Changing a primary key"
         ],
 
@@ -1967,211 +1683,128 @@
       }
     ];
 
-    const key = "vg2026_sql_best";
-
-    let best = Math.min(
-      5,
-      Math.round(readNumber(key))
-    );
-
+    let best = Math.min(5, readBest(key));
     let index = 0;
     let score = 0;
-    let pending = 0;
     let answered = false;
+    let timer = 0;
 
-    bestElement.textContent = `${best}/5`;
+    bestLabel.textContent = `${best}/5`;
 
-    quiz.setAttribute(
-      "aria-live",
-      "polite"
-    );
-
-    function render() {
-      answered = false;
-      quiz.replaceChildren();
-
-      const item = questions[index];
-
-      progress.textContent =
-        `Question ${index + 1} of ${questions.length}`;
-
-      const box =
-        document.createElement("div");
-
-      box.className = "sql-question";
-
-      const code =
-        document.createElement("code");
-
-      code.textContent = item.code;
-
-      const heading =
-        document.createElement("h4");
-
-      heading.textContent = item.question;
-
-      const answers =
-        document.createElement("div");
-
-      answers.className = "sql-answers";
-
-      item.answers.forEach(
-        (answer, answerIndex) => {
-          const button =
-            document.createElement("button");
-
-          button.type = "button";
-          button.className = "sql-answer";
-          button.textContent = answer;
-
-          button.addEventListener(
-            "click",
-            () => {
-              selectAnswer(
-                answerIndex,
-                button
-              );
-            }
-          );
-
-          answers.append(button);
-        }
-      );
-
-      box.append(
-        code,
-        heading,
-        answers
-      );
-
-      quiz.append(box);
-    }
+    root.setAttribute("aria-live", "polite");
 
     function finish() {
       if (score > best) {
         best = score;
+        saveBest(key, best);
 
-        saveNumber(key, best);
-
-        bestElement.textContent =
-          `${best}/5`;
+        bestLabel.textContent = `${best}/5`;
       }
 
-      quiz.replaceChildren();
+      root.replaceChildren();
 
-      const box =
-        document.createElement("div");
+      const panel = document.createElement("div");
+      panel.className = "sql-question";
 
-      box.className = "sql-question";
+      const heading = document.createElement("h4");
+      heading.textContent = `You scored ${score}/5`;
 
-      const heading =
-        document.createElement("h4");
-
-      heading.textContent =
-        `You scored ${score}/5`;
-
-      const message =
-        document.createElement("p");
-
+      const message = document.createElement("p");
       message.textContent =
-        "Small quiz, real database fundamentals. Give it another go if you want.";
+        "Real SQL fundamentals. Give it another go if you like.";
 
-      box.append(
-        heading,
-        message
-      );
-
-      quiz.append(box);
+      panel.append(heading, message);
+      root.append(panel);
 
       progress.textContent = "Complete";
     }
 
-    function selectAnswer(selected, button) {
+    function select(choice, button) {
       if (answered) {
         return;
       }
 
       answered = true;
 
-      const buttons = $$(
-        ".sql-answer",
-        quiz
-      );
+      const buttons = $$(".sql-answer", root);
 
       buttons.forEach(item => {
         item.disabled = true;
       });
 
-      const correct =
-        questions[index].correct;
+      const correct = questions[index].correct;
 
-      if (selected === correct) {
-        score += 1;
-
+      if (choice === correct) {
+        score++;
         button.classList.add("correct");
       } else {
         button.classList.add("wrong");
-
-        buttons[correct]?.classList.add(
-          "correct"
-        );
+        buttons[correct].classList.add("correct");
       }
 
-      pending = setTimeout(
-        () => {
-          pending = 0;
-          index += 1;
+      timer = setTimeout(() => {
+        timer = 0;
+        index++;
 
-          if (index >= questions.length) {
-            finish();
-          } else {
-            render();
-          }
-        },
-        650
-      );
+        if (index >= questions.length) {
+          finish();
+        } else {
+          render();
+        }
+      }, 650);
     }
 
-    restart.addEventListener(
-      "click",
-      () => {
-        clearTimeout(pending);
+    function render() {
+      answered = false;
+      root.replaceChildren();
 
-        pending = 0;
-        index = 0;
-        score = 0;
+      const item = questions[index];
 
-        render();
-      }
-    );
+      progress.textContent =
+        `Question ${index + 1} of ${questions.length}`;
+
+      const panel = document.createElement("div");
+      panel.className = "sql-question";
+
+      const code = document.createElement("code");
+      code.textContent = item.code;
+
+      const heading = document.createElement("h4");
+      heading.textContent = item.question;
+
+      const choices = document.createElement("div");
+      choices.className = "sql-answers";
+
+      item.answers.forEach((answer, i) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "sql-answer";
+        button.textContent = answer;
+
+        button.addEventListener("click", () => {
+          select(i, button);
+        });
+
+        choices.append(button);
+      });
+
+      panel.append(code, heading, choices);
+      root.append(panel);
+    }
+
+    restart.addEventListener("click", () => {
+      clearTimeout(timer);
+
+      index = 0;
+      score = 0;
+
+      render();
+    });
 
     render();
   }
 
-  /* =========================================================
-     13. INITIALISE WEBSITE
-     ========================================================= */
+  initSqlQuiz();
 
-  function init() {
-    initFooterYear();
-    initMobileNavigation();
-    initCursorHalo();
-    initDotHero();
-    initRevealAnimations();
-    initProjectModal();
-    initGameTabs();
-    initReactionGame();
-    initSnakeGame();
-    initSqlQuiz();
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      init,
-      { once: true }
-    );
-  } else {
-    init();
-  }
 })();
