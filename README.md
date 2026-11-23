@@ -1,16 +1,26 @@
-# Viraj Gandhi — Portfolio Website
+# Viraj Gandhi’s portfolio
 
-Personal portfolio website for Viraj Gandhi.
+Personal portfolio for Viraj Gandhi, a Wellington student studying Data Science and Information Systems at Victoria University of Wellington. [Live site](https://vtxzenyx.github.io/) · [GitHub](https://github.com/VTXZenyx) · [Email](mailto:gandhiviraj2006@gmail.com)
 
-## Live website
+## Local development
 
-https://vtxzenyx.github.io/
+From the repository root, run `python3 -m http.server 4173` and open `http://localhost:4173/`. The site uses static HTML, CSS and JavaScript and can be served directly from the GitHub Pages publishing branch. The résumé is the original `resume.pdf`.
 
-## Contact
+The six project cards and screenshot captions live in `index.html`. Their detail dialogs use the matching keys in `PROJECTS` in `script.js`. The same script handles the animated heading, navigation and Playground. Best scores stay in the visitor’s browser.
 
-- Email: gandhiviraj2006@gmail.com
-- Phone: 022 086 6850
-- Instagram: https://www.instagram.com/virajg.andhi/
-- GitHub: https://github.com/VTXZenyx
+## Project visuals
 
-Built by Viraj Gandhi.
+| Project | Evidence shown |
+| --- | --- |
+| [VEE QuoteDesk](https://github.com/VTXZenyx/vee-parts-quote-intelligence/tree/d23f17e/docs/images) | Original enquiry workspace and quote review screenshots. Use the two gallery controls to switch views or open an image at full size. The records are synthetic. |
+| [VEE Quant Research](https://github.com/VTXZenyx/vee-quant-research/tree/7cf77dc) | Chart of candidate spreads from the public offline demo, compared with its configured spread limit. The values describe synthetic market inputs. |
+| [AI Cricket Mentor](https://github.com/VTXZenyx/ai-cricket-virat-kohli-app/tree/312be5f) | Captured from the locally built Next.js message screen. |
+| [Data Analysis & Programming](https://github.com/VTXZenyx/data-analysis-and-programming/tree/51b2d3d/projects/05-clustering) | Repository comparison plot from the independent AI-assisted clustering study, alongside its R implementation. |
+| [Course Enrolment](https://github.com/VTXZenyx/course-enrolment-web-app/tree/4426821) | Captured from the course feed running locally with the application's bundled fictional student data. |
+| [SQL portfolio](https://github.com/VTXZenyx/sql-database-portfolio/tree/6203828/evidence/screenshots) | Crop from the DB Browser for SQLite table-structure screenshot showing the Course_Offering and Enrolment tables. |
+
+The VEE DataDesk drawing is a concept for the proposed next build. The Wellington map is a locally rendered shoreline study derived from [GSHHG 2.3.7](https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7), with decorative waterlines. Its licence is in `assets/`. Manrope, IBM Plex Mono and the DejaVu navigation glyphs are served locally. Their licences accompany the font files.
+
+## Checking changes
+
+Run `node --check script.js`, then open the local site. Check both QuoteDesk views, project dialog focus and Escape, mobile navigation, both CV actions and the three Playground games. Check keyboard controls and reduced motion and verify the narrowest layout at 320 CSS pixels.

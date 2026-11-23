@@ -48,233 +48,155 @@
   // as paid commercial products.
 
   const PROJECTS = {
-    quotedesk: {
-      kicker: "VEE AI SOFTWARE · PYTHON · FLASK · SQLITE",
-      title: "VEE QuoteDesk",
-
-      desc:
-        "A working local prototype for organising technical enquiries and preparing quotations for industrial parts distributors. It combines catalogue candidates, technical checks, employee-approved clarification drafts, simulated stock and prices, and quotation review. I'm using it to learn how reliable software could support a real business workflow.",
-
-      evidence: [
+    "quotedesk": {
+      "kicker": "INDUSTRIAL SOFTWARE · LOCAL PROTOTYPE",
+      "title": "VEE QuoteDesk",
+      "desc": "I wanted to see how much of a distributor’s quoting work could stay in one place. This local prototype uses fictional enquiries, catalogue entries, prices and stock.",
+      "evidence": [
         [
-          "ENQUIRIES",
-          "Organises simulated incoming requests and their attachments in a local workspace."
+          "Enquiries",
+          "The original request, attachments, follow-up questions and customer replies stay on the same record."
         ],
         [
-          "PRODUCT MATCHING",
-          "Uses text-based catalogue evidence and seeded product information. Photos can be reviewed manually; automatic image recognition is not built in."
+          "Matching",
+          "Offline rules compare part references and technical specifications. An employee reviews potential matches and approves clarification drafts."
         ],
         [
-          "TECHNICAL CHECKS",
-          "Flags missing or conflicting specifications and prepares clarification questions for human approval."
-        ],
-        [
-          "QUOTES",
-          "Uses fictional inventory and prices with editable quotations, revisions and 15% New Zealand GST."
-        ],
-        [
-          "REVIEW & HISTORY",
-          "Keeps employee approvals, quotation versions and audit records."
-        ],
-        [
-          "STATUS",
-          "Local prototype with synthetic data, not a live customer, email or ERP integration."
+          "Quotations",
+          "Staff can edit quantities and prices, check New Zealand GST and compare revisions before approving a customer quotation. SQLite keeps the decision history."
         ]
       ],
-
-      tags: [
-        "PYTHON",
-        "FLASK",
-        "SQLITE",
-        "QUOTATIONS",
-        "TESTING"
+      "tags": [
+        "Python",
+        "Flask",
+        "Jinja",
+        "SQLite"
       ],
-
-      actions: [
+      "actions": [
         [
-          "View VEE QuoteDesk ↗",
+          "View source ↗",
           "https://github.com/VTXZenyx/vee-parts-quote-intelligence"
         ]
       ]
     },
-
-    quant: {
-      kicker: "PYTHON · QUANTITATIVE RESEARCH · RISK",
-      title: "VEE Quant Research",
-
-      desc:
-        "My independent quantitative trading research and software engineering project. The public Python toolkit explores repeatable screening, fee-aware risk checks, simulated execution, record reconciliation and automated tests. I want to understand what survives careful evaluation, not claim that a backtest proves profitability.",
-
-      evidence: [
+    "quant": {
+      "kicker": "FINANCIAL RESEARCH · OFFLINE SIMULATION",
+      "title": "VEE Quant Research",
+      "desc": "The public research toolkit runs repeatable scenarios locally. I use it to examine the assumptions behind a simulated trade and trace discrepancies in the records.",
+      "evidence": [
         [
-          "RESEARCH",
-          "Repeatable offline market screening and structured trading scenarios."
+          "Simulation",
+          "A configurable screen checks spreads and price movement. A replay follows bid and ask quotes to test stop-loss and take-profit exits."
         ],
         [
-          "RISK & COSTS",
-          "Checks risk/reward assumptions, fees and stop-loss or take-profit coverage."
+          "Reconciliation",
+          "An audit matches recorded fills against a normalised exchange export. Tests exercise missing records, timing and cost calculations."
         ],
         [
-          "SIMULATION",
-          "Experiments with synthetic execution and forward-shadow workflows without live trading."
-        ],
-        [
-          "AUDITING",
-          "Reconciles local records and normalised demonstration exchange exports."
-        ],
-        [
-          "TESTING",
-          "Automated tests examine behaviour and edge cases."
-        ],
-        [
-          "STATUS",
-          "Experimental research; no verified profitable record or live-trading service."
+          "Attribution",
+          "My wider AI-assisted VEE-Bitra research builds on the open-source Bitra framework by Bijective Labs. The public examples use synthetic data and run without exchange credentials."
         ]
       ],
-
-      tags: [
-        "PYTHON",
-        "QUANT RESEARCH",
-        "RISK",
-        "SIMULATION",
-        "TESTING"
+      "tags": [
+        "Python",
+        "TOML",
+        "unittest"
       ],
-
-      actions: [
+      "actions": [
         [
-          "View VEE Quant Research ↗",
+          "View source ↗",
           "https://github.com/VTXZenyx/vee-quant-research"
+        ],
+        [
+          "Bitra attribution ↗",
+          "https://github.com/VTXZenyx/vee-quant-research/blob/main/ATTRIBUTION.md"
         ]
       ]
     },
-
-    cricket: {
-      kicker: "PERSONAL PROJECT · AI · VOICE",
-      title: "AI Cricket Mentor",
-
-      desc:
-        "A fan-made AI application combining a Next.js interface, a FastAPI backend, local language-model responses, document-backed information and optional voice features. Building it helped me understand how the components of an AI application connect.",
-
-      evidence: [
+    "cricket": {
+      "kicker": "FAN-MADE AI EXPERIMENT",
+      "title": "AI Cricket Mentor",
+      "desc": "Cricket gave me a reason to connect a React interface to a local language model. The app supports text chat, with optional knowledge retrieval and voice features.",
+      "evidence": [
         [
-          "LOCAL AI",
-          "Experiments with Ollama and Qwen for local inference."
+          "Conversation",
+          "Next.js displays the conversation as the Python backend streams responses from Qwen through Ollama."
         ],
         [
-          "CONVERSATION",
-          "Streams generated responses from backend to frontend."
+          "Reference material",
+          "With Supabase configured, the backend ranks approved records by keyword and includes relevant passages in the model’s context."
         ],
         [
-          "KNOWLEDGE",
-          "Uses document-backed keyword matching, not vector search."
-        ],
-        [
-          "VOICE",
-          "Optional speech recognition and voice output need their own setup."
-        ],
-        [
-          "STATUS",
-          "Experimental personal project, not an official or deployed production service."
+          "Voice",
+          "Optional voice interaction uses Whisper for transcription and Fish Audio for speech output. These components need separate setup."
         ]
       ],
-
-      tags: [
-        "PYTHON",
-        "FASTAPI",
-        "REACT",
-        "OLLAMA",
-        "VOICE"
+      "tags": [
+        "Next.js",
+        "FastAPI",
+        "Ollama"
       ],
-
-      actions: [
+      "actions": [
         [
-          "View AI Cricket Mentor ↗",
+          "View source ↗",
           "https://github.com/VTXZenyx/ai-cricket-virat-kohli-app"
         ]
       ]
     },
-
-    r: {
-      kicker: "DATA SCIENCE · R · SQL",
-      title: "Data Analysis & Programming",
-
-      desc:
-        "My R and SQL analysis portfolio brings together university work and an AI-assisted clustering exploration. It includes fossil maps, isotope data, Formula 1 records, simulations and unsupervised learning experiments.",
-
-      evidence: [
+    "r": {
+      "kicker": "COURSEWORK & INDEPENDENT STUDY",
+      "title": "Data Analysis & Programming",
+      "desc": "I used R and SQL to clean records, plot patterns and test probability questions. Each project pairs its code with an example of the result.",
+      "evidence": [
         [
-          "FOSSILS",
-          "Exploring geographic patterns in dinosaur fossil data."
+          "University work",
+          "I mapped fossil locations, compared strontium isotope measurements from ancient Egypt and modelled genetic inheritance and customer arrivals."
         ],
         [
-          "ANCIENT EGYPT",
-          "Cleaning and interpreting isotope measurements with R."
+          "Formula 1",
+          "I used SQL joins and grouped counts in RSQLite to explore the relationship between races, circuits and their locations."
         ],
         [
-          "FORMULA 1",
-          "Querying connected racing data with SQL."
-        ],
-        [
-          "SIMULATIONS",
-          "Exploring probability through sampling and repeated experiments."
-        ],
-        [
-          "CLUSTERING",
-          "Comparing unsupervised approaches on synthetic data in an AI-assisted extension."
+          "Independent study",
+          "The AI-assisted clustering exercise compares k-means, hierarchical clustering, DBSCAN and Gaussian mixtures. The displayed results were calculated in Python. The repository also includes an R implementation."
         ]
       ],
-
-      tags: [
+      "tags": [
         "R",
-        "DPLYR",
-        "GGPLOT2",
-        "SQL",
-        "STATISTICS"
+        "ggplot2",
+        "RSQLite"
       ],
-
-      actions: [
+      "actions": [
         [
-          "View data projects ↗",
+          "View source ↗",
           "https://github.com/VTXZenyx/data-analysis-and-programming"
         ]
       ]
     },
-
-    waid: {
-      kicker: "WEB APPLICATION · VUE · BUSINESS RULES",
-      title: "Course Enrolment Web Application",
-
-      desc:
-        "A browser-based demonstration for browsing courses, enrolling and withdrawing. I turned prerequisites, course-load and GPA requirements, and timetable clashes into application checks. The demo uses sample accounts and course data rather than real university authentication.",
-
-      evidence: [
+    "waid": {
+      "kicker": "STUDENT ENROLMENT · LIVE DEMO",
+      "title": "Course Enrolment Web Application",
+      "desc": "Students can browse as a guest, sign in with a fictional account and change their enrolments. Vue handles the interface and Brython runs the Python rules in the browser.",
+      "evidence": [
         [
-          "USER FLOW",
-          "Demonstration login, course browsing, enrolment and withdrawals."
+          "Course selection",
+          "Each offering shows its trimester, lecture time, overview and prerequisite. Signed-in students can enrol, review their status and withdraw."
         ],
         [
-          "VALIDATION",
-          "Prerequisite, course-load, GPA-related and timetable checks."
+          "Approval rules",
+          "The app checks lecture overlaps, prerequisites and the student’s GPA when deciding whether to admit, decline or record an enrolment for approval."
         ],
         [
-          "TECHNOLOGY",
-          "HTML, CSS, Vue.js, Brython/Python and JSON."
-        ],
-        [
-          "STATUS",
-          "Working demonstration, not a connected student administration system."
+          "Try it",
+          "Use the public demo account Anh Nguyen with password 1254. The project includes sample data in case the external course feed is unavailable."
         ]
       ],
-
-      tags: [
-        "HTML",
-        "CSS",
-        "VUE.JS",
-        "BRYTHON",
+      "tags": [
+        "Vue.js",
+        "Brython",
         "JSON"
       ],
-
-      actions: [
+      "actions": [
         [
           "Try the live demo ↗",
           "https://vtxzenyx.github.io/course-enrolment-web-app/"
@@ -285,91 +207,35 @@
         ]
       ]
     },
-
-    sql: {
-      kicker: "SQL · SQLITE · DATABASE DESIGN",
-      title: "SQL & Relational Database Portfolio",
-
-      desc:
-        "Exercises and projects exploring SQL queries, relational structure and database design. I enjoy turning connected tables into clear answers and learning how reliable data models support applications.",
-
-      evidence: [
+    "sql": {
+      "kicker": "UNIVERSITY DATABASE DESIGN",
+      "title": "SQL & Relational Database Portfolio",
+      "desc": "This collection pairs the SQL I wrote at university with diagrams and query results from my submissions. The music queries run against the supplied SQLite database.",
+      "evidence": [
         [
-          "QUERYING",
-          "Filters, joins, self-joins, grouping, HAVING and aggregates."
+          "Schema design",
+          "I used functional dependencies to normalise student and messaging records, then defined primary keys, foreign keys and constraints."
         ],
         [
-          "SUBQUERIES",
-          "Nested queries and calculations using multiple tables."
+          "Queries",
+          "I used joins, correlated subqueries and grouped aggregates to analyse the music catalogue. Other examples include views and student GPA calculations."
         ],
         [
-          "DESIGN",
-          "Primary and foreign keys, relationships and normalisation."
-        ],
-        [
-          "OPERATIONS",
-          "CREATE, INSERT, UPDATE and DELETE exercises."
-        ],
-        [
-          "R INTEGRATION",
-          "Working with SQLite from R using DBI and RSQLite."
+          "Evidence",
+          "The repository includes my draw.io diagrams, DB Browser for SQLite screenshots and the original database-design submission."
         ]
       ],
-
-      tags: [
+      "tags": [
         "SQL",
-        "SQLITE",
-        "JOINS",
-        "DATABASE DESIGN",
-        "RSQLITE"
+        "SQLite",
+        "draw.io"
       ],
-
-      actions: [
+      "actions": [
         [
-          "View SQL portfolio ↗",
+          "View source ↗",
           "https://github.com/VTXZenyx/sql-database-portfolio"
         ]
       ]
-    },
-
-    systems: {
-      kicker: "INFORMATION SYSTEMS · USER RESEARCH",
-      title: "Business & Systems Analysis",
-
-      desc:
-        "In a university group project, we explored why students can find it difficult to reconnect after meeting in class. Our 'See You Next Tutorial' concept brought together research, prototyping, testing and feedback. It reminded me that understanding users matters before choosing technology.",
-
-      evidence: [
-        [
-          "RESEARCH",
-          "Exploring student experiences and recurring problems."
-        ],
-        [
-          "PROBLEM",
-          "Focusing on the barriers to following up after an initial interaction."
-        ],
-        [
-          "PROTOTYPE",
-          "Designing a simple invitation and meeting flow."
-        ],
-        [
-          "TESTING",
-          "Revising designs after feedback."
-        ],
-        [
-          "STATUS",
-          "University coursework, not a commercial application."
-        ]
-      ],
-
-      tags: [
-        "USER RESEARCH",
-        "REQUIREMENTS",
-        "PROTOTYPING",
-        "TESTING"
-      ],
-
-      actions: []
     }
   };
 
@@ -427,6 +293,33 @@
         navButton.focus();
       }
     });
+
+    const links = $$("a[href^='#']", nav);
+    const sections = $$("main > section[id]");
+    const topbar = nav.closest("header");
+    let activeLink;
+    let navFrame = 0;
+
+    function updateLocation() {
+      navFrame = 0;
+      const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      const threshold = Math.max((topbar?.offsetHeight || 0) + 20, Math.min(190, window.innerHeight * 0.28));
+      const section = atEnd ? sections.at(-1) : sections.findLast(item => item.getBoundingClientRect().top <= threshold);
+      const current = links.find(link => link.hash === `#${section?.id}`);
+      if (current === activeLink) return;
+      activeLink?.removeAttribute("aria-current");
+      current?.setAttribute("aria-current", "location");
+      activeLink = current;
+    }
+
+    function requestLocation() {
+      if (!navFrame) navFrame = requestAnimationFrame(updateLocation);
+    }
+
+    window.addEventListener("scroll", requestLocation, { passive: true });
+    window.addEventListener("resize", requestLocation, { passive: true });
+    window.addEventListener("load", requestLocation);
+    requestLocation();
 
     matchMedia("(min-width: 821px)")
       .addEventListener("change", event => {
@@ -500,168 +393,99 @@
 
     let width = 0;
     let height = 0;
-    let points = [];
+    let dots = [];
+    let radius = 0;
+    let ink;
     let frame = 0;
-
-    let pointerX = -9999;
-    let pointerY = -9999;
     let resizeTimer;
+    let pointerX = -Infinity;
+    let pointerY = -Infinity;
 
     function draw() {
       frame = 0;
+      if (!dots.length) return;
 
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(128, 197, 255, 0.96)";
+      ctx.fillStyle = ink;
       ctx.beginPath();
-
-      for (const point of points) {
-        let { x, y, radius } = point;
-
-        if (
-          finePointer.matches &&
-          !reduceMotion.matches
-        ) {
+      const interactive = finePointer.matches && !reduceMotion.matches;
+      const reach = Math.min(95, width * 0.2);
+      for (const dot of dots) {
+        let { x, y } = dot;
+        let dotRadius = radius;
+        if (interactive) {
           const dx = x - pointerX;
           const dy = y - pointerY;
           const distance = Math.hypot(dx, dy);
-
-          if (distance < 105) {
-            const strength =
-              (105 - distance) / 105;
-
-            x +=
-              (dx / (distance || 1)) *
-              strength * 21;
-
-            y +=
-              (dy / (distance || 1)) *
-              strength * 21;
-
-            radius += strength * 0.8;
+          if (distance < reach) {
+            const strength = 1 - distance / reach;
+            const push = strength * reach * 0.19 / (distance || 1);
+            x += dx * push;
+            y += dy * push;
+            dotRadius += strength * radius * 0.35;
           }
         }
-
-        ctx.moveTo(x + radius, y);
-
-        ctx.arc(
-          x,
-          y,
-          radius,
-          0,
-          Math.PI * 2
-        );
+        ctx.moveTo(x + dotRadius, y);
+        ctx.arc(x, y, dotRadius, 0, Math.PI * 2);
       }
-
       ctx.fill();
+      canvas.parentElement.classList.add("dots-ready");
     }
 
-    const requestDraw = () => {
-      if (!frame) {
-        frame = requestAnimationFrame(draw);
-      }
-    };
+    function requestDraw() {
+      if (!frame) frame = requestAnimationFrame(draw);
+    }
 
     function build() {
-      width = Math.round(
-        canvas.getBoundingClientRect().width
-      );
+      const bounds = canvas.getBoundingClientRect();
+      width = Math.round(bounds.width);
+      height = Math.round(bounds.height);
+      if (width < 10 || height < 10) return;
 
-      height = Math.round(
-        canvas.getBoundingClientRect().height
-      );
+      // Sample the ink bounds so font side bearings and line boxes add no padding.
+      const mask = document.createElement("canvas");
+      mask.width = width;
+      mask.height = height;
+      const off = mask.getContext("2d", { willReadFrequently: true });
+      if (!off) return;
+      const words = ["VIRAJ", "GANDHI"];
+      const font = size => `800 ${size}px Manrope, Arial, sans-serif`;
+      off.font = font(100);
+      const metrics = words.map(word => off.measureText(word));
+      const inkWidth = Math.max(...metrics.map(m => m.actualBoundingBoxLeft + m.actualBoundingBoxRight));
+      const inkHeight = metrics.reduce((sum, m) => sum + m.actualBoundingBoxAscent + m.actualBoundingBoxDescent, 0);
+      const inset = 3;
+      const gap = Math.max(6, height * 0.07);
+      const fontSize = 100 * Math.min((width - inset * 2) / inkWidth, (height - gap - inset * 2) / inkHeight);
+      if (!Number.isFinite(fontSize) || fontSize <= 0) return;
 
-      if (width < 10 || height < 10) {
-        return;
+      off.font = font(fontSize);
+      let top = Math.max(inset, (height - gap - inkHeight * fontSize / 100) / 2);
+      for (const word of words) {
+        const m = off.measureText(word);
+        const baseline = top + m.actualBoundingBoxAscent;
+        off.fillText(word, inset + m.actualBoundingBoxLeft, baseline);
+        top = baseline + m.actualBoundingBoxDescent + gap;
       }
 
-      const ratio = Math.min(
-        devicePixelRatio || 1,
-        2
-      );
+      const pixels = off.getImageData(0, 0, width, height).data;
+      const step = Math.max(3, Math.round(fontSize / 27));
+      radius = step * 0.36;
+      dots = [];
+      for (let y = inset; y < height; y += step) {
+        for (let x = inset; x < width; x += step) {
+          if (pixels[(y * width + x) * 4 + 3] >= 100) dots.push({ x, y });
+        }
+      }
 
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
-
-      ctx.setTransform(
-        ratio, 0, 0, ratio, 0, 0
-      );
-
-      const offscreen = document.createElement("canvas");
-
-      offscreen.width = width;
-      offscreen.height = height;
-
-      const off = offscreen.getContext(
-        "2d",
-        { willReadFrequently: true }
-      );
-
-      if (!off) {
-        return;
-      }
-
-      off.textAlign = "center";
-      off.textBaseline = "middle";
-      off.fillStyle = "white";
-
-      let fontSize = Math.min(
-        width * 0.205,
-        height * 0.35
-      );
-
-      for (let i = 0; i < 20; i++) {
-        off.font =
-          `800 ${fontSize}px Manrope, sans-serif`;
-
-        if (
-          Math.max(
-            off.measureText("VIRAJ").width,
-            off.measureText("GANDHI").width
-          ) <= width * 0.94
-        ) {
-          break;
-        }
-
-        fontSize *= 0.95;
-      }
-
-      off.fillText(
-        "VIRAJ",
-        width / 2,
-        height * 0.32
-      );
-
-      off.fillText(
-        "GANDHI",
-        width / 2,
-        height * 0.69
-      );
-
-      const pixels = off.getImageData(
-        0, 0, width, height
-      ).data;
-
-      const step =
-        width < 480 ? 6 :
-        width < 800 ? 7 : 8;
-
-      const next = [];
-
-      for (let y = 0; y < height; y += step) {
-        for (let x = 0; x < width; x += step) {
-          if (
-            pixels[(y * width + x) * 4 + 3] > 100
-          ) {
-            next.push({
-              x,
-              y,
-              radius: width < 480 ? 1.45 : 1.7
-            });
-          }
-        }
-      }
-
-      points = next;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ink = ctx.createLinearGradient(0, 0, Math.min(width, inkWidth * fontSize / 100), height);
+      ink.addColorStop(0, "#c2ecff");
+      ink.addColorStop(0.47, "#8acaff");
+      ink.addColorStop(1, "#729cff");
       requestDraw();
     }
 
@@ -760,6 +584,7 @@
     reveals.forEach(element => {
       observer.observe(element);
     });
+    document.documentElement.classList.add("reveal-ready");
 
     reduceMotion.addEventListener(
       "change",
@@ -791,33 +616,16 @@
 
     let previousFocus;
     let previousOverflow;
-
-    const background = [
-      $("main"),
-      $(".topbar"),
-      $(".site-footer")
-    ];
+    let background = [];
 
     function close() {
-      if (!modal.classList.contains("open")) {
-        return;
-      }
+      if (!modal.classList.contains("open")) return;
 
+      background.forEach(item => { item.inert = false; });
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
       modal.classList.remove("open");
-
-      modal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      document.body.style.overflow =
-        previousOverflow || "";
-
-      background.forEach(item => {
-        if (item) {
-          item.inert = false;
-        }
-      });
+      modal.setAttribute("aria-hidden", "true");
 
       document.dispatchEvent(
         new CustomEvent(
@@ -826,15 +634,12 @@
         )
       );
 
-      if (previousFocus?.isConnected) {
-        previousFocus.focus();
-      }
     }
 
     function open(key, trigger) {
       const project = PROJECTS[key];
 
-      if (!project) {
+      if (!project || modal.classList.contains("open")) {
         return;
       }
 
@@ -898,13 +703,12 @@
 
       document.body.style.overflow = "hidden";
 
-      background.forEach(item => {
-        if (item) {
-          item.inert = true;
-        }
-      });
-
       card.scrollTop = 0;
+      closeButton.focus({ preventScroll: true });
+      background = [...document.body.children].filter(item =>
+        item !== modal && !item.inert && item.matches("a, header, main, footer")
+      );
+      background.forEach(item => { item.inert = true; });
 
       document.dispatchEvent(
         new CustomEvent(
@@ -913,7 +717,6 @@
         )
       );
 
-      closeButton.focus();
     }
 
     document.addEventListener("click", event => {
@@ -1106,7 +909,7 @@
     let readyAt = 0;
 
     bestLabel.textContent =
-      best ? `${best} ms` : "--- ms";
+      best ? `${best} ms` : "No score yet";
 
     box.setAttribute("aria-live", "polite");
 
@@ -1122,7 +925,7 @@
       text.textContent = "PRESS START";
 
       sub.textContent =
-        "Wait for the signal, then click.";
+        "Wait for the signal, then tap or press Space.";
     }
 
     start.addEventListener("click", () => {
@@ -1134,7 +937,8 @@
       box.classList.add("waiting");
 
       text.textContent = "WAIT...";
-      sub.textContent = "Don't click yet.";
+      sub.textContent = "Wait for green.";
+      box.focus({ preventScroll: true });
 
       timer = setTimeout(() => {
         if (state !== "waiting") {
@@ -1147,8 +951,8 @@
         box.classList.remove("waiting");
         box.classList.add("ready");
 
-        text.textContent = "CLICK!";
-        sub.textContent = "Now!";
+        text.textContent = "GO!";
+        sub.textContent = "Tap or press Space now.";
       }, 900 + Math.random() * 2200);
     });
 
@@ -1242,6 +1046,7 @@
     const scoreLabel = $("#snakeScore");
     const bestLabel = $("#snakeBest");
 
+    const stateLabel = $("#snakeState");
     const key = "vg2026_snake_best";
     const size = 20;
     const cell = canvas.width / size;
@@ -1271,6 +1076,12 @@
     function stop() {
       clearInterval(timer);
       timer = 0;
+    }
+
+    function pause() {
+      if (!timer) return;
+      stop();
+      if (stateLabel) stateLabel.textContent = "Paused. Focus the board to continue.";
     }
 
     function spawnFood() {
@@ -1356,12 +1167,7 @@
         ? "You won! Play again"
         : "Game over. Play again";
 
-      if (score > best) {
-        best = score;
-
-        bestLabel.textContent = String(best);
-        saveBest(key, best);
-      }
+      if (stateLabel) stateLabel.textContent = `${won ? "You won" : "Game over"}. Final score ${score}.`;
     }
 
     function tick() {
@@ -1408,6 +1214,11 @@
         score++;
 
         scoreLabel.textContent = String(score);
+        if (score > best) {
+          best = score;
+          bestLabel.textContent = String(best);
+          saveBest(key, best);
+        }
 
         if (!spawnFood()) {
           draw();
@@ -1426,10 +1237,13 @@
         playing &&
         !timer &&
         !document.hidden &&
+        document.hasFocus() &&
+        panel.contains(document.activeElement) &&
         !modalOpen &&
         panel.classList.contains("active")
       ) {
         timer = setInterval(tick, 110);
+        if (stateLabel) stateLabel.textContent = "Game in progress.";
       }
     }
 
@@ -1453,6 +1267,7 @@
 
       spawnFood();
       draw();
+      canvas.focus({ preventScroll: true });
       resume();
     }
 
@@ -1490,38 +1305,14 @@
       locked = true;
     }
 
-    document.addEventListener("keydown", event => {
-      if (
-        !playing ||
-        modalOpen ||
-        !panel.classList.contains("active")
-      ) {
-        return;
-      }
+    const keys = {
+      ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
+      w: "up", s: "down", a: "left", d: "right"
+    };
 
-      if (
-        document.activeElement?.matches(
-          "input, textarea, select, [contenteditable], [role='tab']"
-        )
-      ) {
-        return;
-      }
-
-      const keys = {
-        ArrowUp: "up",
-        ArrowDown: "down",
-        ArrowLeft: "left",
-        ArrowRight: "right",
-        w: "up",
-        s: "down",
-        a: "left",
-        d: "right"
-      };
-
-      const name =
-        keys[event.key] ||
-        keys[event.key.toLowerCase()];
-
+    panel.addEventListener("keydown", event => {
+      if (!timer || event.altKey || event.ctrlKey || event.metaKey) return;
+      const name = keys[event.key] || keys[event.key.toLowerCase()];
       if (name) {
         event.preventDefault();
         turn(name);
@@ -1530,46 +1321,31 @@
 
     $$("[data-dir]", panel).forEach(button => {
       button.addEventListener("click", () => {
+        if (!panel.contains(document.activeElement)) canvas.focus({ preventScroll: true });
         turn(button.dataset.dir);
       });
     });
 
     start.addEventListener("click", begin);
-
-    document.addEventListener(
-      "portfolio:gamechange",
-      event => {
-        if (event.detail.game === "snake") {
-          resume();
-        } else {
-          stop();
-        }
-      }
-    );
-
-    document.addEventListener(
-      "portfolio:modalchange",
-      event => {
-        modalOpen = event.detail.open;
-
-        if (modalOpen) {
-          stop();
-        } else {
-          resume();
-        }
-      }
-    );
-
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        if (document.hidden) {
-          stop();
-        } else {
-          resume();
-        }
-      }
-    );
+    panel.addEventListener("focusin", resume);
+    panel.addEventListener("focusout", event => {
+      if (!panel.contains(event.relatedTarget)) pause();
+    });
+    window.addEventListener("blur", pause);
+    window.addEventListener("focus", resume);
+    document.addEventListener("portfolio:gamechange", event => {
+      if (event.detail.game === "snake") resume();
+      else pause();
+    });
+    document.addEventListener("portfolio:modalchange", event => {
+      modalOpen = event.detail.open;
+      if (modalOpen) pause();
+      else resume();
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) pause();
+      else resume();
+    });
 
     snake = [
       { x: 6, y: 10 },
@@ -1683,123 +1459,92 @@
       }
     ];
 
-    let best = Math.min(5, readBest(key));
+    let best = Math.min(questions.length, readBest(key));
     let index = 0;
     let score = 0;
-    let answered = false;
-    let timer = 0;
 
-    bestLabel.textContent = `${best}/5`;
-
-    root.setAttribute("aria-live", "polite");
+    bestLabel.textContent = `${best}/${questions.length}`;
 
     function finish() {
       if (score > best) {
         best = score;
+        bestLabel.textContent = `${best}/${questions.length}`;
         saveBest(key, best);
-
-        bestLabel.textContent = `${best}/5`;
       }
-
-      root.replaceChildren();
 
       const panel = document.createElement("div");
       panel.className = "sql-question";
-
       const heading = document.createElement("h4");
-      heading.textContent = `You scored ${score}/5`;
-
-      const message = document.createElement("p");
-      message.textContent =
-        "Real SQL fundamentals. Give it another go if you like.";
-
-      panel.append(heading, message);
-      root.append(panel);
-
+      heading.textContent = `You scored ${score}/${questions.length}`;
+      heading.tabIndex = -1;
+      panel.append(heading);
+      root.replaceChildren(panel);
       progress.textContent = "Complete";
+      heading.focus({ preventScroll: true });
     }
 
-    function select(choice, button) {
-      if (answered) {
-        return;
-      }
-
-      answered = true;
-
-      const buttons = $$(".sql-answer", root);
-
-      buttons.forEach(item => {
-        item.disabled = true;
-      });
-
-      const correct = questions[index].correct;
-
-      if (choice === correct) {
-        score++;
-        button.classList.add("correct");
-      } else {
-        button.classList.add("wrong");
-        buttons[correct].classList.add("correct");
-      }
-
-      timer = setTimeout(() => {
-        timer = 0;
-        index++;
-
-        if (index >= questions.length) {
-          finish();
-        } else {
-          render();
-        }
-      }, 650);
-    }
-
-    function render() {
-      answered = false;
-      root.replaceChildren();
-
+    function render(focusQuestion = false) {
       const item = questions[index];
-
-      progress.textContent =
-        `Question ${index + 1} of ${questions.length}`;
+      progress.textContent = `Question ${index + 1} of ${questions.length}`;
 
       const panel = document.createElement("div");
       panel.className = "sql-question";
-
       const code = document.createElement("code");
       code.textContent = item.code;
-
       const heading = document.createElement("h4");
       heading.textContent = item.question;
-
+      heading.tabIndex = -1;
+      heading.setAttribute("aria-describedby", "sqlProgress");
       const choices = document.createElement("div");
       choices.className = "sql-answers";
 
+      const feedback = document.createElement("p");
+      feedback.className = "sql-feedback";
+      feedback.id = "sqlFeedback";
+      feedback.setAttribute("role", "status");
+      const next = document.createElement("button");
+      next.type = "button";
+      next.className = "button button-ghost compact";
+      next.textContent = index === questions.length - 1 ? "See result" : "Next question";
+      next.setAttribute("aria-describedby", feedback.id);
+      next.hidden = true;
+      next.addEventListener("click", () => {
+        index++;
+        if (index === questions.length) finish();
+        else render(true);
+      });
+
       item.answers.forEach((answer, i) => {
         const button = document.createElement("button");
-
         button.type = "button";
         button.className = "sql-answer";
         button.textContent = answer;
-
         button.addEventListener("click", () => {
-          select(i, button);
+          const buttons = $$(".sql-answer", choices);
+          buttons.forEach(choice => { choice.disabled = true; });
+          buttons[item.correct].classList.add("correct");
+          if (i === item.correct) {
+            score++;
+            feedback.textContent = "Correct.";
+          } else {
+            button.classList.add("wrong");
+            feedback.textContent = `The correct answer is “${item.answers[item.correct]}”.`;
+          }
+          next.hidden = false;
+          next.focus({ preventScroll: true });
         });
-
         choices.append(button);
       });
 
-      panel.append(code, heading, choices);
-      root.append(panel);
+      panel.append(code, heading, choices, feedback, next);
+      root.replaceChildren(panel);
+      if (focusQuestion) heading.focus({ preventScroll: true });
     }
 
     restart.addEventListener("click", () => {
-      clearTimeout(timer);
-
       index = 0;
       score = 0;
-
-      render();
+      render(true);
     });
 
     render();
