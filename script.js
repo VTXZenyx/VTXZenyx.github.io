@@ -202,6 +202,10 @@
           "https://vtxzenyx.github.io/course-enrolment-web-app/"
         ],
         [
+          "View signed-in course feed ↗",
+          "assets/course-enrolment.webp"
+        ],
+        [
           "View source ↗",
           "https://github.com/VTXZenyx/course-enrolment-web-app"
         ]

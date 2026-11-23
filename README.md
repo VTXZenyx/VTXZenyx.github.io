@@ -16,10 +16,16 @@ The six project cards and screenshot captions live in `index.html`. Their detail
 | [VEE Quant Research](https://github.com/VTXZenyx/vee-quant-research/tree/7cf77dc) | Chart of candidate spreads from the public offline demo, compared with its configured spread limit. The values describe synthetic market inputs. |
 | [AI Cricket Mentor](https://github.com/VTXZenyx/ai-cricket-virat-kohli-app/tree/312be5f) | Captured from the locally built Next.js message screen. |
 | [Data Analysis & Programming](https://github.com/VTXZenyx/data-analysis-and-programming/tree/51b2d3d/projects/05-clustering) | Repository comparison plot from the independent AI-assisted clustering study, alongside its R implementation. |
-| [Course Enrolment](https://github.com/VTXZenyx/course-enrolment-web-app/tree/4426821) | Captured from the course feed running locally with the application's bundled fictional student data. |
-| [SQL portfolio](https://github.com/VTXZenyx/sql-database-portfolio/tree/6203828/evidence/screenshots) | Crop from the DB Browser for SQLite table-structure screenshot showing the Course_Offering and Enrolment tables. |
+| [Course Enrolment](https://github.com/VTXZenyx/course-enrolment-web-app/tree/4426821) | The card uses the original [WAID login screenshot](https://github.com/VTXZenyx/VTXZenyx.github.io/blob/dea06c4/assets/course-enrolment-preview.png), cropped to remove its outer frame. The details dialog also links to the signed-in course feed captured with the bundled fictional student data. |
+| [SQL portfolio](https://github.com/VTXZenyx/sql-database-portfolio/blob/62038287efcb77f5505b8751d493b7fb45c15824/sql/database-design/messaging-database.sql) | Entity-relationship diagram of the group membership tables in the messaging schema. It shows both foreign keys in the composite primary key of Group_Member. |
 
-The VEE DataDesk drawing is a concept for the proposed next build. The Wellington map is a locally rendered shoreline study derived from [GSHHG 2.3.7](https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7), with decorative waterlines. Its licence is in `assets/`. Manrope, IBM Plex Mono and the DejaVu navigation glyphs are served locally. Their licences accompany the font files.
+The VEE DataDesk drawing is a concept for the proposed next build. Manrope, IBM Plex Mono and the DejaVu navigation glyphs are served locally. Their licences accompany the font files.
+
+## Wellington map credits
+
+The regional map and its mobile detail use [GSHHG 2.3.7 shoreline data](https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7), distributed under LGPL 3 or later. The licence notices accompany the images. Roads come from [Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/roads/) (public domain).
+
+Hillshade and contours were rendered from the reprojected [1 km New Zealand elevation raster](https://github.com/Nowosad/spDataLarge/blob/master/inst/raster/nz_elev.tif), distributed through spDataLarge from Mapzen Terrain Service. Copyright 2011 Crown copyright (c) Land Information New Zealand and the New Zealand Government. All rights reserved. [Mapzen source attribution](https://github.com/tilezen/joerd/blob/master/docs/attribution.md#land-information-new-zealand-linz) · [CC BY 3.0 NZ](https://creativecommons.org/licenses/by/3.0/nz/).
 
 ## Checking changes
 

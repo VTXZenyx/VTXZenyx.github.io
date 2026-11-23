@@ -167,7 +167,13 @@
         </div>
       </div>
       <figure class="harbour">
-        <img src="assets/wellington-harbour.webp" width="1040" height="820" alt="Map of Wellington Harbour with central Wellington marked on its western shore.">
+        <a class="harbour-map" href="assets/wellington-region.webp" target="_blank" rel="noopener noreferrer">
+          <picture>
+            <source media="(max-width: 720px)" srcset="assets/wellington-region-mobile.webp" width="736" height="312">
+            <img src="assets/wellington-region.webp" width="1040" height="820" alt="Regional map of Wellington, Porirua and Lower Hutt showing Wellington Harbour, surrounding hills and coastline.">
+          </picture>
+          <span class="sr-only">Open the full-size map in a new tab</span>
+        </a>
         <figcaption><strong>Wellington, NZ</strong><span>41.29° S &nbsp; 174.78° E</span></figcaption>
       </figure>
     </section>
@@ -281,9 +287,9 @@
 
         <article class="project-card reveal" aria-labelledby="project-waid">
           <div class="work-plate work-plate--waid">
-            <a class="work-frame" href="assets/course-enrolment.webp" target="_blank" rel="noopener noreferrer">
-                <span class="work-frame-bar"><i aria-hidden="true"></i><span>Enrolment feed</span><span aria-hidden="true">↗</span></span>
-                <img src="assets/course-enrolment.webp" width="1037" height="776" loading="lazy" decoding="async" alt="The demo student’s course feed shows INFO101 and INFO102, their approval statuses and controls to drop each course.">
+            <a class="work-frame" href="assets/waid-login.webp" target="_blank" rel="noopener noreferrer">
+                <span class="work-frame-bar"><i aria-hidden="true"></i><span>Login and course listings</span><span aria-hidden="true">↗</span></span>
+                <img src="assets/waid-login.webp" width="894" height="558" loading="lazy" decoding="async" alt="WAID login form above the Trimester 1 course listings for INFO101 and INFO102.">
                 <span class="sr-only">Open full-size preview in a new tab</span>
               </a>
           </div>
@@ -302,9 +308,9 @@
 
         <article class="project-card reveal" aria-labelledby="project-sql">
           <div class="work-plate work-plate--sql">
-            <a class="work-frame" href="assets/sql-design.webp" target="_blank" rel="noopener noreferrer">
-                <span class="work-frame-bar"><i aria-hidden="true"></i><span>Student database schema</span><span aria-hidden="true">↗</span></span>
-                <img src="assets/sql-design.webp" width="756" height="510" loading="lazy" decoding="async" alt="DB Browser for SQLite lists the keys, fields and data types for the Course_Offering and Enrolment tables.">
+            <a class="work-frame" href="assets/sql-relationships.svg" target="_blank" rel="noopener noreferrer">
+                <span class="work-frame-bar"><i aria-hidden="true"></i><span>Group membership schema</span><span aria-hidden="true">↗</span></span>
+                <img src="assets/sql-relationships.svg" width="576" height="360" loading="lazy" decoding="async" alt="Group_Member links Group and User. Its group_id and sender_phone foreign keys form a composite primary key.">
                 <span class="sr-only">Open full-size preview in a new tab</span>
               </a>
           </div>

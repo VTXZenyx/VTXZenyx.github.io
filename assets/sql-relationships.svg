@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 360" width="576" height="360" role="img" aria-labelledby="title desc">
+  <title id="title">Group membership in the messaging database</title>
+  <desc id="desc">Group_Member links Group and User. Its composite primary key consists of group_id and sender_phone. These are also foreign keys to the corresponding primary keys in Group and User. Each membership record includes a join_date.</desc>
+  <defs>
+    <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r=".65" fill="#b2c4d3"/>
+    </pattern>
+    <style>
+      .table-name { font: 700 22px ui-monospace, monospace; fill: #f3f8fc; }
+      .field { font: 17.5px ui-monospace, monospace; fill: #152d44; }
+      .key { font: bold 13px ui-monospace, monospace; fill: #116075; }
+      .legend { font: 15px system-ui, sans-serif; fill: #354e65; }
+      .table { fill: #fafdff; stroke: #8ea9bb; stroke-width: 1.5; }
+      .link { fill: none; stroke: #226b82; stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect width="576" height="360" fill="#e7eff5"/>
+  <rect width="576" height="360" fill="url(#dots)"/>
+
+  <!-- Two foreign keys from the group-membership junction table. -->
+  <g class="link">
+    <path d="M90 116v110h55m-12 0 12-6m-12 6 12 6"/>
+    <path d="M486 116v138h-55m12 0-12-6m12 6-12 6"/>
+  </g>
+  <g fill="#226b82">
+    <circle cx="90" cy="116" r="3.5"/>
+    <circle cx="486" cy="116" r="3.5"/>
+  </g>
+
+  <g>
+    <rect class="table" x="26" y="16" width="238" height="100" rx="7"/>
+    <path d="M33 16h224q7 0 7 7v28H26V23q0-7 7-7Z" fill="#203c55"/>
+    <text class="table-name" x="43" y="41">Group</text>
+    <text class="field" x="43" y="77">group_id</text>
+    <text class="key" x="220" y="76">PK</text>
+    <text class="field" x="43" y="102">group_name</text>
+  </g>
+
+  <g>
+    <rect class="table" x="312" y="16" width="238" height="100" rx="7"/>
+    <path d="M319 16h224q7 0 7 7v28H312V23q0-7 7-7Z" fill="#203c55"/>
+    <text class="table-name" x="329" y="41">User</text>
+    <text class="field" x="329" y="77">sender_phone</text>
+    <text class="key" x="506" y="76">PK</text>
+    <text class="field" x="329" y="102">sender_name</text>
+  </g>
+
+  <g>
+    <rect class="table" x="146" y="169" width="284" height="133" rx="7"/>
+    <path d="M153 169h270q7 0 7 7v30H146v-30q0-7 7-7Z" fill="#15556d"/>
+    <text class="table-name" x="164" y="195">Group_Member</text>
+    <text class="field" x="164" y="232">group_id</text>
+    <text class="key" x="358" y="231">PK / FK</text>
+    <text class="field" x="164" y="260">sender_phone</text>
+    <text class="key" x="358" y="259">PK / FK</text>
+    <text class="field" x="164" y="288">join_date</text>
+  </g>
+
+  <g transform="translate(138 338)">
+    <text class="key">PK</text><text class="legend" x="27">Primary key</text>
+    <text class="key" x="155">FK</text><text class="legend" x="182">Foreign key</text>
+  </g>
+</svg>
